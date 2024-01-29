@@ -1,7 +1,7 @@
 import 'package:doctor_appointment_client/app/screens/appointments_screen.dart';
 import 'package:doctor_appointment_client/app/screens/home_screen.dart';
 import 'package:doctor_appointment_client/app/screens/notification_screen.dart';
-import 'package:doctor_appointment_client/app/screens/pill_remider_screen.dart';
+import 'package:doctor_appointment_client/app/screens/pill_reminder_screen.dart';
 import 'package:doctor_appointment_client/app/screens/user_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -50,7 +50,8 @@ class _MainScreenState extends State<MainScreen> {
           children: const [
             SingleChildScrollView(child: HomeScreen()),
             AppointmentsScreen(),
-            PillReminder(),
+            SingleChildScrollView(child: PillReminder()),
+            NotificationScreen(),
             NotificationScreen(),
             UserInfoScreen()
           ],
