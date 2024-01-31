@@ -181,12 +181,17 @@ class UserInfoHeader extends StatelessWidget {
       children: [
         Row(
           children: [
-            const SizedBox(
-              height: 50,
-              width: 50,
-              child: CircleAvatar(
-                backgroundImage: AssetImage(
-                  'assets/images/edward.jpg',
+            InkWell(
+              onTap: () {
+                context.push('/user');
+              },
+              child: const SizedBox(
+                height: 50,
+                width: 50,
+                child: CircleAvatar(
+                  backgroundImage: AssetImage(
+                    'assets/images/edward.jpg',
+                  ),
                 ),
               ),
             ),
