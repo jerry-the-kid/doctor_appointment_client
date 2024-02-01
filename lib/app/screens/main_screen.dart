@@ -15,11 +15,19 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int currentIndex = 0;
 
+  List<String> appBarTitle = [
+    '',
+    'My Appointment',
+    'Pill Reminder  ',
+    'Notifications',
+    'Settings',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: currentIndex != 0
-          ? AppBar(title: const Text("My Appointment"))
+          ? AppBar(title: Text(appBarTitle[currentIndex]))
           : null,
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
@@ -51,7 +59,6 @@ class _MainScreenState extends State<MainScreen> {
             SingleChildScrollView(child: HomeScreen()),
             AppointmentsScreen(),
             SingleChildScrollView(child: PillReminder()),
-            NotificationScreen(),
             NotificationScreen(),
             UserInfoScreen()
           ],
