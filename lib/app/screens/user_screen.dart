@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class UserInfoScreen extends StatefulWidget {
   const UserInfoScreen({super.key});
@@ -112,7 +113,9 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                       ),
                       const Spacer(),
                       IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.push('/user/health');
+                          },
                           icon: const Icon(Icons.navigate_next))
                     ],
                   ),

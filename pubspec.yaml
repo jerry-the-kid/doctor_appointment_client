@@ -48,6 +48,7 @@ dependencies:
   calendar_date_picker2: ^0.5.3
   easy_date_timeline: ^1.0.4
   timeline_tile: ^2.0.0
+  flutter_svg: ^2.0.9
 
 dev_dependencies:
   flutter_test:
