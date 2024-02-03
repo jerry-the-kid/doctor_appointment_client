@@ -114,7 +114,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                       const Spacer(),
                       IconButton(
                           onPressed: () {
-                            context.push('/user/health');
+                            context.push('/health');
                           },
                           icon: const Icon(Icons.navigate_next))
                     ],
