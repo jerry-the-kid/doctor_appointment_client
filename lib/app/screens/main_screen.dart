@@ -57,9 +57,9 @@ class _MainScreenState extends State<MainScreen> {
           index: currentIndex,
           children: const [
             SingleChildScrollView(child: HomeScreen()),
-            AppointmentsScreen(),
+            SingleChildScrollView(child: AppointmentsScreen()),
             SingleChildScrollView(child: PillReminder()),
-            NotificationScreen(),
+            SingleChildScrollView(child: NotificationScreen()),
             UserInfoScreen()
           ],
         ),

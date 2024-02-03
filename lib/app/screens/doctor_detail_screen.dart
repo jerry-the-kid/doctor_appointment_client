@@ -12,6 +12,8 @@ class DoctorDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
@@ -65,27 +67,6 @@ class DoctorDetailScreen extends StatelessWidget {
                 ),
                 dayProps: const EasyDayProps(
                     dayStructure: DayStructure.dayStrDayNum, height: 60)),
-            // SizedBox(
-            //   height: 60,
-            //   child: ListView(
-            //     scrollDirection: Axis.horizontal,
-            //     children: const [
-            //       DateItem(weekday: "Sun", day: "6"),
-            //       SizedBox(width: 8),
-            //       DateItem(weekday: "Mon", day: "7"),
-            //       SizedBox(width: 8),
-            //       DateItem(weekday: "Tue", day: "8", isActive: true),
-            //       SizedBox(width: 8),
-            //       DateItem(weekday: "Sun", day: "6"),
-            //       SizedBox(width: 8),
-            //       DateItem(weekday: "Mon", day: "7"),
-            //       SizedBox(width: 8),
-            //       DateItem(weekday: "Tue", day: "8"),
-            //       SizedBox(width: 8),
-            //       DateItem(weekday: "Mon", day: "7"),
-            //     ],
-            //   ),
-            // ),
             const SizedBox(
               height: 20,
             ),
@@ -104,12 +85,12 @@ class DoctorDetailScreen extends StatelessWidget {
             SizedBox(
               height: 90,
               child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 4, // Number of columns
                       crossAxisSpacing: 8.0, // Spacing between columns
                       mainAxisSpacing: 8.0, // Spacing between rows
-                      childAspectRatio: 3),
-                  itemCount: 7, // Number of items in the grid
+                      childAspectRatio: childAspectRatio(width)),
+                  itemCount: 7, // Number of ite  ms in the grid
 
                   itemBuilder: (BuildContext context, int index) {
                     return ElevatedButton(
@@ -185,4 +166,13 @@ class DateItem extends StatelessWidget {
       ),
     );
   }
+}
+
+double childAspectRatio(double width) {
+  if (width > 1400) return 8;
+  if (width > 1000) return 6;
+  if (width > 720) return 5;
+  if (width > 600) return 4;
+  if (width > 470) return 3;
+  return 2;
 }
