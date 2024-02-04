@@ -35,7 +35,9 @@ class HealthReportScreen extends StatelessWidget {
               MedicalCard(
                 imageSrc: 'assets/images/good_result.svg',
                 title: "Physical Health",
-                onTap: () {},
+                onTap: () {
+                  context.push('/health/physical');
+                },
               ),
               MedicalCard(
                 imageSrc: 'assets/images/recommend_medicine.svg',
