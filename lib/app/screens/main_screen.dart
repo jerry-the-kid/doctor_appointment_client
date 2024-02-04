@@ -1,7 +1,6 @@
 import 'package:doctor_appointment_client/app/screens/appointments_screen.dart';
 import 'package:doctor_appointment_client/app/screens/heath_report_screen.dart';
 import 'package:doctor_appointment_client/app/screens/home_screen.dart';
-import 'package:doctor_appointment_client/app/screens/notification_screen.dart';
 import 'package:doctor_appointment_client/app/screens/pill_reminder_screen.dart';
 import 'package:doctor_appointment_client/app/screens/user_screen.dart';
 import 'package:flutter/material.dart';

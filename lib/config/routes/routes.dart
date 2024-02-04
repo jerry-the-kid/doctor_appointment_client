@@ -3,6 +3,7 @@ import 'package:doctor_appointment_client/app/screens/doctor_detail_screen.dart'
 import 'package:doctor_appointment_client/app/screens/doctor_list_screen.dart';
 import 'package:doctor_appointment_client/app/screens/general_health_screen.dart';
 import 'package:doctor_appointment_client/app/screens/heath_report_screen.dart';
+import 'package:doctor_appointment_client/app/screens/laboratory_test_screen.dart';
 import 'package:doctor_appointment_client/app/screens/main_screen.dart';
 import 'package:doctor_appointment_client/app/screens/login_screen.dart';
 import 'package:doctor_appointment_client/app/screens/notification_screen.dart';
@@ -18,9 +19,9 @@ final router = GoRouter(
     GoRoute(
         path: '/notification',
         builder: (context, state) => const NotificationScreen()),
-    // GoRoute(
-    //     path: '/health',
-    //     builder: (context, state) => const HealthReportScreen()),
+    GoRoute(
+        path: '/health/laboratory',
+        builder: (context, state) => const LaboratoryTestScreen()),
     GoRoute(
         path: '/health/general',
         builder: (context, state) => const GeneralHealthScreen()),

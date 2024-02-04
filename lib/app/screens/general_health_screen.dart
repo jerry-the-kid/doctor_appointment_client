@@ -1,3 +1,4 @@
+import 'package:doctor_appointment_client/app/widgets/table_cell_custom.dart';
 import 'package:flutter/material.dart';
 
 List<String> subsystems = [
@@ -257,26 +258,5 @@ class GeneralHealthScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class TableCellCustom extends StatelessWidget {
-  final String content;
-  final bool isTitle;
-
-  const TableCellCustom({
-    super.key,
-    this.isTitle = false,
-    required this.content,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TableCell(
-        child: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Text(content,
-          style: isTitle ? Theme.of(context).textTheme.titleMedium : null),
-    ));
   }
 }

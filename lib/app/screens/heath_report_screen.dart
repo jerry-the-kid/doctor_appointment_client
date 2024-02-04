@@ -28,7 +28,9 @@ class HealthReportScreen extends StatelessWidget {
               MedicalCard(
                 imageSrc: 'assets/images/lab.svg',
                 title: "Laboratory Test",
-                onTap: () {},
+                onTap: () {
+                  context.push('/health/laboratory');
+                },
               ),
               MedicalCard(
                 imageSrc: 'assets/images/good_result.svg',
