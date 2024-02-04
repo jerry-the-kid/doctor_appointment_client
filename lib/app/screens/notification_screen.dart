@@ -6,58 +6,63 @@ class NotificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text("Today", style: Theme.of(context).textTheme.headlineMedium),
-              TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    "Mark all read",
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineSmall!
-                        .copyWith(color: AppColors.orange),
-                  ))
-            ],
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          const Notification(),
-          const Notification(),
-          const Notification(),
-          const SizedBox(
-            height: 30,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text("Today", style: Theme.of(context).textTheme.headlineMedium),
-              TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    "Mark all read",
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineSmall!
-                        .copyWith(color: AppColors.orange),
-                  ))
-            ],
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          const Notification(),
-          const Notification(),
-          const Notification()
-        ],
+    return Scaffold(
+      appBar: AppBar(title: const Text('Notifications')),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text("Today",
+                    style: Theme.of(context).textTheme.headlineMedium),
+                TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      "Mark all read",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall!
+                          .copyWith(color: AppColors.orange),
+                    ))
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const Notification(),
+            const Notification(),
+            const Notification(),
+            const SizedBox(
+              height: 30,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text("Today",
+                    style: Theme.of(context).textTheme.headlineMedium),
+                TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      "Mark all read",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall!
+                          .copyWith(color: AppColors.orange),
+                    ))
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const Notification(),
+            const Notification(),
+            const Notification()
+          ],
+        ),
       ),
     );
   }

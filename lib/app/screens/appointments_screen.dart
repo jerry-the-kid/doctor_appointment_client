@@ -1,7 +1,7 @@
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:doctor_appointment_client/app/widgets/divided_button.dart';
 import 'package:doctor_appointment_client/app/widgets/upcoming_schedule_card.dart';
-import 'package:doctor_appointment_client/constants/app_colors.dart';
+
 import 'package:flutter/material.dart';
 
 class AppointmentsScreen extends StatefulWidget {

@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart' as badges;
 import 'package:doctor_appointment_client/app/widgets/doctor_list.dart';
 import 'package:doctor_appointment_client/app/widgets/upcoming_schedule_card.dart';
 import 'package:doctor_appointment_client/constants/app_colors.dart';
@@ -212,12 +213,18 @@ class UserInfoHeader extends StatelessWidget {
             )
           ],
         ),
-        IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.notifications_active,
-              color: AppColors.primaryColor,
-            ))
+        badges.Badge(
+          position: badges.BadgePosition.topStart(top: 10, start: 21),
+          showBadge: false,
+          child: IconButton(
+              onPressed: () {
+                context.push('/notification');
+              },
+              icon: const Icon(
+                Icons.notifications,
+                color: AppColors.primaryColor,
+              )),
+        )
       ],
     );
   }

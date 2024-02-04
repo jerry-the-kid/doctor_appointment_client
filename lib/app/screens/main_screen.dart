@@ -1,4 +1,5 @@
 import 'package:doctor_appointment_client/app/screens/appointments_screen.dart';
+import 'package:doctor_appointment_client/app/screens/heath_report_screen.dart';
 import 'package:doctor_appointment_client/app/screens/home_screen.dart';
 import 'package:doctor_appointment_client/app/screens/notification_screen.dart';
 import 'package:doctor_appointment_client/app/screens/pill_reminder_screen.dart';
@@ -19,7 +20,7 @@ class _MainScreenState extends State<MainScreen> {
     '',
     'My Appointment',
     'Pill Reminder  ',
-    'Notifications',
+    'Medical Reports',
     'Settings',
   ];
 
@@ -49,7 +50,7 @@ class _MainScreenState extends State<MainScreen> {
                 label: "", icon: Icon(Icons.calendar_month_outlined)),
             BottomNavigationBarItem(
                 label: "", icon: Icon(Icons.access_time_rounded)),
-            BottomNavigationBarItem(label: "", icon: Icon(Icons.notifications)),
+            BottomNavigationBarItem(label: "", icon: Icon(Icons.checklist)),
             BottomNavigationBarItem(label: "", icon: Icon(Icons.person)),
           ]),
       body: SafeArea(
@@ -59,7 +60,7 @@ class _MainScreenState extends State<MainScreen> {
             SingleChildScrollView(child: HomeScreen()),
             SingleChildScrollView(child: AppointmentsScreen()),
             SingleChildScrollView(child: PillReminder()),
-            SingleChildScrollView(child: NotificationScreen()),
+            SingleChildScrollView(child: HealthReportScreen()),
             UserInfoScreen()
           ],
         ),

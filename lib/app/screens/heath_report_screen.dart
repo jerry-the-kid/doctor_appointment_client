@@ -9,42 +9,40 @@ class HealthReportScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
 
-    return Scaffold(
-      appBar: AppBar(title: const Text("Health Reports")),
-      body: SingleChildScrollView(
-        child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Align(
-              alignment: width < 465 ? Alignment.center : Alignment.topLeft,
-              child: Wrap(
-                // alignment: WrapAlignment.s,
-                spacing: 10,
-                children: [
-                  MedicalCard(
-                    imageSrc: 'assets/images/medical_check.svg',
-                    title: "General Health",
-                    onTap: () {
-                      context.push('/health/general');
-                    },
-                  ),
-                  MedicalCard(
-                    imageSrc: 'assets/images/lab.svg',
-                    title: "Laboratory Test",
-                    onTap: () {},
-                  ),
-                  MedicalCard(
-                    imageSrc: 'assets/images/good_result.svg',
-                    title: "Physical Health",
-                    onTap: () {},
-                  ),
-                  MedicalCard(
-                    imageSrc: 'assets/images/recommend_medicine.svg',
-                    title: "Medical Prescription",
-                    onTap: () {},
-                  ),
-                ],
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Align(
+          alignment: width < 465 ? Alignment.center : Alignment.topLeft,
+          child: Wrap(
+            // alignment: WrapAlignment.s,
+            spacing: 10,
+            children: [
+              MedicalCard(
+                imageSrc: 'assets/images/medical_check.svg',
+                title: "General Health",
+                onTap: () {
+                  context.push('/health/general');
+                },
               ),
-            )),
+              MedicalCard(
+                imageSrc: 'assets/images/lab.svg',
+                title: "Laboratory Test",
+                onTap: () {},
+              ),
+              MedicalCard(
+                imageSrc: 'assets/images/good_result.svg',
+                title: "Physical Health",
+                onTap: () {},
+              ),
+              MedicalCard(
+                imageSrc: 'assets/images/recommend_medicine.svg',
+                title: "Medical Prescription",
+                onTap: () {},
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
