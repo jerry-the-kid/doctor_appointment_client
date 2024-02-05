@@ -77,8 +77,11 @@ class DoctorDetailScreen extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            const DividedButton(
-                firstButtonTitle: "Morning", secondButtonTitle: "Afternoon"),
+            DividedButton(
+              firstButtonTitle: "Morning",
+              secondButtonTitle: "Afternoon",
+              onChange: (value) {},
+            ),
             const SizedBox(
               height: 20,
             ),

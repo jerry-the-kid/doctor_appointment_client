@@ -47,7 +47,7 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(
             height: 15,
           ),
-          const UpcomingScheduleCard(),
+          const UpcomingScheduleCard(isActive: true),
           const SizedBox(
             height: 30,
           ),
