@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 
 class UpcomingScheduleCard extends StatelessWidget {
   final bool isActive;
+  final bool isPast;
 
-  const UpcomingScheduleCard({super.key, this.isActive = false});
+  const UpcomingScheduleCard(
+      {super.key, this.isActive = false, this.isPast = false});
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +94,8 @@ class UpcomingScheduleCard extends StatelessWidget {
             children: [
               Expanded(
                   child: ElevatedButton(
-                      onPressed: () {}, child: const Text('Cancel'))),
+                      onPressed: () {},
+                      child: Text(isPast ? 'Re-Book' : 'Cancel'))),
               const SizedBox(width: 10),
               Expanded(
                   child: ElevatedButton(
@@ -100,7 +103,7 @@ class UpcomingScheduleCard extends StatelessWidget {
                           backgroundColor: AppColors.orange,
                           foregroundColor: Colors.white),
                       onPressed: () {},
-                      child: const Text("Reschedule")))
+                      child: Text(isPast ? 'Add Review' : "Reschedule")))
             ],
           ),
         ],

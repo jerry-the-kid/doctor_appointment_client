@@ -48,7 +48,16 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                       UpcomingScheduleCard(),
                     ],
                   )
-                : const SizedBox(),
+                : const Column(
+                    children: [
+                      SizedBox(height: 20),
+                      UpcomingScheduleCard(isPast: true),
+                      SizedBox(height: 20),
+                      UpcomingScheduleCard(isPast: true),
+                      SizedBox(height: 20),
+                      UpcomingScheduleCard(isPast: true),
+                    ],
+                  ),
           ],
         ),
       ),
