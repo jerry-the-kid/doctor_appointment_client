@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:doctor_appointment_client/config/routes/routes.dart';
 import 'package:doctor_appointment_client/config/theme/theme.dart';
-
 import 'package:flutter/material.dart';
 
 void main() {

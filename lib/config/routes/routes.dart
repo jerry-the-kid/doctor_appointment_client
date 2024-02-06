@@ -1,4 +1,5 @@
 import 'package:doctor_appointment_client/app/screens/appointments_screen.dart';
+import 'package:doctor_appointment_client/app/screens/cancel_appointment.dart';
 import 'package:doctor_appointment_client/app/screens/doctor_detail_screen.dart';
 import 'package:doctor_appointment_client/app/screens/doctor_list_screen.dart';
 import 'package:doctor_appointment_client/app/screens/general_health_screen.dart';
@@ -16,6 +17,9 @@ import 'package:go_router/go_router.dart';
 final router = GoRouter(
   routes: [
     GoRoute(path: '/', builder: (context, state) => const MainScreen()),
+    GoRoute(
+        path: '/appointment/cancel',
+        builder: (context, state) => const CancelAppointment()),
     GoRoute(path: '/user', builder: (context, state) => const UserInfoScreen()),
     GoRoute(
         path: '/notification',

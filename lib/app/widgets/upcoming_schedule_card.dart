@@ -1,7 +1,9 @@
+import 'package:doctor_appointment_client/app/widgets/dialog.dart';
 import 'package:doctor_appointment_client/constants/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-class UpcomingScheduleCard extends StatelessWidget {
+class UpcomingScheduleCard extends StatefulWidget {
   final bool isActive;
   final bool isPast;
 
@@ -9,11 +11,24 @@ class UpcomingScheduleCard extends StatelessWidget {
       {super.key, this.isActive = false, this.isPast = false});
 
   @override
+  State<UpcomingScheduleCard> createState() => _UpcomingScheduleCardState();
+}
+
+class _UpcomingScheduleCardState extends State<UpcomingScheduleCard> {
+  void showCancelDialog() {
+    // showDialog(
+    //     context: context, builder: (BuildContext context) => errorDialog);
+    showDialog(
+        context: context,
+        builder: (BuildContext context) => const ErrorDialog());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18.0),
-        color: isActive
+        color: widget.isActive
             ? AppColors.primaryColor
             : const Color.fromARGB(255, 235, 240, 251),
       ),
@@ -37,7 +52,7 @@ class UpcomingScheduleCard extends StatelessWidget {
                   Text(
                     "Dr. Anna Baker",
                     style: TextStyle(
-                        color: isActive ? Colors.white : Colors.black,
+                        color: widget.isActive ? Colors.white : Colors.black,
                         fontSize: 19,
                         fontWeight: FontWeight.w500),
                   ),
@@ -53,7 +68,9 @@ class UpcomingScheduleCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
             decoration: BoxDecoration(
-                color: isActive ? AppColors.primaryColorDark : Colors.grey[50],
+                color: widget.isActive
+                    ? AppColors.primaryColorDark
+                    : Colors.grey[50],
                 borderRadius: BorderRadius.circular(7.0)),
             child: Row(
               children: [
@@ -67,8 +84,8 @@ class UpcomingScheduleCard extends StatelessWidget {
                 ),
                 Text(
                   "Tuesday, July 22",
-                  style:
-                      TextStyle(color: isActive ? Colors.white : Colors.black),
+                  style: TextStyle(
+                      color: widget.isActive ? Colors.white : Colors.black),
                 ),
                 const Spacer(),
                 const Icon(
@@ -81,8 +98,8 @@ class UpcomingScheduleCard extends StatelessWidget {
                 ),
                 Text(
                   "11:00 - 12:00 AM",
-                  style:
-                      TextStyle(color: isActive ? Colors.white : Colors.black),
+                  style: TextStyle(
+                      color: widget.isActive ? Colors.white : Colors.black),
                 )
               ],
             ),
@@ -94,8 +111,12 @@ class UpcomingScheduleCard extends StatelessWidget {
             children: [
               Expanded(
                   child: ElevatedButton(
-                      onPressed: () {},
-                      child: Text(isPast ? 'Re-Book' : 'Cancel'))),
+                      onPressed: () {
+                        if (!widget.isPast) {
+                          context.push('/appointment/cancel');
+                        }
+                      },
+                      child: Text(widget.isPast ? 'Re-Book' : 'Cancel'))),
               const SizedBox(width: 10),
               Expanded(
                   child: ElevatedButton(
@@ -103,7 +124,7 @@ class UpcomingScheduleCard extends StatelessWidget {
                           backgroundColor: AppColors.orange,
                           foregroundColor: Colors.white),
                       onPressed: () {},
-                      child: Text(isPast ? 'Add Review' : "Reschedule")))
+                      child: Text(widget.isPast ? 'Add Review' : "Reschedule")))
             ],
           ),
         ],
