@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:doctor_appointment_client/app/widgets/full_btn.dart';
+import 'package:doctor_appointment_client/app/widgets/primary_full_btn.dart';
 import 'package:doctor_appointment_client/constants/helpers.dart';
 import 'package:flutter/material.dart';
 
@@ -51,9 +51,13 @@ class _AddCardScreenState extends State<AddCardScreen> {
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
-              const Align(
+              Align(
                 alignment: Alignment.center,
-                child: VisaCard(),
+                child: VisaCard(
+                  cardNumber: _cardNumberController.text,
+                  holderName: _cardHolderNameController.text,
+                  expiredDate: _cardExpiryDateController.text,
+                ),
               ),
               const SizedBox(
                 height: 30,
@@ -64,6 +68,9 @@ class _AddCardScreenState extends State<AddCardScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Input(
+                      onChanged: (value) {
+                        setState(() {});
+                      },
                       controller: _cardHolderNameController,
                       label: 'Card Holder Name',
                       placeholder: 'Your Name',
@@ -78,6 +85,9 @@ class _AddCardScreenState extends State<AddCardScreen> {
                       height: 15,
                     ),
                     Input(
+                      onChanged: (value) {
+                        setState(() {});
+                      },
                       controller: _cardNumberController,
                       label: 'Card Number',
                       placeholder: 'Your Visa Number',
@@ -100,6 +110,9 @@ class _AddCardScreenState extends State<AddCardScreen> {
                       children: [
                         Expanded(
                             child: Input(
+                          onChanged: (value) {
+                            setState(() {});
+                          },
                           controller: _cardExpiryDateController,
                           label: "Expiry Date",
                           placeholder: 'MM/YY',
@@ -146,6 +159,7 @@ class Input extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextInputType inputType;
   final TextEditingController? controller;
+  final void Function(String)? onChanged;
 
   const Input({
     super.key,
@@ -154,6 +168,7 @@ class Input extends StatelessWidget {
     required this.label,
     required this.validator,
     this.controller,
+    this.onChanged,
   });
 
   @override
@@ -166,6 +181,7 @@ class Input extends StatelessWidget {
           height: 8,
         ),
         TextFormField(
+          onChanged: onChanged,
           controller: controller,
           keyboardType: inputType,
           decoration: InputDecoration(
@@ -183,9 +199,15 @@ class Input extends StatelessWidget {
 }
 
 class VisaCard extends StatelessWidget {
-  const VisaCard({
-    super.key,
-  });
+  final String cardNumber;
+  final String holderName;
+  final String expiredDate;
+
+  const VisaCard(
+      {super.key,
+      required this.cardNumber,
+      required this.holderName,
+      required this.expiredDate});
 
   @override
   Widget build(BuildContext context) {
@@ -219,7 +241,11 @@ class VisaCard extends StatelessWidget {
             left: 20,
             bottom: 80,
             child: Text(
-              '4716 9627 1635 8047',
+              cardNumber.length < 16
+                  ? Helpers().addSpacesEveryIntervalCharacter(cardNumber)
+                  : Helpers()
+                      .addSpacesEveryIntervalCharacter(cardNumber)
+                      .substring(0, 19),
               style: TextStyle(
                   letterSpacing: 1,
                   fontWeight: FontWeight.w500,
@@ -245,7 +271,8 @@ class VisaCard extends StatelessWidget {
                             fontWeight: FontWeight.w300),
                       ),
                       Text(
-                        "Esther Howard",
+                        // "Esther Howard",
+                        holderName,
                         style: TextStyle(
                             fontSize: creditCardFont - 9,
                             color: Colors.white,
@@ -264,7 +291,10 @@ class VisaCard extends StatelessWidget {
                             fontWeight: FontWeight.w300),
                       ),
                       Text(
-                        "02/30",
+                        // "02/30",
+                        expiredDate.length < 5
+                            ? expiredDate
+                            : expiredDate.substring(0, 5),
                         style: TextStyle(
                             fontSize: creditCardFont - 9,
                             color: Colors.white,

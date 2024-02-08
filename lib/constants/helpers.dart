@@ -1,3 +1,5 @@
+import 'dart:math';
+
 class Helpers {
   // // API Endpoints
   // static const String apiBaseUrl = 'https://api.example.com';
@@ -17,6 +19,16 @@ class Helpers {
 
   // // Other Constants
   // static const int maxRetryAttempts = 3;
+
+  String addSpacesEveryIntervalCharacter(String text, {int interval = 4}) {
+    if (text.isEmpty) return text; // Handle empty string case
+
+    final chunks = <String>[];
+    for (var i = 0; i < text.length; i += interval) {
+      chunks.add(text.substring(i, min(i + interval, text.length)));
+    }
+    return chunks.join(' ');
+  }
 
   bool isStringMMYYFormat(String string) {
     // Use a regular expression to match the format and month range

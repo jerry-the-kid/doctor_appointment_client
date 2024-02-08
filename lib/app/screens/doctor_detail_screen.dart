@@ -1,7 +1,6 @@
 import 'package:doctor_appointment_client/app/widgets/divided_button.dart';
 import 'package:doctor_appointment_client/app/widgets/doctor_list_tile.dart';
-import 'package:doctor_appointment_client/app/widgets/full_btn.dart';
-import 'package:doctor_appointment_client/app/widgets/full_button.dart';
+import 'package:doctor_appointment_client/app/widgets/primary_full_btn.dart';
 import 'package:doctor_appointment_client/constants/app_colors.dart';
 import 'package:doctor_appointment_client/constants/helpers.dart';
 import 'package:easy_date_timeline/easy_date_timeline.dart';
