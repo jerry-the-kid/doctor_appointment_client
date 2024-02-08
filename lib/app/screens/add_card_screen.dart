@@ -1,8 +1,7 @@
 import 'dart:math';
 
-import 'package:doctor_appointment_client/app/widgets/box_input.dart';
 import 'package:doctor_appointment_client/app/widgets/full_btn.dart';
-import 'package:doctor_appointment_client/constants/app_colors.dart';
+import 'package:doctor_appointment_client/constants/helpers.dart';
 import 'package:flutter/material.dart';
 
 double textScaleFactor(BuildContext context, {double maxTextScaleFactor = 2}) {
@@ -20,6 +19,10 @@ class AddCardScreen extends StatefulWidget {
 
 class _AddCardScreenState extends State<AddCardScreen> {
   final _formKey = GlobalKey<FormState>();
+  final _cardHolderNameController = TextEditingController();
+  final _cardNumberController = TextEditingController();
+  final _cardExpiryDateController = TextEditingController();
+  final _cardCvvController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +30,19 @@ class _AddCardScreenState extends State<AddCardScreen> {
       appBar: AppBar(
         title: const Text("Add Card"),
       ),
-      floatingActionButton: const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: PrimaryFullBtn(
           title: "Add Cart",
+          onPressed: () {
+            if (_formKey.currentState!.validate()) {
+              _formKey.currentState!.save();
+              // final snackBar = SnackBar(
+              //   content: Text(_cardCvvController.text),
+              // );
+              // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            }
+          },
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -48,35 +60,72 @@ class _AddCardScreenState extends State<AddCardScreen> {
               ),
               Form(
                 key: _formKey,
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Input(
+                      controller: _cardHolderNameController,
                       label: 'Card Holder Name',
                       placeholder: 'Your Name',
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter card holder name';
+                        }
+                        return null;
+                      },
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     Input(
+                      controller: _cardNumberController,
                       label: 'Card Number',
                       placeholder: 'Your Visa Number',
+                      inputType: TextInputType.number,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter card number';
+                        } else if (!Helpers().isAllNumbers(value)) {
+                          return 'Card number must not have characters';
+                        } else if (value.trim().length != 16) {
+                          return 'Card number must have 16 digits';
+                        }
+                        return null;
+                      },
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     Row(
                       children: [
                         Expanded(
                             child: Input(
+                          controller: _cardExpiryDateController,
                           label: "Expiry Date",
                           placeholder: 'MM/YY',
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Please enter cvv's expiry date";
+                            } else if (!Helpers().isStringMMYYFormat(value)) {
+                              return 'Invalid expiry date';
+                            }
+                            return null;
+                          },
                         )),
-                        SizedBox(width: 20),
+                        const SizedBox(width: 20),
                         Expanded(
                             child: Input(
+                          controller: _cardCvvController,
                           label: "CVV",
                           placeholder: "000",
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Please enter cvv number";
+                            } else if (value.trim().length != 3) {
+                              return 'CVV number must have 3 digits';
+                            }
+                            return null;
+                          },
                         )),
                       ],
                     ),
@@ -94,11 +143,17 @@ class _AddCardScreenState extends State<AddCardScreen> {
 class Input extends StatelessWidget {
   final String label;
   final String placeholder;
+  final String? Function(String?)? validator;
+  final TextInputType inputType;
+  final TextEditingController? controller;
 
   const Input({
     super.key,
-    required this.label,
     this.placeholder = '',
+    this.inputType = TextInputType.text,
+    required this.label,
+    required this.validator,
+    this.controller,
   });
 
   @override
@@ -111,6 +166,8 @@ class Input extends StatelessWidget {
           height: 8,
         ),
         TextFormField(
+          controller: controller,
+          keyboardType: inputType,
           decoration: InputDecoration(
             hintText: placeholder,
             hintStyle: const TextStyle(fontSize: 14),
@@ -118,9 +175,7 @@ class Input extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
           ),
-          validator: (value) {
-            return null;
-          },
+          validator: validator,
         )
       ],
     );

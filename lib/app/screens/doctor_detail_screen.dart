@@ -117,7 +117,7 @@ class DoctorDetailScreen extends StatelessWidget {
               flex: 2,
             ),
             // const FullButton(title: "Book Appointment"),
-            const PrimaryFullBtn(title: 'Book Appointment'),
+            PrimaryFullBtn(title: 'Book Appointment', onPressed: () {}),
             const Spacer(),
           ],
         ),
