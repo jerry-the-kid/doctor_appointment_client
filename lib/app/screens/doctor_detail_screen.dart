@@ -1,5 +1,7 @@
 import 'package:doctor_appointment_client/app/widgets/divided_button.dart';
 import 'package:doctor_appointment_client/app/widgets/doctor_list_tile.dart';
+import 'package:doctor_appointment_client/app/widgets/full_btn.dart';
+import 'package:doctor_appointment_client/app/widgets/full_button.dart';
 import 'package:doctor_appointment_client/constants/app_colors.dart';
 import 'package:doctor_appointment_client/constants/helpers.dart';
 import 'package:easy_date_timeline/easy_date_timeline.dart';
@@ -114,16 +116,8 @@ class DoctorDetailScreen extends StatelessWidget {
             const Spacer(
               flex: 2,
             ),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      backgroundColor: AppColors.primaryColor,
-                      foregroundColor: Colors.white),
-                  onPressed: () {},
-                  child: const Text("Book Appointment")),
-            ),
+            // const FullButton(title: "Book Appointment"),
+            const PrimaryFullBtn(title: 'Book Appointment'),
             const Spacer(),
           ],
         ),

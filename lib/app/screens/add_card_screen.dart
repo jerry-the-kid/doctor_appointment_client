@@ -1,5 +1,8 @@
 import 'dart:math';
 
+import 'package:doctor_appointment_client/app/widgets/box_input.dart';
+import 'package:doctor_appointment_client/app/widgets/full_btn.dart';
+import 'package:doctor_appointment_client/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 
 double textScaleFactor(BuildContext context, {double maxTextScaleFactor = 2}) {
@@ -16,26 +19,110 @@ class AddCardScreen extends StatefulWidget {
 }
 
 class _AddCardScreenState extends State<AddCardScreen> {
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Add Card"),
       ),
-      body: const SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(20.0),
-          child: Column(children: [
-            Align(
-              alignment: Alignment.center,
-              child: VisaCard(),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-          ]),
+      floatingActionButton: const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: PrimaryFullBtn(
+          title: "Add Cart",
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            children: [
+              const Align(
+                alignment: Alignment.center,
+                child: VisaCard(),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Form(
+                key: _formKey,
+                child: const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Input(
+                      label: 'Card Holder Name',
+                      placeholder: 'Your Name',
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Input(
+                      label: 'Card Number',
+                      placeholder: 'Your Visa Number',
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                            child: Input(
+                          label: "Expiry Date",
+                          placeholder: 'MM/YY',
+                        )),
+                        SizedBox(width: 20),
+                        Expanded(
+                            child: Input(
+                          label: "CVV",
+                          placeholder: "000",
+                        )),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class Input extends StatelessWidget {
+  final String label;
+  final String placeholder;
+
+  const Input({
+    super.key,
+    required this.label,
+    this.placeholder = '',
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label, style: const TextStyle(fontSize: 14)),
+        const SizedBox(
+          height: 8,
+        ),
+        TextFormField(
+          decoration: InputDecoration(
+            hintText: placeholder,
+            hintStyle: const TextStyle(fontSize: 14),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          validator: (value) {
+            return null;
+          },
+        )
+      ],
     );
   }
 }
