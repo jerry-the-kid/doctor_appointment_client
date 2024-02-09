@@ -5,6 +5,7 @@ import 'package:doctor_appointment_client/constants/app_colors.dart';
 import 'package:doctor_appointment_client/constants/helpers.dart';
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class DoctorDetailScreen extends StatelessWidget {
   const DoctorDetailScreen({super.key, this.id = ''});
@@ -19,7 +20,9 @@ class DoctorDetailScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: PrimaryFullBtn(
           title: 'Book Appointment',
-          onPressed: () {},
+          onPressed: () {
+            context.push('/payments');
+          },
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
