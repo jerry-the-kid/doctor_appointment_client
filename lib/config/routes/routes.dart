@@ -9,6 +9,7 @@ import 'package:doctor_appointment_client/app/screens/laboratory_test_screen.dar
 import 'package:doctor_appointment_client/app/screens/main_screen.dart';
 import 'package:doctor_appointment_client/app/screens/login_screen.dart';
 import 'package:doctor_appointment_client/app/screens/notification_screen.dart';
+import 'package:doctor_appointment_client/app/screens/payment_methods_screen.dart';
 import 'package:doctor_appointment_client/app/screens/physical_health_screen.dart';
 import 'package:doctor_appointment_client/app/screens/register_screen.dart';
 import 'package:doctor_appointment_client/app/screens/user_screen.dart';
@@ -17,7 +18,9 @@ import 'package:go_router/go_router.dart';
 // GoRouter configuration
 final router = GoRouter(
   routes: [
-    GoRoute(path: '/', builder: (context, state) => const MainScreen()),
+    // GoRoute(path: '/', builder: (context, state) => const MainScreen()),
+    GoRoute(
+        path: '/', builder: (context, state) => const PaymentMethodScreen()),
     // GoRoute(path: '/', builder: ((context, state) => const AddCardScreen())),
     GoRoute(
         path: '/appointment/cancel',
