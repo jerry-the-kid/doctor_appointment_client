@@ -25,9 +25,35 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var iconButton = IconButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (_) => AlertDialog(
+              title: const Text("Accept?"),
+              content: const Text("Do you accept"),
+              actions: [
+                Column(
+                  children: [
+                    TextButton(onPressed: () {}, child: const Text("Hello")),
+                    TextButton(onPressed: () {}, child: const Text("Hello")),
+                    TextButton(onPressed: () {}, child: const Text("Hello")),
+                  ],
+                )
+              ],
+            ),
+          );
+        },
+        icon: const Icon(Icons.add));
+
     return Scaffold(
       appBar: currentIndex != 0
-          ? AppBar(title: Text(appBarTitle[currentIndex]))
+          ? AppBar(
+              title: Text(
+                appBarTitle[currentIndex],
+              ),
+              actions: currentIndex == 1 ? [iconButton] : null,
+            )
           : null,
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
