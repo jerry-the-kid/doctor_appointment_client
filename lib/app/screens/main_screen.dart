@@ -3,6 +3,7 @@ import 'package:doctor_appointment_client/app/screens/heath_report_screen.dart';
 import 'package:doctor_appointment_client/app/screens/home_screen.dart';
 import 'package:doctor_appointment_client/app/screens/pill_reminder_screen.dart';
 import 'package:doctor_appointment_client/app/screens/user_screen.dart';
+import 'package:doctor_appointment_client/app/widgets/select_appointment_dialog.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -29,19 +30,7 @@ class _MainScreenState extends State<MainScreen> {
         onPressed: () {
           showDialog(
             context: context,
-            builder: (_) => AlertDialog(
-              title: const Text("Accept?"),
-              content: const Text("Do you accept"),
-              actions: [
-                Column(
-                  children: [
-                    TextButton(onPressed: () {}, child: const Text("Hello")),
-                    TextButton(onPressed: () {}, child: const Text("Hello")),
-                    TextButton(onPressed: () {}, child: const Text("Hello")),
-                  ],
-                )
-              ],
-            ),
+            builder: (_) => const SelectAppointmentDialog(),
           );
         },
         icon: const Icon(Icons.add));
