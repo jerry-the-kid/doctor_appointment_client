@@ -15,16 +15,10 @@ class UpcomingScheduleCard extends StatefulWidget {
 }
 
 class _UpcomingScheduleCardState extends State<UpcomingScheduleCard> {
-  void showCancelDialog() {
-    // showDialog(
-    //     context: context, builder: (BuildContext context) => errorDialog);
-    showDialog(
-        context: context,
-        builder: (BuildContext context) => const ErrorDialog());
-  }
-
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18.0),
@@ -74,10 +68,10 @@ class _UpcomingScheduleCardState extends State<UpcomingScheduleCard> {
                 borderRadius: BorderRadius.circular(7.0)),
             child: Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.calendar_month_outlined,
                   color: AppColors.gray_1,
-                  size: 22,
+                  size: width < 450 ? 18 : 22,
                 ),
                 const SizedBox(
                   width: 5,
@@ -85,13 +79,14 @@ class _UpcomingScheduleCardState extends State<UpcomingScheduleCard> {
                 Text(
                   "Tuesday, July 22",
                   style: TextStyle(
+                      fontSize: width < 450 ? 12 : 14,
                       color: widget.isActive ? Colors.white : Colors.black),
                 ),
                 const Spacer(),
-                const Icon(
+                Icon(
                   Icons.access_time_rounded,
                   color: AppColors.gray_1,
-                  size: 22,
+                  size: width < 450 ? 18 : 22,
                 ),
                 const SizedBox(
                   width: 5,
@@ -99,6 +94,7 @@ class _UpcomingScheduleCardState extends State<UpcomingScheduleCard> {
                 Text(
                   "11:00 - 12:00 AM",
                   style: TextStyle(
+                      fontSize: width < 450 ? 12 : 14,
                       color: widget.isActive ? Colors.white : Colors.black),
                 )
               ],

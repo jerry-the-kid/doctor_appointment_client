@@ -75,7 +75,9 @@ class _MainScreenState extends State<MainScreen> {
             SingleChildScrollView(child: AppointmentsScreen()),
             SingleChildScrollView(child: PillReminder()),
             SingleChildScrollView(child: HealthReportScreen()),
-            UserInfoScreen()
+            SingleChildScrollView(
+              child: UserInfoScreen(),
+            )
           ],
         ),
       ),
