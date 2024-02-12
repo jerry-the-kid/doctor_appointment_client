@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 
 class SelectAppointmentDialog extends StatelessWidget {
   const SelectAppointmentDialog({super.key});
@@ -10,9 +11,8 @@ class SelectAppointmentDialog extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 25, horizontal: 25),
         child: SizedBox(
-          height: 250,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Wrap(
+            runSpacing: 10,
             children: [
               Text(
                 "What is you want to booking for ?",
@@ -26,9 +26,6 @@ class SelectAppointmentDialog extends StatelessWidget {
                 title: "Schedule health check up",
                 message:
                     "Schedule your health check-up with ease, ensuring your well-being is a top priority",
-              ),
-              SizedBox(
-                height: 10,
               ),
               AppointmentSelection(
                 prefixIcon: Icons.people_alt,
@@ -58,7 +55,9 @@ class AppointmentSelection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        context.push('/checkup');
+      },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
         decoration: BoxDecoration(
