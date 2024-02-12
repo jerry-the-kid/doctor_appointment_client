@@ -76,7 +76,10 @@ class _CheckupAppointmentScreenState extends State<CheckupAppointmentScreen> {
                     return ExpansionPanel(
                       headerBuilder: (BuildContext context, bool isExpanded) {
                         return ListTile(
-                          title: Text(item.headerValue),
+                          title: Text(
+                            item.headerValue,
+                            style: const TextStyle(fontWeight: FontWeight.w500),
+                          ),
                         );
                       },
                       body: Column(children: [
