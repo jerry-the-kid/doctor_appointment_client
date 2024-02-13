@@ -14,12 +14,15 @@ import 'package:doctor_appointment_client/app/screens/payment_methods_screen.dar
 import 'package:doctor_appointment_client/app/screens/physical_health_screen.dart';
 import 'package:doctor_appointment_client/app/screens/register_screen.dart';
 import 'package:doctor_appointment_client/app/screens/user_screen.dart';
+import 'package:doctor_appointment_client/app/widgets/widget_tree.dart';
 import 'package:go_router/go_router.dart';
 
 // GoRouter configuration
 final router = GoRouter(
   routes: [
-    GoRoute(path: '/', builder: (context, state) => const MainScreen()),
+    GoRoute(path: '/', builder: (context, state) => const WidgetTreeState()),
+    GoRoute(
+        path: '/register', builder: (context, state) => const RegisterScreen()),
     // GoRoute(
     //     path: '/',
     //     builder: (context, state) => const CheckupAppointmentScreen()),

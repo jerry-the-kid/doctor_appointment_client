@@ -20,33 +20,34 @@ class RegisterScreen extends StatelessWidget {
             ),
             // const Spacer(),
             SizedBox(height: screenHeight * 0.1),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 25),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
               child: Column(
                 children: [
-                  Text(
+                  const Text(
                     "Register",
                     style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  BoxInput(label: "Email"),
-                  SizedBox(height: 10),
-                  BoxInput(
+                  const BoxInput(label: "Email"),
+                  const SizedBox(height: 10),
+                  const BoxInput(
                     label: "Password",
                     obscure: true,
                   ),
-                  SizedBox(height: 10),
-                  BoxInput(
+                  const SizedBox(height: 10),
+                  const BoxInput(
                     label: "Confirm Password",
                     obscure: true,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   FullButton(
                     text: "Submit",
+                    onPressed: () {},
                   ),
                 ],
               ),

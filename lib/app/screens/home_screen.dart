@@ -2,11 +2,15 @@ import 'package:badges/badges.dart' as badges;
 import 'package:doctor_appointment_client/app/widgets/doctor_list.dart';
 import 'package:doctor_appointment_client/app/widgets/upcoming_schedule_card.dart';
 import 'package:doctor_appointment_client/constants/app_colors.dart';
+import 'package:doctor_appointment_client/services/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+
+  final User? user = Auth().currentUser;
 
   @override
   Widget build(BuildContext context) {
