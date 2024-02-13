@@ -254,14 +254,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
-  flutter_mobx:
-    dependency: "direct main"
-    description:
-      name: flutter_mobx
-      sha256: "4a5d062ff85ed3759f4aac6410ff0ffae32e324b2e71ca722ae1b37b32e865f4"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.0+2"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -416,22 +408,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
-  mobx:
-    dependency: "direct main"
-    description:
-      name: mobx
-      sha256: "74ee54012dc7c1b3276eaa960a600a7418ef5f9997565deb8fca1fd88fb36b78"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.0+1"
-  mobx_codegen:
-    dependency: "direct main"
-    description:
-      name: mobx_codegen
-      sha256: b26c7f9c20b38f0ea572c1ed3f29d8e027cb265538bbd1aed3ec198642cfca42
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.6.0+1"
   nested:
     dependency: transitive
     description:
@@ -553,7 +529,7 @@ packages:
     source: hosted
     version: "3.1.0"
   provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: provider
       sha256: "9a96a0a19b594dbc5bf0f1f27d2bc67d5f95957359b461cd9feb44ed6ae75096"

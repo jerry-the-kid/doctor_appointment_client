@@ -38,9 +38,6 @@ dependencies:
   equatable: ^2.0.5
   shared_preferences: ^2.2.2
   path_provider: ^2.1.2
-  mobx: ^2.3.0+1
-  mobx_codegen: ^2.6.0+1
-  flutter_mobx: ^2.2.0+2
   retrofit: ^4.0.3
   dio: ^5.4.0
   json_annotation: ^4.8.1
@@ -48,6 +45,7 @@ dependencies:
   easy_date_timeline: ^1.0.4
   flutter_svg: ^2.0.9
   badges: ^3.1.2
+  provider: ^6.1.1
 
 dev_dependencies:
   flutter_test:
