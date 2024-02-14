@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 class FullButton extends StatelessWidget {
   final String text;
+  final VoidCallback onPressed;
 
   const FullButton({
     super.key,
     required this.text,
+    required this.onPressed,
   });
 
   @override
@@ -20,7 +22,7 @@ class FullButton extends StatelessWidget {
           // minimumSize: const Size(double.infinity, 50)),
           minimumSize: const Size(double.infinity, 55),
         ),
-        onPressed: () {},
+        onPressed: onPressed,
         child: Text(
           text,
           style: const TextStyle(fontSize: 16, color: Colors.white),
