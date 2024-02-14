@@ -1,7 +1,6 @@
-import 'package:doctor_appointment_client/app/screens/home_screen.dart';
 import 'package:doctor_appointment_client/app/screens/login_screen.dart';
 import 'package:doctor_appointment_client/app/screens/main_screen.dart';
-import 'package:doctor_appointment_client/services/auth.dart';
+import 'package:doctor_appointment_client/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 class WidgetTreeState extends StatelessWidget {

@@ -2,10 +2,12 @@ import 'package:doctor_appointment_client/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class BoxInput extends StatelessWidget {
-  const BoxInput({super.key, required this.label, this.obscure = false});
+  const BoxInput(
+      {super.key, required this.label, this.obscure = false, this.controller});
 
   final String label;
   final bool obscure;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class BoxInput extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           TextField(
+            controller: controller,
             obscureText: obscure,
             decoration: const InputDecoration(
               border: InputBorder.none,

@@ -1,7 +1,10 @@
+import 'package:doctor_appointment_client/data/models/user_model.dart';
+import 'package:doctor_appointment_client/services/user_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Auth {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final UserService userService = UserService();
 
   User? get currentUser => _firebaseAuth.currentUser;
 
@@ -15,8 +18,14 @@ class Auth {
 
   Future<void> createUserWithEmailAndPassword(
       {required String email, required String password}) async {
-    await _firebaseAuth.createUserWithEmailAndPassword(
-        email: email, password: password);
+    UserCredential userCredential = await _firebaseAuth
+        .createUserWithEmailAndPassword(email: email, password: password);
+
+    print(userCredential);
+
+    await userService.createUser(
+        uid: userCredential.user!.uid,
+        userModel: UserModel(id: userCredential.user!.uid, email: email));
   }
 
   Future<void> signOut() async {

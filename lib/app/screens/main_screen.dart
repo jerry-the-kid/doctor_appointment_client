@@ -4,7 +4,7 @@ import 'package:doctor_appointment_client/app/screens/home_screen.dart';
 import 'package:doctor_appointment_client/app/screens/pill_reminder_screen.dart';
 import 'package:doctor_appointment_client/app/screens/user_screen.dart';
 import 'package:doctor_appointment_client/app/widgets/select_appointment_dialog.dart';
-import 'package:doctor_appointment_client/services/auth.dart';
+import 'package:doctor_appointment_client/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -27,6 +27,8 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Auth().signOut();
+
     var iconButton = IconButton(
         onPressed: () {
           showDialog(
