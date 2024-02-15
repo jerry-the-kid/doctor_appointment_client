@@ -13,4 +13,6 @@ abstract class AppColors {
   static const Color gray_3 = Color(0xFFf4f6fa);
   static const Color color_card_bg = Color(0xFFF6F8FB);
   static const Color color_yellow_bg = Color(0xFFFFF2F0);
+  static const Color pink = Color(0xFFFAE6F8);
+  static const Color bg = Color(0xFFF0EFFF);
 }
