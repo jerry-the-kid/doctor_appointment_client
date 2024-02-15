@@ -15,6 +15,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
@@ -22,8 +23,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void handleSubmit(
       {required String email,
       required String password,
-      required String confirmPassword}) {
-    if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
+      required String confirmPassword,
+      required String name}) {
+    if (email.isEmpty ||
+        password.isEmpty ||
+        confirmPassword.isEmpty ||
+        name.isEmpty) {
       Helpers().showErrorSnackbar(context, 'Input Fields is required!');
       return;
     }
@@ -42,8 +47,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     Helpers().handleFirebaseException(
         context: context,
         callBackFnc: () async {
-          await Auth()
-              .createUserWithEmailAndPassword(email: email, password: password);
+          await Auth().createUserWithEmailAndPassword(
+              email: email, password: password, name: name);
         },
         successCallBack: () async {
           EasyLoading.showSuccess('SignUp successfully!')
@@ -76,7 +81,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               imageSrc: 'assets/images/background_2.jpg',
             ),
             // const Spacer(),
-            SizedBox(height: screenHeight * 0.1),
+            SizedBox(height: screenHeight * 0.05),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: Column(
@@ -88,6 +93,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(
                     height: 20,
                   ),
+                  BoxInput(
+                    label: "Your Name",
+                    controller: _nameController,
+                  ),
+                  const SizedBox(height: 10),
                   BoxInput(
                     label: "Email",
                     controller: _emailController,
@@ -113,7 +123,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       handleSubmit(
                           email: _emailController.text,
                           password: _passwordController.text,
-                          confirmPassword: _confirmPasswordController.text);
+                          confirmPassword: _confirmPasswordController.text,
+                          name: _nameController.text);
                     },
                   ),
                 ],

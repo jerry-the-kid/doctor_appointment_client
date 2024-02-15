@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:doctor_appointment_client/app/widgets/input.dart';
 import 'package:doctor_appointment_client/app/widgets/primary_full_btn.dart';
 import 'package:doctor_appointment_client/constants/helpers.dart';
 import 'package:flutter/material.dart';
@@ -149,51 +150,6 @@ class _AddCardScreenState extends State<AddCardScreen> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class Input extends StatelessWidget {
-  final String label;
-  final String placeholder;
-  final String? Function(String?)? validator;
-  final TextInputType inputType;
-  final TextEditingController? controller;
-  final void Function(String)? onChanged;
-
-  const Input({
-    super.key,
-    this.placeholder = '',
-    this.inputType = TextInputType.text,
-    required this.label,
-    required this.validator,
-    this.controller,
-    this.onChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(label, style: const TextStyle(fontSize: 14)),
-        const SizedBox(
-          height: 8,
-        ),
-        TextFormField(
-          onChanged: onChanged,
-          controller: controller,
-          keyboardType: inputType,
-          decoration: InputDecoration(
-            hintText: placeholder,
-            hintStyle: const TextStyle(fontSize: 14),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
-          validator: validator,
-        )
-      ],
     );
   }
 }
