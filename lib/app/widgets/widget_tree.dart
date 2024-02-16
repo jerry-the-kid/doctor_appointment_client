@@ -29,8 +29,10 @@ class _WidgetTreeStateState extends State<WidgetTreeState> {
                   if (userSnapshot.connectionState == ConnectionState.done &&
                       userSnapshot.data!.firstCreate) {
                     return OnBoardScreen(
-                      name: userSnapshot.data!.userName,
-                    );
+                        name: userSnapshot.data!.userName,
+                        onSubmit: () {
+                          setState(() {});
+                        });
                   }
                   return const MainScreen();
                 });

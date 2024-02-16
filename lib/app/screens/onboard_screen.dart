@@ -5,12 +5,12 @@ import 'package:doctor_appointment_client/services/auth_service.dart';
 import 'package:doctor_appointment_client/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
 
 class OnBoardScreen extends StatefulWidget {
   final String name;
+  final VoidCallback onSubmit;
 
-  const OnBoardScreen({super.key, required this.name});
+  const OnBoardScreen({super.key, required this.name, required this.onSubmit});
 
   @override
   State<OnBoardScreen> createState() => _OnBoardScreenState();
@@ -173,7 +173,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                                 height: 20,
                               ),
                               const Text(
-                                "Male",
+                                "Female",
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ]),
@@ -332,12 +332,17 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
       ),
     );
 
+    var title = 'Save';
+
+    if (pageIndex == 0) title = "Get Started";
+    if (pageIndex == 3) title = "Completed";
+
     return Scaffold(
       // backgroundColor: AppColors.bg,
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: PrimaryFullBtn(
-          title: pageIndex == 0 ? 'Get Started' : 'Save',
+          title: title,
           onPressed: () {
             setState(() {
               if (pageIndex < 3) {
@@ -348,7 +353,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                   "weight": weight,
                   "gender": gender,
                   "firstCreate": false,
-                }).then((value) => context.go('/'));
+                }).then((value) => widget.onSubmit());
               }
             });
           },
