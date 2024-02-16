@@ -1,14 +1,10 @@
 import 'package:doctor_appointment_client/app/screens/add_card_screen.dart';
-import 'package:doctor_appointment_client/app/screens/appointments_screen.dart';
 import 'package:doctor_appointment_client/app/screens/cancel_appointment.dart';
 import 'package:doctor_appointment_client/app/screens/checkup_appointment_screen.dart';
 import 'package:doctor_appointment_client/app/screens/doctor_detail_screen.dart';
 import 'package:doctor_appointment_client/app/screens/doctor_list_screen.dart';
 import 'package:doctor_appointment_client/app/screens/general_health_screen.dart';
-import 'package:doctor_appointment_client/app/screens/heath_report_screen.dart';
 import 'package:doctor_appointment_client/app/screens/laboratory_test_screen.dart';
-import 'package:doctor_appointment_client/app/screens/main_screen.dart';
-import 'package:doctor_appointment_client/app/screens/login_screen.dart';
 import 'package:doctor_appointment_client/app/screens/notification_screen.dart';
 import 'package:doctor_appointment_client/app/screens/payment_methods_screen.dart';
 import 'package:doctor_appointment_client/app/screens/physical_health_screen.dart';

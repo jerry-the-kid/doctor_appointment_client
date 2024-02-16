@@ -1,10 +1,22 @@
 import 'package:doctor_appointment_client/constants/app_colors.dart';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class DoctorListTile extends StatelessWidget {
+  final String name;
+  final String title;
+  final String specialistIn;
+  final String avatarUrl;
+  final String id;
+
   const DoctorListTile({
     super.key,
+    required this.name,
+    required this.title,
+    required this.specialistIn,
+    required this.avatarUrl,
+    required this.id,
     this.isListTile = true,
   });
 
@@ -13,8 +25,14 @@ class DoctorListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        context.push('/doctors/1');
+      onTap: () async {
+        if (!isListTile) {
+          return;
+        }
+
+        context.push(
+          '/doctors/$id',
+        );
       },
       child: Container(
         padding:
@@ -31,7 +49,7 @@ class DoctorListTile extends StatelessWidget {
               borderRadius: BorderRadius.circular(10), // Image border
               child: SizedBox.fromSize(
                 size: const Size.fromRadius(40), // Image radius
-                child: Image.asset('assets/images/doctor.jpg',
+                child: Image.network(avatarUrl,
                     alignment: Alignment.topCenter, fit: BoxFit.cover),
               ),
             ),
@@ -40,14 +58,14 @@ class DoctorListTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Dr. Arlene McCoy",
+                  "$title $name",
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium!
                       .copyWith(fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "MBBS, FPCS (Pediastrics)",
+                  specialistIn,
                   style: Theme.of(context)
                       .textTheme
                       .bodySmall!

@@ -48,9 +48,9 @@ class DoctorListScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
-            const Expanded(
-              child: DoctorList(),
-            )
+            // const Expanded(
+            //   child: DoctorList(),
+            // )
           ],
         ),
       ),

@@ -74,6 +74,20 @@ class Helpers {
   }
 
   // Utils
+  String capitalizeString(String string) {
+    List<String> words = string.toLowerCase().split(' ');
+    List<String> capitalizedWords = [];
+
+    for (String word in words) {
+      if (word.isNotEmpty) {
+        String capitalizedWord = word[0].toUpperCase() + word.substring(1);
+        capitalizedWords.add(capitalizedWord);
+      }
+    }
+
+    return capitalizedWords.join(' ');
+  }
+
   String addSpacesEveryIntervalCharacter(String text, {int interval = 4}) {
     if (text.isEmpty) return text; // Handle empty string case
 

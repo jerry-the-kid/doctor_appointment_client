@@ -38,7 +38,7 @@ class Auth {
       if (documentSnapshot.exists) {
         Map<String, dynamic> userData =
             documentSnapshot.data() as Map<String, dynamic>;
-        print(UserModel.fromJson(userData));
+
         return UserModel.fromJson(userData);
       } else {
         return null;

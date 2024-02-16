@@ -1,8 +1,11 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:doctor_appointment_client/app/widgets/doctor_list.dart';
+import 'package:doctor_appointment_client/app/widgets/no_item_note.dart';
 import 'package:doctor_appointment_client/app/widgets/upcoming_schedule_card.dart';
 import 'package:doctor_appointment_client/constants/app_colors.dart';
+import 'package:doctor_appointment_client/data/models/doctor_model.dart';
 import 'package:doctor_appointment_client/services/auth_service.dart';
+import 'package:doctor_appointment_client/services/doctor_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -51,7 +54,8 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(
             height: 15,
           ),
-          const UpcomingScheduleCard(isActive: true),
+          const NoItemNote(message: "You don't have any upcoming schedule !"),
+          // const UpcomingScheduleCard(isActive: true),
           const SizedBox(
             height: 30,
           ),
@@ -61,7 +65,22 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          const SizedBox(height: 300, child: DoctorList())
+          SizedBox(
+              height: 300,
+              child: FutureBuilder(
+                  future: DoctorService().getAllDoctors(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.hasData) {
+                      return DoctorList(doctors: snapshot.data!);
+                    }
+
+                    return const NoItemNote(
+                        message: "Something went wrong. Please try again !");
+                  })),
         ],
       ),
     );
