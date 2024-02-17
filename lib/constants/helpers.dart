@@ -49,6 +49,7 @@ class Helpers {
     } on FirebaseAuthException catch (e) {
       print(e.code);
       if (!context.mounted) return;
+
       if (e.code == 'weak-password') {
         Helpers()
             .showErrorSnackbar(context, 'The password provided is too weak.');
@@ -59,7 +60,7 @@ class Helpers {
         Helpers().showErrorSnackbar(
             context, "Too many request. Please try again another time");
       }
-      if (e.code == 'unknown-error') {
+      if (e.code == 'unknown-error' || e.code == "invalid-credential") {
         Helpers().showErrorSnackbar(
             context, 'Credential must be invalid. Please try again!');
       } else if (e.code == 'user-not-found') {

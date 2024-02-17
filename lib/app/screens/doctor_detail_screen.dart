@@ -47,8 +47,8 @@ class DoctorDetailScreen extends StatelessWidget {
               DoctorModel doctor = snapshot.data!;
 
               return Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20),
+                padding: const EdgeInsets.only(
+                    top: 8, bottom: 100.0, left: 20, right: 20),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
