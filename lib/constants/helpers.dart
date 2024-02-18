@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:intl/intl.dart';
 
 class Helpers {
   // // API Endpoints
@@ -113,6 +114,29 @@ class Helpers {
   bool isAllNumbers(String string) {
     // Use a regular expression to match only digits
     return RegExp(r'^[0-9]+$').hasMatch(string);
+  }
+
+  DateTime combineDateTimeAndTimeString(DateTime dateTime, String timeString) {
+    // Parse time string
+    List<String> timeComponents = timeString.split(":");
+    int hour = int.parse(timeComponents[0]);
+    int minute = int.parse(timeComponents[1].split(" ")[0]);
+    String period = timeComponents[1].split(" ")[1];
+
+    // Adjust hour for PM if needed
+    if (period == "PM" && hour != 12) {
+      hour += 12;
+    } else if (period == "AM" && hour == 12) {
+      hour = 0; // 12 AM is equivalent to 0 hours
+    }
+
+    // Create new DateTime object with combined date and time
+    return DateTime(dateTime.year, dateTime.month, dateTime.day, hour, minute);
+  }
+
+  String formattedDate(
+      {required String newPattern, required DateTime dateTime}) {
+    return DateFormat(newPattern).format(dateTime);
   }
 
   DateTime startOfMonth =

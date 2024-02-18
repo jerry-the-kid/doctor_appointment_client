@@ -1,14 +1,29 @@
 import 'package:doctor_appointment_client/app/widgets/no_item_note.dart';
 import 'package:doctor_appointment_client/app/widgets/primary_full_btn.dart';
 import 'package:doctor_appointment_client/constants/app_colors.dart';
+import 'package:doctor_appointment_client/constants/helpers.dart';
+import 'package:doctor_appointment_client/providers/booking_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
-class PaymentMethodScreen extends StatelessWidget {
+class PaymentMethodScreen extends StatefulWidget {
   const PaymentMethodScreen({super.key});
 
   @override
+  State<PaymentMethodScreen> createState() => _PaymentMethodScreenState();
+}
+
+class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
+  @override
   Widget build(BuildContext context) {
+    var bookingProvider = context.watch<BookingProvider>();
+    var bookingTime = Helpers().combineDateTimeAndTimeString(
+        bookingProvider.selectedDate, bookingProvider.selectedHour);
+
+    var bookingTimeString =
+        "${Helpers().formattedDate(newPattern: "HH:mm", dateTime: bookingTime)} - ${Helpers().formattedDate(newPattern: "HH:mm", dateTime: bookingTime.add(const Duration(hours: 1)))}";
+
     return Scaffold(
       appBar: AppBar(title: const Text("Payment Method")),
       floatingActionButton: Padding(
@@ -46,7 +61,7 @@ class PaymentMethodScreen extends StatelessWidget {
                         height: 18,
                       ),
                       Text(
-                        "SaiGon General Hospital: Khám Nội Khoa #1",
+                        "SaiGon General Hospital: ${bookingProvider.doctor!.specialistIn}",
                         style: Theme.of(context)
                             .textTheme
                             .headlineMedium!
@@ -55,18 +70,24 @@ class PaymentMethodScreen extends StatelessWidget {
                       const SizedBox(
                         height: 18,
                       ),
-                      const Row(
+                      Row(
                         children: [
                           Expanded(
                             child: DetailInfo(
                               label: "Date",
-                              info: "10.05.2023",
+                              // info: "10.05.2023",
+                              info: Helpers().formattedDate(
+                                  newPattern: 'dd.MM.yyyy',
+                                  dateTime: context
+                                      .watch<BookingProvider>()
+                                      .selectedDate),
                             ),
                           ),
                           Expanded(
                             child: DetailInfo(
                               label: "Time",
-                              info: "13:00 - 14:00",
+                              // info: "13:00 - 14:00",
+                              info: bookingTimeString,
                             ),
                           ),
                         ],
@@ -74,18 +95,20 @@ class PaymentMethodScreen extends StatelessWidget {
                       const SizedBox(
                         height: 18,
                       ),
-                      const Row(
+                      Row(
                         children: [
                           Expanded(
                             child: DetailInfo(
                               label: "Doctor",
-                              info: "Dr. John Wilson",
+                              info:
+                                  "${bookingProvider.doctor!.title} ${bookingProvider.doctor!.name}",
                             ),
                           ),
                           Expanded(
                             child: DetailInfo(
                               label: "Department",
-                              info: "Phòng ban Nội Khoa",
+                              info:
+                                  "Phòng ban ${bookingProvider.doctor!.specialistIn}",
                             ),
                           ),
                         ],

@@ -1,4 +1,3 @@
-import 'package:doctor_appointment_client/app/widgets/dialog.dart';
 import 'package:doctor_appointment_client/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

@@ -4,10 +4,12 @@ import 'package:doctor_appointment_client/app/widgets/primary_full_btn.dart';
 import 'package:doctor_appointment_client/constants/app_colors.dart';
 import 'package:doctor_appointment_client/constants/helpers.dart';
 import 'package:doctor_appointment_client/data/models/doctor_model.dart';
+import 'package:doctor_appointment_client/providers/booking_provider.dart';
 import 'package:doctor_appointment_client/services/doctor_service.dart';
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class DoctorDetailScreen extends StatelessWidget {
   const DoctorDetailScreen({super.key, this.id = ''});
@@ -45,6 +47,10 @@ class DoctorDetailScreen extends StatelessWidget {
               );
             } else {
               DoctorModel doctor = snapshot.data!;
+
+              Future.delayed(Duration.zero, () {
+                context.read<BookingProvider>().setDoctor(doctor: doctor);
+              });
 
               return Padding(
                 padding: const EdgeInsets.only(
@@ -91,20 +97,7 @@ class DoctorDetailScreen extends StatelessWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      EasyDateTimeLine(
-                          initialDate: DateTime.now(),
-                          disabledDates: Helpers().generateDisabledDates(),
-                          onDateChange: (selectedDate) {
-                            print(selectedDate);
-                          },
-                          headerProps: const EasyHeaderProps(
-                            padding: EdgeInsets.all(0),
-                            monthPickerType: MonthPickerType.switcher,
-                            dateFormatter: DateFormatter.dayOnly(),
-                          ),
-                          dayProps: const EasyDayProps(
-                              dayStructure: DayStructure.dayStrDayNum,
-                              height: 60)),
+                      const TimeLine(),
                       const SizedBox(
                         height: 20,
                       ),
@@ -126,6 +119,36 @@ class DoctorDetailScreen extends StatelessWidget {
   }
 }
 
+class TimeLine extends StatefulWidget {
+  const TimeLine({
+    super.key,
+  });
+
+  @override
+  State<TimeLine> createState() => _TimeLineState();
+}
+
+class _TimeLineState extends State<TimeLine> {
+  @override
+  Widget build(BuildContext context) {
+    return EasyDateTimeLine(
+        initialDate: context.watch<BookingProvider>().selectedDate,
+        disabledDates: Helpers().generateDisabledDates(),
+        onDateChange: (value) {
+          context
+              .read<BookingProvider>()
+              .changeSelectedDate(selectedDate: value);
+        },
+        headerProps: const EasyHeaderProps(
+          padding: EdgeInsets.all(0),
+          monthPickerType: MonthPickerType.switcher,
+          dateFormatter: DateFormatter.dayOnly(),
+        ),
+        dayProps: const EasyDayProps(
+            dayStructure: DayStructure.dayStrDayNum, height: 60));
+  }
+}
+
 class DividedTab extends StatefulWidget {
   const DividedTab({super.key});
 
@@ -135,16 +158,19 @@ class DividedTab extends StatefulWidget {
 
 class _DividedTabState extends State<DividedTab> {
   int tabValue = 0;
-  String seletedHour = "";
 
   List<Widget> buildTimeSlots(int startHour, int endHour, String endPrefix) {
     List<Widget> timeSlots = [];
+
+    String selectedHour = context.watch<BookingProvider>().selectedHour;
 
     for (int hour = startHour; hour <= endHour; hour++) {
       // Build time slot widget
       String time = '${hour.toString().padLeft(2, '0')}:00 $endPrefix';
       Widget timeSlot = ElevatedButton(
         style: ElevatedButton.styleFrom(
+          backgroundColor:
+              selectedHour == time ? AppColors.primaryColor : Colors.white,
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
@@ -152,17 +178,18 @@ class _DividedTabState extends State<DividedTab> {
           ),
         ),
         onPressed: () {
-          // Handle button press
+          context
+              .read<BookingProvider>()
+              .changeSelectedHour(selectedHour: time);
         },
         child: Text(
           time,
-          style: const TextStyle(
-            color: Colors.black,
+          style: TextStyle(
+            color: selectedHour == time ? Colors.white : Colors.black,
           ),
         ),
       );
 
-      // Add the time slot widget to the list
       timeSlots.add(timeSlot);
     }
 
