@@ -39,7 +39,9 @@ class Auth {
         Map<String, dynamic> userData =
             documentSnapshot.data() as Map<String, dynamic>;
 
-        return UserModel.fromJson(userData);
+        UserModel user = UserModel.fromJson(userData);
+
+        return user;
       } else {
         return null;
       }

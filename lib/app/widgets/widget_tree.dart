@@ -1,8 +1,10 @@
 import 'package:doctor_appointment_client/app/screens/login_screen.dart';
 import 'package:doctor_appointment_client/app/screens/main_screen.dart';
 import 'package:doctor_appointment_client/app/screens/onboard_screen.dart';
+import 'package:doctor_appointment_client/providers/user_provider.dart';
 import 'package:doctor_appointment_client/services/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class WidgetTreeState extends StatefulWidget {
   const WidgetTreeState({super.key});
@@ -34,6 +36,11 @@ class _WidgetTreeStateState extends State<WidgetTreeState> {
                           setState(() {});
                         });
                   }
+
+                  context
+                      .read<UserProvider>()
+                      .setCurrentUser(user: userSnapshot.data!);
+
                   return const MainScreen();
                 });
           }

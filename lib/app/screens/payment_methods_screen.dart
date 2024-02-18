@@ -3,6 +3,7 @@ import 'package:doctor_appointment_client/app/widgets/primary_full_btn.dart';
 import 'package:doctor_appointment_client/constants/app_colors.dart';
 import 'package:doctor_appointment_client/constants/helpers.dart';
 import 'package:doctor_appointment_client/providers/booking_provider.dart';
+import 'package:doctor_appointment_client/providers/card_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +24,8 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
 
     var bookingTimeString =
         "${Helpers().formattedDate(newPattern: "HH:mm", dateTime: bookingTime)} - ${Helpers().formattedDate(newPattern: "HH:mm", dateTime: bookingTime.add(const Duration(hours: 1)))}";
+
+    var selectedCard = context.watch<CardProvider>().selectedCard;
 
     return Scaffold(
       appBar: AppBar(title: const Text("Payment Method")),
@@ -145,9 +148,11 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                   ),
                 ],
               ),
-              const NoItemNote(
-                message: "There is no saved cards. Please add new card",
-              ),
+              if (selectedCard == null)
+                const NoItemNote(
+                  message: "There is no saved cards. Please add new card",
+                ),
+              if (selectedCard != null) (const OptionTile()),
               const SizedBox(
                 height: 15,
               ),
@@ -185,6 +190,36 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class OptionTile extends StatelessWidget {
+  const OptionTile({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+      decoration: BoxDecoration(
+          border: Border.all(width: 1, color: AppColors.gray_2),
+          borderRadius: BorderRadius.circular(8)),
+      child: Row(
+        children: [
+          const Icon(Icons.credit_card),
+          const SizedBox(
+            width: 10,
+          ),
+          const Text(
+            "1234 567 8900 1234",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          const Spacer(),
+          Radio(value: true, groupValue: true, onChanged: (value) {}),
+        ],
       ),
     );
   }

@@ -14,6 +14,9 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       weight: json['weight'] as int?,
       gender: json['gender'] as String?,
       firstCreate: json['firstCreate'] as bool? ?? true,
+      cards: (json['cards'] as List<dynamic>?)
+          ?.map((e) => CardModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
@@ -24,4 +27,5 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'gender': instance.gender,
       'weight': instance.weight,
       'age': instance.age,
+      'cards': instance.cards,
     };

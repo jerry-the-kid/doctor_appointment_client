@@ -4,11 +4,13 @@ import 'package:doctor_appointment_client/app/widgets/no_item_note.dart';
 import 'package:doctor_appointment_client/app/widgets/upcoming_schedule_card.dart';
 import 'package:doctor_appointment_client/constants/app_colors.dart';
 import 'package:doctor_appointment_client/data/models/doctor_model.dart';
+import 'package:doctor_appointment_client/providers/user_provider.dart';
 import 'package:doctor_appointment_client/services/auth_service.dart';
 import 'package:doctor_appointment_client/services/doctor_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -22,7 +24,9 @@ class HomeScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const UserInfoHeader(),
+          UserInfoHeader(
+            userName: context.watch<UserProvider>().currentUser!.userName,
+          ),
           const SizedBox(
             height: 40,
           ),
@@ -194,8 +198,11 @@ class MedicineListTile extends StatelessWidget {
 }
 
 class UserInfoHeader extends StatelessWidget {
+  final String userName;
+
   const UserInfoHeader({
     super.key,
+    required this.userName,
   });
 
   @override
@@ -227,7 +234,7 @@ class UserInfoHeader extends StatelessWidget {
                   "Hello",
                   style: TextStyle(color: AppColors.gray_2),
                 ),
-                Text("Edward!",
+                Text(userName,
                     style: Theme.of(context)
                         .textTheme
                         .headlineMedium!

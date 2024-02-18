@@ -60,8 +60,9 @@ class Helpers {
       } else if (e.code == 'too-many-requests') {
         Helpers().showErrorSnackbar(
             context, "Too many request. Please try again another time");
-      }
-      if (e.code == 'unknown-error' || e.code == "invalid-credential") {
+      } else if (e.code == 'unknown-error') {
+        Helpers().showErrorSnackbar(context, "Unknown Error Please try again");
+      } else if (e.code == "invalid-credential") {
         Helpers().showErrorSnackbar(
             context, 'Credential must be invalid. Please try again!');
       } else if (e.code == 'user-not-found') {
@@ -69,6 +70,8 @@ class Helpers {
       } else if (e.code == 'wrong-password') {
         Helpers().showErrorSnackbar(
             context, 'Wrong password provided for that user.');
+      } else {
+        Helpers().showErrorSnackbar(context, e.message!);
       }
     } finally {
       await EasyLoading.dismiss();
@@ -137,6 +140,18 @@ class Helpers {
   String formattedDate(
       {required String newPattern, required DateTime dateTime}) {
     return DateFormat(newPattern).format(dateTime);
+  }
+
+  DateTime parseShortDateString(String input) {
+    // Split the input string into month and year parts
+    List<String> parts = input.split('/');
+
+    // Extract month and year from the parts
+    int month = int.parse(parts[0]);
+    int year = int.parse(parts[1]);
+
+    // Assuming day as 1 for the date
+    return DateTime(year + 2000, month, 1);
   }
 
   DateTime startOfMonth =

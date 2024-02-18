@@ -1,9 +1,18 @@
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctor_appointment_client/app/widgets/input.dart';
 import 'package:doctor_appointment_client/app/widgets/primary_full_btn.dart';
 import 'package:doctor_appointment_client/constants/helpers.dart';
+import 'package:doctor_appointment_client/data/models/card_model.dart';
+import 'package:doctor_appointment_client/providers/card_provider.dart';
+import 'package:doctor_appointment_client/providers/user_provider.dart';
+import 'package:doctor_appointment_client/services/auth_service.dart';
+import 'package:doctor_appointment_client/services/card_service.dart';
+import 'package:doctor_appointment_client/services/user_service.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 double textScaleFactor(BuildContext context, {double maxTextScaleFactor = 2}) {
   final width = MediaQuery.of(context).size.width;
@@ -35,13 +44,41 @@ class _AddCardScreenState extends State<AddCardScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: PrimaryFullBtn(
           title: "Add Cart",
-          onPressed: () {
+          onPressed: () async {
             if (_formKey.currentState!.validate()) {
               _formKey.currentState!.save();
-              // final snackBar = SnackBar(
-              //   content: Text(_cardCvvController.text),
-              // );
-              // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+              Helpers().handleFirebaseException(
+                context: context,
+                callBackFnc: () async {
+                  CardModel? card = await CardService().getCardByCardInfo(
+                      cardNumber: _cardNumberController.text,
+                      cvv: _cardCvvController.text,
+                      expiredDate: _cardExpiryDateController.text,
+                      username: _cardHolderNameController.text);
+
+                  if (card != null && context.mounted) {
+                    context
+                        .read<CardProvider>()
+                        .setSelectedCard(selectedCard: card);
+
+                    context
+                        .read<UserProvider>()
+                        .updateCardList(updatedCards: [card]);
+
+                    UserService()
+                        .updateUser(uid: Auth().currentUser!.uid, data: {
+                      "cards": FieldValue.arrayUnion([card.toJson()]),
+                    });
+                  } else {
+                    if (context.mounted) {
+                      Helpers().showErrorSnackbar(context,
+                          "Card not found in Database !! Please try other.");
+                    }
+                  }
+                },
+                // successCallBack: () => context.pop(),
+              );
             }
           },
         ),
