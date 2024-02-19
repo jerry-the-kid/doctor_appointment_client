@@ -4,6 +4,7 @@ import 'package:doctor_appointment_client/app/widgets/no_item_note.dart';
 import 'package:doctor_appointment_client/app/widgets/upcoming_schedule_card.dart';
 import 'package:doctor_appointment_client/constants/app_colors.dart';
 import 'package:doctor_appointment_client/data/models/doctor_model.dart';
+import 'package:doctor_appointment_client/data/models/user_model.dart';
 import 'package:doctor_appointment_client/providers/user_provider.dart';
 import 'package:doctor_appointment_client/services/auth_service.dart';
 import 'package:doctor_appointment_client/services/doctor_service.dart';
@@ -13,9 +14,9 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+  const HomeScreen({super.key, required this.user});
 
-  final User? user = Auth().currentUser;
+  final UserModel user;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class HomeScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           UserInfoHeader(
-            userName: context.watch<UserProvider>().currentUser!.userName,
+            userName: user.userName,
           ),
           const SizedBox(
             height: 40,

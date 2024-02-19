@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:doctor_appointment_client/config/routes/routes.dart';
 import 'package:doctor_appointment_client/config/theme/theme.dart';
 import 'package:doctor_appointment_client/providers/booking_provider.dart';
-import 'package:doctor_appointment_client/providers/card_provider.dart';
 import 'package:doctor_appointment_client/providers/user_provider.dart';
 import 'package:doctor_appointment_client/services/auth_service.dart';
 import 'package:flutter/material.dart';
@@ -65,9 +64,6 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => BookingProvider()),
-        ChangeNotifierProvider(
-          create: (context) => CardProvider(),
-        ),
         ChangeNotifierProvider(create: (context) => UserProvider()),
       ],
       child: MaterialApp.router(

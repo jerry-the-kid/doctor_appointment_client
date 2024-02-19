@@ -14,6 +14,7 @@ class UserProvider extends ChangeNotifier {
 
   void updateCardList({required List<CardModel> updatedCards}) {
     if (currentUser == null) return;
+
     currentUser!.cards = [...(currentUser!.cards ?? []), ...updatedCards];
     notifyListeners();
   }

@@ -37,11 +37,13 @@ class _WidgetTreeStateState extends State<WidgetTreeState> {
                         });
                   }
 
-                  context
-                      .read<UserProvider>()
-                      .setCurrentUser(user: userSnapshot.data!);
+                  Future.delayed(Duration.zero, () {
+                    context
+                        .read<UserProvider>()
+                        .setCurrentUser(user: userSnapshot.data!);
+                  });
 
-                  return const MainScreen();
+                  return MainScreen(user: userSnapshot.data!);
                 });
           }
           return const LoginScreen();

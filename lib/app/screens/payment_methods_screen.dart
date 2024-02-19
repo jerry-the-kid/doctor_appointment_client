@@ -2,8 +2,9 @@ import 'package:doctor_appointment_client/app/widgets/no_item_note.dart';
 import 'package:doctor_appointment_client/app/widgets/primary_full_btn.dart';
 import 'package:doctor_appointment_client/constants/app_colors.dart';
 import 'package:doctor_appointment_client/constants/helpers.dart';
+import 'package:doctor_appointment_client/data/models/card_model.dart';
 import 'package:doctor_appointment_client/providers/booking_provider.dart';
-import 'package:doctor_appointment_client/providers/card_provider.dart';
+import 'package:doctor_appointment_client/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -25,14 +26,14 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
     var bookingTimeString =
         "${Helpers().formattedDate(newPattern: "HH:mm", dateTime: bookingTime)} - ${Helpers().formattedDate(newPattern: "HH:mm", dateTime: bookingTime.add(const Duration(hours: 1)))}";
 
-    var selectedCard = context.watch<CardProvider>().selectedCard;
+    var cards = context.watch<UserProvider>().currentUser!.cards;
 
     return Scaffold(
       appBar: AppBar(title: const Text("Payment Method")),
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: PrimaryFullBtn(
-          title: 'Proceed to Pay',
+          title: 'Reserved booking for 250,000 VND',
           onPressed: () {},
         ),
       ),
@@ -148,13 +149,16 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                   ),
                 ],
               ),
-              if (selectedCard == null)
+              const SizedBox(
+                height: 10,
+              ),
+              if (cards == null || cards.isEmpty)
                 const NoItemNote(
                   message: "There is no saved cards. Please add new card",
                 ),
-              if (selectedCard != null) (const OptionTile()),
+              if (cards != null) SelectedCard(cards: cards),
               const SizedBox(
-                height: 15,
+                height: 10,
               ),
               Text(
                 'Other Ways To Pays',
@@ -195,10 +199,61 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
   }
 }
 
-class OptionTile extends StatelessWidget {
-  const OptionTile({
-    super.key,
-  });
+class SelectedCard extends StatefulWidget {
+  const SelectedCard({super.key, required this.cards});
+
+  final List<CardModel> cards;
+
+  @override
+  State<SelectedCard> createState() => _SelectedCardState();
+}
+
+class _SelectedCardState extends State<SelectedCard> {
+  int selectedCardIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 120,
+      child: ListView.builder(
+        itemBuilder: ((context, index) => Column(children: [
+              OptionTile<int>(
+                label: Helpers().addSpacesEveryIntervalCharacter(
+                    widget.cards[index].cardNumber),
+                value: index,
+                groupValue: selectedCardIndex,
+                onChanged: (value) {
+                  context
+                      .read<BookingProvider>()
+                      .setCard(card: widget.cards[value!]);
+
+                  setState(() {
+                    selectedCardIndex = value;
+                  });
+                },
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+            ])),
+        itemCount: widget.cards.length,
+      ),
+    );
+  }
+}
+
+class OptionTile<T> extends StatelessWidget {
+  const OptionTile(
+      {super.key,
+      required this.value,
+      required this.groupValue,
+      required this.onChanged,
+      required this.label});
+
+  final T value;
+  final T groupValue;
+  final void Function(T?)? onChanged;
+  final String label;
 
   @override
   Widget build(BuildContext context) {
@@ -213,12 +268,12 @@ class OptionTile extends StatelessWidget {
           const SizedBox(
             width: 10,
           ),
-          const Text(
-            "1234 567 8900 1234",
-            style: TextStyle(fontWeight: FontWeight.bold),
+          Text(
+            label,
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           const Spacer(),
-          Radio(value: true, groupValue: true, onChanged: (value) {}),
+          Radio(value: value, groupValue: groupValue, onChanged: onChanged),
         ],
       ),
     );

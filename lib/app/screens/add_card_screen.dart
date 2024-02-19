@@ -5,7 +5,6 @@ import 'package:doctor_appointment_client/app/widgets/input.dart';
 import 'package:doctor_appointment_client/app/widgets/primary_full_btn.dart';
 import 'package:doctor_appointment_client/constants/helpers.dart';
 import 'package:doctor_appointment_client/data/models/card_model.dart';
-import 'package:doctor_appointment_client/providers/card_provider.dart';
 import 'package:doctor_appointment_client/providers/user_provider.dart';
 import 'package:doctor_appointment_client/services/auth_service.dart';
 import 'package:doctor_appointment_client/services/card_service.dart';
@@ -59,10 +58,6 @@ class _AddCardScreenState extends State<AddCardScreen> {
 
                   if (card != null && context.mounted) {
                     context
-                        .read<CardProvider>()
-                        .setSelectedCard(selectedCard: card);
-
-                    context
                         .read<UserProvider>()
                         .updateCardList(updatedCards: [card]);
 
@@ -77,7 +72,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                     }
                   }
                 },
-                // successCallBack: () => context.pop(),
+                successCallBack: () => context.pop(),
               );
             }
           },

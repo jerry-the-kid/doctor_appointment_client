@@ -4,11 +4,14 @@ import 'package:doctor_appointment_client/app/screens/home_screen.dart';
 import 'package:doctor_appointment_client/app/screens/pill_reminder_screen.dart';
 import 'package:doctor_appointment_client/app/screens/user_screen.dart';
 import 'package:doctor_appointment_client/app/widgets/select_appointment_dialog.dart';
+import 'package:doctor_appointment_client/data/models/user_model.dart';
 import 'package:doctor_appointment_client/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+  const MainScreen({super.key, required this.user});
+
+  final UserModel user;
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -74,7 +77,7 @@ class _MainScreenState extends State<MainScreen> {
         child: IndexedStack(
           index: currentIndex,
           children: [
-            SingleChildScrollView(child: HomeScreen()),
+            SingleChildScrollView(child: HomeScreen(user: widget.user)),
             const SingleChildScrollView(child: AppointmentsScreen()),
             const SingleChildScrollView(child: PillReminder()),
             const SingleChildScrollView(child: HealthReportScreen()),
