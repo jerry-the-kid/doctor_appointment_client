@@ -9,8 +9,11 @@ import 'package:doctor_appointment_client/app/screens/notification_screen.dart';
 import 'package:doctor_appointment_client/app/screens/payment_methods_screen.dart';
 import 'package:doctor_appointment_client/app/screens/physical_health_screen.dart';
 import 'package:doctor_appointment_client/app/screens/register_screen.dart';
+import 'package:doctor_appointment_client/app/screens/app_notify_screen.dart';
 import 'package:doctor_appointment_client/app/screens/user_screen.dart';
 import 'package:doctor_appointment_client/app/widgets/widget_tree.dart';
+import 'package:doctor_appointment_client/constants/helpers.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 // GoRouter configuration
@@ -18,7 +21,25 @@ final router = GoRouter(
   routes: [
     GoRoute(path: '/', builder: (context, state) => const WidgetTreeState()),
     GoRoute(
+        path: '/appNotify',
+        builder: (context, state) {
+          Map<String, String> result = Helpers().uriToObject(state.uri);
+
+          final svgSrc = result['svgSrc']!;
+          final title = result['title']!;
+          final description = result['description'];
+          var onBtnClick = state.extra as VoidCallback?;
+
+          return AppNotifyScreen(
+            svgSrc: svgSrc,
+            title: title,
+            onBtnClick: onBtnClick,
+            description: description,
+          );
+        }),
+    GoRoute(
         path: '/register', builder: (context, state) => const RegisterScreen()),
+
     // GoRoute(
     //     path: '/',
     //     builder: (context, state) => const CheckupAppointmentScreen()),

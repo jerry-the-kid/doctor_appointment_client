@@ -34,7 +34,17 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: PrimaryFullBtn(
           title: 'Reserved booking for 250,000 VND',
-          onPressed: () {},
+          onPressed: () {
+            context.replace(
+              Uri(
+                path: '/appNotify',
+                queryParameters: {
+                  'svgSrc': 'assets/images/trans_done.svg',
+                  'title': 'Booking successfully !!'
+                },
+              ).toString(),
+            );
+          },
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

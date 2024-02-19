@@ -5,6 +5,7 @@ import 'package:doctor_appointment_client/services/auth_service.dart';
 import 'package:doctor_appointment_client/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 
 class OnBoardScreen extends StatefulWidget {
   final String name;
@@ -353,7 +354,17 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                   "weight": weight,
                   "gender": gender,
                   "firstCreate": false,
-                }).then((value) => widget.onSubmit());
+                }).then((value) => context.push(
+                    Uri(
+                      path: '/appNotify',
+                      queryParameters: {
+                        'svgSrc': 'assets/images/done.svg',
+                        'title': 'It\'s all checked!',
+                        'description':
+                            'Thanks for filling the information form.'
+                      },
+                    ).toString(),
+                    extra: () => {widget.onSubmit()}));
               }
             });
           },

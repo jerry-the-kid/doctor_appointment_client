@@ -79,6 +79,18 @@ class Helpers {
   }
 
   // Utils
+  Map<String, String> uriToObject(Uri uri) {
+    // Extract query parameters from the Uri object
+    Map<String, String> queryParams = uri.queryParameters;
+
+    // Construct the final object
+    Map<String, String> result = {};
+    result['path'] = uri.path;
+    result.addAll(queryParams);
+
+    return result;
+  }
+
   String capitalizeString(String string) {
     List<String> words = string.toLowerCase().split(' ');
     List<String> capitalizedWords = [];
