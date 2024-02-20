@@ -1,10 +1,17 @@
+import 'dart:io';
+
 import 'package:doctor_appointment_client/app/widgets/detail_avatar_image.dart';
 import 'package:doctor_appointment_client/app/widgets/input.dart';
 import 'package:doctor_appointment_client/app/widgets/primary_full_btn.dart';
 import 'package:doctor_appointment_client/constants/helpers.dart';
 import 'package:doctor_appointment_client/providers/user_provider.dart';
+import 'package:doctor_appointment_client/services/auth_service.dart';
+import 'package:doctor_appointment_client/services/file_service.dart';
+import 'package:doctor_appointment_client/services/user_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
+import 'package:path/path.dart' as path;
 
 class UserDetailScreen extends StatefulWidget {
   const UserDetailScreen({super.key});
@@ -16,6 +23,7 @@ class UserDetailScreen extends StatefulWidget {
 class _UserDetailScreenState extends State<UserDetailScreen> {
   bool isEdit = false;
   int imageWidgetKey = 0;
+  File? selectFile;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +51,11 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                 DetailAvatarImage(
                   isEdit: isEdit,
                   key: Key(imageWidgetKey.toString()),
+                  onFileChange: (file) {
+                    setState(() {
+                      selectFile = file;
+                    });
+                  },
                 ),
                 const SizedBox(
                   height: 5,
@@ -63,7 +76,10 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                UserDetailForm(isEdit: isEdit)
+                UserDetailForm(
+                  isEdit: isEdit,
+                  selectFile: selectFile,
+                )
               ],
             ),
           ),
@@ -72,9 +88,11 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
 }
 
 class UserDetailForm extends StatefulWidget {
-  const UserDetailForm({super.key, required this.isEdit});
+  const UserDetailForm(
+      {super.key, required this.isEdit, required this.selectFile});
 
   final bool isEdit;
+  final File? selectFile;
 
   @override
   State<UserDetailForm> createState() => _UserDetailFormState();
@@ -168,7 +186,26 @@ class _UserDetailFormState extends State<UserDetailForm> {
             const SizedBox(
               height: 40,
             ),
-            if (widget.isEdit) PrimaryFullBtn(title: "Save", onPressed: () {})
+            if (widget.isEdit)
+              PrimaryFullBtn(
+                  title: "Save",
+                  onPressed: () {
+                    if (widget.selectFile != null) {
+                      Helpers().handleFirebaseException(
+                          context: context,
+                          callBackFnc: () async {
+                            var imageSrc =
+                                await FileService().uploadImageToFirebase(
+                              widget.selectFile!,
+                              DateTime.now().microsecond.toString() +
+                                  path.extension(widget.selectFile!.path),
+                            );
+                            await UserService().updateUser(
+                                uid: Auth().currentUser!.uid,
+                                data: {'avatarImage': imageSrc});
+                          });
+                    }
+                  })
           ],
         ));
   }

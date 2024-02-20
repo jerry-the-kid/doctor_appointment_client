@@ -23,6 +23,7 @@ class HomeScreen extends StatelessWidget {
         children: [
           UserInfoHeader(
             userName: user.userName,
+            imageSrc: user.avatarImage,
           ),
           const SizedBox(
             height: 40,
@@ -196,11 +197,10 @@ class MedicineListTile extends StatelessWidget {
 
 class UserInfoHeader extends StatelessWidget {
   final String userName;
+  final String imageSrc;
 
-  const UserInfoHeader({
-    super.key,
-    required this.userName,
-  });
+  const UserInfoHeader(
+      {super.key, required this.userName, required this.imageSrc});
 
   @override
   Widget build(BuildContext context) {
@@ -217,9 +217,7 @@ class UserInfoHeader extends StatelessWidget {
                 height: 50,
                 width: 50,
                 child: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    context.watch<UserProvider>().currentUser!.avatarImage,
-                  ),
+                  backgroundImage: NetworkImage(imageSrc),
                 ),
               ),
             ),
