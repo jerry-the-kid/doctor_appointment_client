@@ -1,13 +1,14 @@
+import 'package:doctor_appointment_client/app/widgets/detail_avatar_image.dart';
 import 'package:flutter/material.dart';
 
-class UserInfoScreen extends StatefulWidget {
-  const UserInfoScreen({super.key});
+class UserSettingScreen extends StatefulWidget {
+  const UserSettingScreen({super.key});
 
   @override
-  State<UserInfoScreen> createState() => _UserInfoScreenState();
+  State<UserSettingScreen> createState() => _UserSettingScreenState();
 }
 
-class _UserInfoScreenState extends State<UserInfoScreen> {
+class _UserSettingScreenState extends State<UserSettingScreen> {
   bool light = true;
   @override
   Widget build(BuildContext context) {
@@ -15,28 +16,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
       padding: const EdgeInsets.only(right: 20, left: 20, bottom: 40),
       child: Column(
         children: [
-          Align(
-            alignment: Alignment.center,
-            child: Stack(children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Image.asset(
-                    'assets/images/image_placeholder.jpg',
-                    width: 150,
-                  ),
-                ),
-              ),
-
-              // const SizedBox(height: 150),
-              Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: IconButton.filled(
-                      onPressed: () {}, icon: const Icon(Icons.edit)))
-            ]),
-          ),
+          const DetailAvatarImage(),
           const SizedBox(
             height: 5,
           ),

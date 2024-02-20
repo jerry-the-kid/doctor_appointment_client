@@ -10,7 +10,8 @@ import 'package:doctor_appointment_client/app/screens/payment_methods_screen.dar
 import 'package:doctor_appointment_client/app/screens/physical_health_screen.dart';
 import 'package:doctor_appointment_client/app/screens/register_screen.dart';
 import 'package:doctor_appointment_client/app/screens/app_notify_screen.dart';
-import 'package:doctor_appointment_client/app/screens/user_screen.dart';
+import 'package:doctor_appointment_client/app/screens/user_detail_screen.dart';
+import 'package:doctor_appointment_client/app/screens/user_setting_screen.dart';
 import 'package:doctor_appointment_client/app/widgets/widget_tree.dart';
 import 'package:doctor_appointment_client/constants/helpers.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +57,8 @@ final router = GoRouter(
     GoRoute(
         path: '/appointment/cancel',
         builder: (context, state) => const CancelAppointment()),
-    GoRoute(path: '/user', builder: (context, state) => const UserInfoScreen()),
+    GoRoute(
+        path: '/user', builder: (context, state) => const UserDetailScreen()),
     GoRoute(
         path: '/notification',
         builder: (context, state) => const NotificationScreen()),

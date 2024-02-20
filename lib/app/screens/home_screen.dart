@@ -1,14 +1,10 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:doctor_appointment_client/app/widgets/doctor_list.dart';
 import 'package:doctor_appointment_client/app/widgets/no_item_note.dart';
-import 'package:doctor_appointment_client/app/widgets/upcoming_schedule_card.dart';
 import 'package:doctor_appointment_client/constants/app_colors.dart';
-import 'package:doctor_appointment_client/data/models/doctor_model.dart';
 import 'package:doctor_appointment_client/data/models/user_model.dart';
 import 'package:doctor_appointment_client/providers/user_provider.dart';
-import 'package:doctor_appointment_client/services/auth_service.dart';
 import 'package:doctor_appointment_client/services/doctor_service.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -217,12 +213,12 @@ class UserInfoHeader extends StatelessWidget {
               onTap: () {
                 context.push('/user');
               },
-              child: const SizedBox(
+              child: SizedBox(
                 height: 50,
                 width: 50,
                 child: CircleAvatar(
-                  backgroundImage: AssetImage(
-                    'assets/images/edward.jpg',
+                  backgroundImage: NetworkImage(
+                    context.watch<UserProvider>().currentUser!.avatarImage,
                   ),
                 ),
               ),

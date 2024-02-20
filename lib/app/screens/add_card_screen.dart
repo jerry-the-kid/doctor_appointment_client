@@ -160,19 +160,20 @@ class _AddCardScreenState extends State<AddCardScreen> {
                         )),
                         const SizedBox(width: 20),
                         Expanded(
-                            child: Input(
-                          controller: _cardCvvController,
-                          label: "CVV",
-                          placeholder: "000",
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "Please enter cvv number";
-                            } else if (value.trim().length != 3) {
-                              return 'CVV number must have 3 digits';
-                            }
-                            return null;
-                          },
-                        )),
+                          child: Input(
+                            controller: _cardCvvController,
+                            label: "CVV",
+                            placeholder: "000",
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Please enter cvv number";
+                              } else if (value.trim().length != 3) {
+                                return 'CVV number must have 3 digits';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
                       ],
                     ),
                   ],

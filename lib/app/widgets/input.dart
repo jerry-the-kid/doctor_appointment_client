@@ -7,15 +7,17 @@ class Input extends StatelessWidget {
   final TextInputType inputType;
   final TextEditingController? controller;
   final void Function(String)? onChanged;
+  final bool? enabled;
 
   const Input({
     super.key,
-    this.placeholder = '',
-    this.inputType = TextInputType.text,
     required this.label,
     required this.validator,
     this.controller,
     this.onChanged,
+    this.placeholder = '',
+    this.inputType = TextInputType.text,
+    this.enabled = true,
   });
 
   @override
@@ -28,6 +30,7 @@ class Input extends StatelessWidget {
           height: 8,
         ),
         TextFormField(
+          enabled: enabled,
           onChanged: onChanged,
           controller: controller,
           keyboardType: inputType,
