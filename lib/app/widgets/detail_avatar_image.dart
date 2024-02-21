@@ -20,6 +20,7 @@ class _DetailAvatarImageState extends State<DetailAvatarImage> {
 
   @override
   Widget build(BuildContext context) {
+    var currentUser = context.watch<UserProvider>().currentUser;
     return Align(
       alignment: Alignment.center,
       child: Stack(
@@ -33,10 +34,15 @@ class _DetailAvatarImageState extends State<DetailAvatarImage> {
                       _selectedImage!,
                       width: 150,
                     )
-                  : Image.network(
-                      context.watch<UserProvider>().currentUser!.avatarImage,
-                      width: 150,
-                    ),
+                  : currentUser != null
+                      ? Image.network(
+                          context
+                              .watch<UserProvider>()
+                              .currentUser!
+                              .avatarImage,
+                          width: 150,
+                        )
+                      : null,
             ),
           ),
 

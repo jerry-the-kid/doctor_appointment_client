@@ -204,6 +204,8 @@ class UserInfoHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var currentUser = context.watch<UserProvider>().currentUser;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -217,7 +219,8 @@ class UserInfoHeader extends StatelessWidget {
                 height: 50,
                 width: 50,
                 child: CircleAvatar(
-                  backgroundImage: NetworkImage(imageSrc),
+                  backgroundImage: NetworkImage(
+                      currentUser == null ? imageSrc : currentUser.avatarImage),
                 ),
               ),
             ),
@@ -229,7 +232,7 @@ class UserInfoHeader extends StatelessWidget {
                   "Hello",
                   style: TextStyle(color: AppColors.gray_2),
                 ),
-                Text(userName,
+                Text(currentUser == null ? userName : currentUser.userName,
                     style: Theme.of(context)
                         .textTheme
                         .headlineMedium!

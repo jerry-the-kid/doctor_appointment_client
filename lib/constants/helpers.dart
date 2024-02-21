@@ -37,7 +37,8 @@ class Helpers {
   void handleFirebaseException(
       {required BuildContext context,
       required Function callBackFnc,
-      Function? successCallBack}) async {
+      Function? successCallBack,
+      String? successMessage}) async {
     try {
       await EasyLoading.show(
         status: 'loading...',
@@ -45,7 +46,7 @@ class Helpers {
       );
       await callBackFnc();
       if (successCallBack != null) {
-        successCallBack();
+        await successCallBack();
       }
     } on FirebaseAuthException catch (e) {
       print(e.code);
@@ -75,7 +76,21 @@ class Helpers {
       }
     } finally {
       await EasyLoading.dismiss();
+      if (successMessage != null) {
+        await EasyLoading.showSuccess(
+          successMessage,
+          maskType: EasyLoadingMaskType.black,
+        );
+      }
     }
+  }
+
+  String generateRandomKey() {
+    const characters =
+        'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    final random = Random();
+    return String.fromCharCodes(Iterable.generate(
+        12, (_) => characters.codeUnitAt(random.nextInt(characters.length))));
   }
 
   // Utils
