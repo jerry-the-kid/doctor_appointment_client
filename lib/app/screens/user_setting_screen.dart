@@ -1,5 +1,8 @@
 import 'package:doctor_appointment_client/app/widgets/detail_avatar_image.dart';
+import 'package:doctor_appointment_client/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class UserSettingScreen extends StatefulWidget {
   const UserSettingScreen({super.key});
@@ -20,13 +23,13 @@ class _UserSettingScreenState extends State<UserSettingScreen> {
           const SizedBox(
             height: 5,
           ),
-          Text("Jane Cooper",
+          Text(context.watch<UserProvider>().currentUser!.userName,
               style: Theme.of(context).textTheme.headlineMedium),
           const SizedBox(
             height: 5,
           ),
           Text(
-            "jane.cooper@medicare.com",
+            context.watch<UserProvider>().currentUser!.email,
             style:
                 Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14),
           ),
@@ -45,7 +48,10 @@ class _UserSettingScreenState extends State<UserSettingScreen> {
                     ),
                     const Spacer(),
                     IconButton(
-                        onPressed: () {}, icon: const Icon(Icons.navigate_next))
+                        onPressed: () {
+                          context.push('/user');
+                        },
+                        icon: const Icon(Icons.navigate_next))
                   ],
                 ),
                 const SizedBox(height: 10),

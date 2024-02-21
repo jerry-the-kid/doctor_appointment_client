@@ -41,13 +41,26 @@ class _MainScreenState extends State<MainScreen> {
         },
         icon: const Icon(Icons.add));
 
+    var logOutButton = IconButton(
+        onPressed: () {
+          Auth().signOut();
+        },
+        icon: Icon(
+          Icons.logout,
+          color: Colors.red[600],
+        ));
+
     return Scaffold(
       appBar: currentIndex != 0
           ? AppBar(
               title: Text(
                 appBarTitle[currentIndex],
               ),
-              actions: currentIndex == 1 ? [iconButton] : null,
+              actions: currentIndex == 1
+                  ? [iconButton]
+                  : currentIndex == 4
+                      ? [logOutButton]
+                      : null,
             )
           : null,
       bottomNavigationBar: BottomNavigationBar(
