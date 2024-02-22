@@ -33,13 +33,18 @@ class CardService {
     return null;
   }
 
-  // Future<void> createUser(
-  //     {required String uid, required UserModel userModel}) async {
-  //   await _userCollectionReference.doc(uid).set(userModel.toJson());
-  // }
-
-  // Future<void> updateUser(
-  //     {required String uid, required Map<Object, Object?> data}) async {
-  //   await _userCollectionReference.doc(uid).update(data);
-  // }
+  Future<void> updateCard(
+      {required String cardNumber, required Map<Object, Object?> data}) async {
+    await _cardCollectionReference
+        .where('cardNumber', isEqualTo: cardNumber)
+        .get()
+        .then((querySnapshot) {
+      for (var doc in querySnapshot.docs) {
+        doc.reference
+            .update(data)
+            .then((value) => print("Item updated successfully"))
+            .catchError((error) => throw ("Failed to update item: $error"));
+      }
+    });
+  }
 }

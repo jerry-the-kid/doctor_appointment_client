@@ -13,8 +13,10 @@ class UserSettingScreen extends StatefulWidget {
 
 class _UserSettingScreenState extends State<UserSettingScreen> {
   bool light = true;
+
   @override
   Widget build(BuildContext context) {
+    var currentUser = context.watch<UserProvider>().currentUser;
     return Padding(
       padding: const EdgeInsets.only(right: 20, left: 20, bottom: 40),
       child: Column(
@@ -23,13 +25,13 @@ class _UserSettingScreenState extends State<UserSettingScreen> {
           const SizedBox(
             height: 5,
           ),
-          Text(context.watch<UserProvider>().currentUser!.userName,
+          Text(currentUser == null ? "" : currentUser.userName,
               style: Theme.of(context).textTheme.headlineMedium),
           const SizedBox(
             height: 5,
           ),
           Text(
-            context.watch<UserProvider>().currentUser!.email,
+            currentUser == null ? "" : currentUser.email,
             style:
                 Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14),
           ),

@@ -1,10 +1,16 @@
+import 'package:doctor_appointment_client/app/widgets/dialog.dart';
 import 'package:doctor_appointment_client/app/widgets/no_item_note.dart';
 import 'package:doctor_appointment_client/app/widgets/primary_full_btn.dart';
 import 'package:doctor_appointment_client/constants/app_colors.dart';
 import 'package:doctor_appointment_client/constants/helpers.dart';
+import 'package:doctor_appointment_client/data/models/booking_model.dart';
 import 'package:doctor_appointment_client/data/models/card_model.dart';
 import 'package:doctor_appointment_client/providers/booking_provider.dart';
 import 'package:doctor_appointment_client/providers/user_provider.dart';
+import 'package:doctor_appointment_client/services/auth_service.dart';
+import 'package:doctor_appointment_client/services/booking_service.dart';
+import 'package:doctor_appointment_client/services/card_service.dart';
+import 'package:doctor_appointment_client/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +34,20 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
 
     var cards = context.watch<UserProvider>().currentUser!.cards;
 
+    showDenyDialog(title, message) {
+      showDialog(
+          context: context,
+          builder: (context) => MessageDialog(
+                'info',
+                title: title,
+                message: message,
+                primaryButtonText: "Cancel",
+                primaryButtonCallback: () {
+                  Navigator.pop(context, true);
+                },
+              ));
+    }
+
     return Scaffold(
       appBar: AppBar(title: const Text("Payment Method")),
       floatingActionButton: Padding(
@@ -35,15 +55,70 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
         child: PrimaryFullBtn(
           title: 'Reserved booking for 250,000 VND',
           onPressed: () {
-            context.replace(
-              Uri(
-                path: '/appNotify',
-                queryParameters: {
-                  'svgSrc': 'assets/images/trans_done.svg',
-                  'title': 'Booking successfully !!'
+            var card = bookingProvider.card!;
+
+            if (card.currentBalance < 250000) {
+              showDenyDialog('Payment Deny',
+                  "Your card has insufficient balance to process the payment.");
+              return;
+            } else if (Helpers().isBeforeToday(
+                Helpers().parseShortDateString(card.expiredDate))) {
+              showDenyDialog("Payment Deny", "Your card has expired ");
+              return;
+            }
+
+            var doctor = context.read<BookingProvider>().doctor!;
+            var currentUser = context.read<UserProvider>().currentUser!;
+
+            var booking = BookingModel(
+                selectedDate: bookingTime,
+                userId: Auth().currentUser!.uid,
+                doctorName: doctor.name,
+                title: doctor.title,
+                specialistIn: doctor.specialistIn,
+                avatarUrl: doctor.avatarUrl,
+                createdDate: DateTime.now());
+
+            Helpers().handleFirebaseException(
+                context: context,
+                callBackFnc: () async {
+                  int index = currentUser.cards!.indexWhere((item) =>
+                      item.cardNumber == bookingProvider.card!.cardNumber);
+
+                  if (index != -1) {
+                    cards![index].currentBalance =
+                        cards[index].currentBalance - 250000;
+
+                    Map<String, dynamic> userData = currentUser.toJson();
+
+                    userData['cards'] =
+                        cards.map((card) => card.toJson()).toList();
+
+                    await UserService().updateUser(
+                      uid: Auth().currentUser!.uid,
+                      data: userData,
+                    );
+                  }
+
+                  await BookingService().createBooking(bookingModel: booking);
+
+                  final user =
+                      await Auth().getUserDocument(Auth().currentUser!.uid);
+                  if (context.mounted) {
+                    context.read<UserProvider>().setCurrentUser(user: user!);
+                  }
                 },
-              ).toString(),
-            );
+                successCallBack: () {
+                  context.replace(
+                    Uri(
+                      path: '/appNotify',
+                      queryParameters: {
+                        'svgSrc': 'assets/images/trans_done.svg',
+                        'title': 'Booking successfully !!'
+                      },
+                    ).toString(),
+                  );
+                });
           },
         ),
       ),
