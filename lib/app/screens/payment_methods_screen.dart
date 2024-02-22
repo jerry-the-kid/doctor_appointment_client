@@ -297,6 +297,12 @@ class _SelectedCardState extends State<SelectedCard> {
   int selectedCardIndex = 0;
 
   @override
+  void initState() {
+    super.initState();
+    context.read<BookingProvider>().setCard(card: widget.cards[0]);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 120,
