@@ -65,6 +65,15 @@ class Helpers {
     }
   }
 
+  // Utils
+  double calculateBMI(double weight, double height) {
+    if (weight <= 0 || height <= 0) {
+      throw ArgumentError("Weight and height must be positive values.");
+    }
+
+    return weight / (height * height);
+  }
+
   String generateRandomKey() {
     const characters =
         'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -73,7 +82,6 @@ class Helpers {
         12, (_) => characters.codeUnitAt(random.nextInt(characters.length))));
   }
 
-  // Utils
   Map<String, String> uriToObject(Uri uri) {
     Map<String, String> queryParams = uri.queryParameters;
 

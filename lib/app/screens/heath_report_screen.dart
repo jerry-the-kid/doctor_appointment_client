@@ -42,7 +42,10 @@ class HealthReportScreen extends StatelessWidget {
               MedicalCard(
                 imageSrc: 'assets/images/recommend_medicine.svg',
                 title: "Medical Prescription",
-                onTap: () {},
+                onTap: () {
+                  // context.push('/prescription/2');
+                  context.push("/prescription");
+                },
               ),
             ],
           ),

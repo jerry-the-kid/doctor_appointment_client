@@ -8,6 +8,8 @@ import 'package:doctor_appointment_client/app/screens/laboratory_test_screen.dar
 import 'package:doctor_appointment_client/app/screens/notification_screen.dart';
 import 'package:doctor_appointment_client/app/screens/payment_methods_screen.dart';
 import 'package:doctor_appointment_client/app/screens/physical_health_screen.dart';
+import 'package:doctor_appointment_client/app/screens/prescription_list.dart';
+import 'package:doctor_appointment_client/app/screens/prescription_screen.dart';
 import 'package:doctor_appointment_client/app/screens/register_screen.dart';
 import 'package:doctor_appointment_client/app/screens/app_notify_screen.dart';
 import 'package:doctor_appointment_client/app/screens/user_detail_screen.dart';
@@ -16,6 +18,7 @@ import 'package:doctor_appointment_client/app/widgets/widget_tree.dart';
 import 'package:doctor_appointment_client/constants/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:path/path.dart';
 
 // GoRouter configuration
 final router = GoRouter(
@@ -71,6 +74,12 @@ final router = GoRouter(
     GoRoute(
         path: '/health/physical',
         builder: (context, state) => const PhysicalHealthScreen()),
+    GoRoute(
+        path: '/prescription',
+        builder: (context, state) => const PrescriptionList()),
+    GoRoute(
+        path: '/prescription/:prescriptionId',
+        builder: (context, state) => const PrescriptionScreen()),
     GoRoute(
       path: '/doctors',
       builder: (context, state) => const DoctorListScreen(),
