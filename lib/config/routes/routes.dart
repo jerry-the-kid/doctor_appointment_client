@@ -24,6 +24,16 @@ final router = GoRouter(
     GoRoute(path: '/', builder: (context, state) => const WidgetTreeState()),
     GoRoute(
         path: '/appNotify',
+        // context.replace(
+        //             Uri(
+        //               path: '/appNotify',
+        //               queryParameters: {
+        //                 'svgSrc': 'assets/images/trans_done.svg',
+        //                 'title': 'Booking successfully !!'
+        //               },
+        //             ).toString(),
+        //           );
+
         builder: (context, state) {
           Map<String, String> result = Helpers().uriToObject(state.uri);
 
@@ -81,7 +91,15 @@ final router = GoRouter(
     ),
     GoRoute(
         path: '/doctors/:doctorId',
-        builder: ((context, state) =>
-            DoctorDetailScreen(id: state.pathParameters['doctorId']!)))
+        builder: ((context, state) {
+          Map<String, String> result = Helpers().uriToObject(state.uri);
+
+          final rescheduleBookingID = result['rescheduleBookingID'];
+
+          return DoctorDetailScreen(
+            id: state.pathParameters['doctorId']!,
+            rescheduleBookingID: rescheduleBookingID,
+          );
+        }))
   ],
 );

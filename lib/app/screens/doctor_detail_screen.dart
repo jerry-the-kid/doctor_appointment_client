@@ -3,8 +3,12 @@ import 'package:doctor_appointment_client/app/widgets/doctor_list_tile.dart';
 import 'package:doctor_appointment_client/app/widgets/primary_full_btn.dart';
 import 'package:doctor_appointment_client/constants/app_colors.dart';
 import 'package:doctor_appointment_client/constants/helpers.dart';
+import 'package:doctor_appointment_client/data/models/booking_model.dart';
 import 'package:doctor_appointment_client/data/models/doctor_model.dart';
 import 'package:doctor_appointment_client/providers/booking_provider.dart';
+import 'package:doctor_appointment_client/providers/refresh_provider.dart';
+import 'package:doctor_appointment_client/services/auth_service.dart';
+import 'package:doctor_appointment_client/services/booking_service.dart';
 import 'package:doctor_appointment_client/services/doctor_service.dart';
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +16,10 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class DoctorDetailScreen extends StatelessWidget {
-  const DoctorDetailScreen({super.key, this.id = ''});
+  const DoctorDetailScreen({super.key, this.id = '', this.rescheduleBookingID});
 
   final String id;
+  final String? rescheduleBookingID;
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +28,58 @@ class DoctorDetailScreen extends StatelessWidget {
         floatingActionButton: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: PrimaryFullBtn(
-            title: 'Book Appointment',
+            title: rescheduleBookingID == null
+                ? 'Book Appointment'
+                : "Reschedule Appointment",
             onPressed: () {
-              context.push('/payments');
+              if (rescheduleBookingID == null) {
+                context.push('/payments');
+              } else {
+                Helpers().handleFirebaseException(
+                    context: context,
+                    callBackFnc: () async {
+                      await BookingService().updateBooking(
+                          uid: rescheduleBookingID!,
+                          data: {
+                            "cancel": true,
+                            "cancelReason": "Schedule Change"
+                          });
+
+                      if (context.mounted) {
+                        var bookingProvider = context.read<BookingProvider>();
+                        var bookingTime = Helpers()
+                            .combineDateTimeAndTimeString(
+                                bookingProvider.selectedDate,
+                                bookingProvider.selectedHour);
+
+                        var doctor = bookingProvider.doctor!;
+
+                        var booking = BookingModel(
+                            selectedDate: bookingTime,
+                            userId: Auth().currentUser!.uid,
+                            doctorId: doctor.id!,
+                            doctorName: doctor.name,
+                            title: doctor.title,
+                            specialistIn: doctor.specialistIn,
+                            avatarUrl: doctor.avatarUrl,
+                            createdDate: DateTime.now());
+
+                        await BookingService()
+                            .createBooking(bookingModel: booking);
+                      }
+                    },
+                    successCallBack: () {
+                      context.replace(
+                        Uri(
+                          path: '/appNotify',
+                          queryParameters: {
+                            'svgSrc': 'assets/images/trans_done.svg',
+                            'title': 'Booking successfully !!'
+                          },
+                        ).toString(),
+                      );
+                    });
+              }
             },
           ),
         ),

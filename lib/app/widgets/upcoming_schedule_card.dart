@@ -1,3 +1,4 @@
+import 'package:doctor_appointment_client/app/widgets/dialog.dart';
 import 'package:doctor_appointment_client/constants/app_colors.dart';
 import 'package:doctor_appointment_client/constants/helpers.dart';
 import 'package:doctor_appointment_client/data/models/booking_model.dart';
@@ -28,6 +29,12 @@ class _UpcomingScheduleCardState extends State<UpcomingScheduleCard> {
     final width = MediaQuery.of(context).size.width;
     var bookingTimeString =
         "${Helpers().formattedDate(newPattern: "HH:mm", dateTime: widget.bookingModel.selectedDate)} - ${Helpers().formattedDate(newPattern: "HH:mm", dateTime: widget.bookingModel.selectedDate.add(const Duration(hours: 1)))}";
+
+    bool isDateTimeWithinThreeDays(DateTime dateTime) {
+      DateTime now = DateTime.now();
+      Duration difference = dateTime.difference(now);
+      return difference.inDays >= 3;
+    }
 
     return Container(
       decoration: BoxDecoration(
@@ -152,7 +159,55 @@ class _UpcomingScheduleCardState extends State<UpcomingScheduleCard> {
                       style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.orange,
                           foregroundColor: Colors.white),
-                      onPressed: widget.isCancel ? null : () {},
+                      onPressed: widget.isCancel
+                          ? null
+                          : () {
+                              if (!widget.isPast) {
+                                if (!isDateTimeWithinThreeDays(
+                                    widget.bookingModel.selectedDate)) {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) => MessageDialog(
+                                            'info',
+                                            title: "Reschedule Invalid",
+                                            message:
+                                                "Schedule within 3 days can't be rescheduled",
+                                            primaryButtonText: "Cancel",
+                                            primaryButtonCallback: () {
+                                              Navigator.pop(context, true);
+                                            },
+                                          ));
+                                } else {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => MessageDialog(
+                                      'info',
+                                      title: "Reschedule Warning",
+                                      message:
+                                          "Current schedule will be canceled to make new one.",
+                                      primaryButtonText: "Reschedule",
+                                      primaryButtonCallback: () {
+                                        Navigator.pop(context, true);
+                                        context.push(
+                                          Uri(
+                                            path:
+                                                '/doctors/${widget.bookingModel.doctorId}',
+                                            queryParameters: {
+                                              'rescheduleBookingID':
+                                                  widget.bookingModel.id,
+                                            },
+                                          ).toString(),
+                                        );
+                                      },
+                                      secondaryButtonText: "Cancel",
+                                      secondaryButtonCallback: () {
+                                        Navigator.pop(context, true);
+                                      },
+                                    ),
+                                  );
+                                }
+                              }
+                            },
                       child: Text(widget.isPast ? 'Add Review' : "Reschedule")))
             ],
           ),
