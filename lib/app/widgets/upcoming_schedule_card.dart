@@ -1,13 +1,20 @@
 import 'package:doctor_appointment_client/constants/app_colors.dart';
+import 'package:doctor_appointment_client/constants/helpers.dart';
+import 'package:doctor_appointment_client/data/models/booking_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class UpcomingScheduleCard extends StatefulWidget {
   final bool isActive;
   final bool isPast;
+  final BookingModel bookingModel;
 
-  const UpcomingScheduleCard(
-      {super.key, this.isActive = false, this.isPast = false});
+  const UpcomingScheduleCard({
+    super.key,
+    required this.bookingModel,
+    this.isActive = false,
+    this.isPast = false,
+  });
 
   @override
   State<UpcomingScheduleCard> createState() => _UpcomingScheduleCardState();
@@ -17,6 +24,8 @@ class _UpcomingScheduleCardState extends State<UpcomingScheduleCard> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+    var bookingTimeString =
+        "${Helpers().formattedDate(newPattern: "HH:mm", dateTime: widget.bookingModel.selectedDate)} - ${Helpers().formattedDate(newPattern: "HH:mm", dateTime: widget.bookingModel.selectedDate.add(const Duration(hours: 1)))}";
 
     return Container(
       decoration: BoxDecoration(
@@ -34,7 +43,7 @@ class _UpcomingScheduleCardState extends State<UpcomingScheduleCard> {
                 borderRadius: BorderRadius.circular(10), // Image border
                 child: SizedBox.fromSize(
                   size: const Size.fromRadius(25), // Image radius
-                  child: Image.asset('assets/images/doctor.jpg',
+                  child: Image.network(widget.bookingModel.avatarUrl,
                       alignment: Alignment.topCenter, fit: BoxFit.cover),
                 ),
               ),
@@ -43,14 +52,14 @@ class _UpcomingScheduleCardState extends State<UpcomingScheduleCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Dr. Anna Baker",
+                    "${widget.bookingModel.title} ${widget.bookingModel.doctorName}",
                     style: TextStyle(
                         color: widget.isActive ? Colors.white : Colors.black,
                         fontSize: 19,
                         fontWeight: FontWeight.w500),
                   ),
                   Text(
-                    "MBBS, FPCS (Cardiologist)",
+                    widget.bookingModel.specialistIn,
                     style: Theme.of(context).textTheme.bodySmall,
                   )
                 ],
@@ -76,7 +85,9 @@ class _UpcomingScheduleCardState extends State<UpcomingScheduleCard> {
                   width: 5,
                 ),
                 Text(
-                  "Tuesday, July 22",
+                  Helpers().formattedDate(
+                      newPattern: 'EEEE, MMMM d',
+                      dateTime: widget.bookingModel.selectedDate),
                   style: TextStyle(
                       fontSize: width < 450 ? 12 : 14,
                       color: widget.isActive ? Colors.white : Colors.black),
@@ -91,7 +102,8 @@ class _UpcomingScheduleCardState extends State<UpcomingScheduleCard> {
                   width: 5,
                 ),
                 Text(
-                  "11:00 - 12:00 AM",
+                  // "11:00 - 12:00 AM",
+                  bookingTimeString,
                   style: TextStyle(
                       fontSize: width < 450 ? 12 : 14,
                       color: widget.isActive ? Colors.white : Colors.black),

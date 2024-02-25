@@ -27,3 +27,24 @@ class BookingModel {
 
   Map<String, dynamic> toJson() => _$BookingModelToJson(this);
 }
+
+BookingModel findClosestBooking(
+    List<BookingModel> bookings, DateTime targetDate) {
+  BookingModel closestBooking = bookings.first;
+
+  Duration minDifference =
+      (closestBooking.selectedDate.difference(targetDate)).abs();
+
+  for (int i = 1; i < bookings.length; i++) {
+    BookingModel currentBooking = bookings[i];
+    Duration difference =
+        (currentBooking.selectedDate.difference(targetDate)).abs();
+
+    if (difference < minDifference) {
+      minDifference = difference;
+      closestBooking = currentBooking;
+    }
+  }
+
+  return closestBooking;
+}

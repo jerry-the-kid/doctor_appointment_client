@@ -142,10 +142,8 @@ class PrescriptionScreen extends StatelessWidget {
                 "Advice :",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
               ),
-              const Text("* TAKE BED REST"),
-              const Text("* DO NOT EAT OUTSIDE FOOD"),
               const Text(
-                  "* EAT EASY TO DIGEST FOOD LIKE BOILED RICE WITH DAAL"),
+                  "* TAKE BED REST\n* DO NOT EAT OUTSIDE FOOD\n* EAT EASY TO DIGEST FOOD LIKE BOILED RICE WITH DAAL"),
               const SizedBox(
                 height: 20,
               ),

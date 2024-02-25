@@ -40,22 +40,22 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
             tabValue == 0
                 ? const Column(
                     children: [
-                      SizedBox(height: 20),
-                      UpcomingScheduleCard(isActive: true),
-                      SizedBox(height: 10),
-                      UpcomingScheduleCard(),
-                      SizedBox(height: 10),
-                      UpcomingScheduleCard(),
+                      // SizedBox(height: 20),
+                      // UpcomingScheduleCard(isActive: true),
+                      // SizedBox(height: 10),
+                      // UpcomingScheduleCard(),
+                      // SizedBox(height: 10),
+                      // UpcomingScheduleCard(),
                     ],
                   )
                 : const Column(
                     children: [
-                      SizedBox(height: 20),
-                      UpcomingScheduleCard(isPast: true),
-                      SizedBox(height: 20),
-                      UpcomingScheduleCard(isPast: true),
-                      SizedBox(height: 20),
-                      UpcomingScheduleCard(isPast: true),
+                      // SizedBox(height: 20),
+                      // UpcomingScheduleCard(isPast: true),
+                      // SizedBox(height: 20),
+                      // UpcomingScheduleCard(isPast: true),
+                      // SizedBox(height: 20),
+                      // UpcomingScheduleCard(isPast: true),
                     ],
                   ),
           ],

@@ -29,9 +29,12 @@ class _MainScreenState extends State<MainScreen> {
   ];
 
   @override
-  Widget build(BuildContext context) {
-    // Auth().signOut();
+  void initState() {
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     var iconButton = IconButton(
         onPressed: () {
           showDialog(

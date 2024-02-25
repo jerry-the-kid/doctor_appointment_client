@@ -1,9 +1,13 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:doctor_appointment_client/app/widgets/doctor_list.dart';
 import 'package:doctor_appointment_client/app/widgets/no_item_note.dart';
+import 'package:doctor_appointment_client/app/widgets/upcoming_schedule_card.dart';
 import 'package:doctor_appointment_client/constants/app_colors.dart';
+import 'package:doctor_appointment_client/data/models/booking_model.dart';
 import 'package:doctor_appointment_client/data/models/user_model.dart';
+import 'package:doctor_appointment_client/providers/refresh_provider.dart';
 import 'package:doctor_appointment_client/providers/user_provider.dart';
+import 'package:doctor_appointment_client/services/booking_service.dart';
 import 'package:doctor_appointment_client/services/doctor_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -56,8 +60,26 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(
             height: 15,
           ),
-          const NoItemNote(message: "You don't have any upcoming schedule !"),
-          // const UpcomingScheduleCard(isActive: true),
+          FutureBuilder(
+              key: Key(context.watch<KeyRefreshProvider>().bookingKey),
+              future: BookingService().getAllBookings(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                if (snapshot.connectionState == ConnectionState.done &&
+                    (snapshot.data == null || snapshot.data!.isEmpty)) {
+                  return const NoItemNote(
+                      message: "You don't have any upcoming schedule !");
+                }
+
+                var closestBooking =
+                    findClosestBooking(snapshot.data!, DateTime.now());
+
+                return UpcomingScheduleCard(
+                    isActive: true, bookingModel: closestBooking);
+              }),
           const SizedBox(
             height: 30,
           ),

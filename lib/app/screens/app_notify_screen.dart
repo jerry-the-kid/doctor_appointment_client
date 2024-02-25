@@ -1,7 +1,9 @@
 import 'package:doctor_appointment_client/app/widgets/primary_full_btn.dart';
+import 'package:doctor_appointment_client/providers/refresh_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class AppNotifyScreen extends StatelessWidget {
   final String svgSrc;
@@ -31,6 +33,7 @@ class AppNotifyScreen extends StatelessWidget {
                 context.pop();
               } else {
                 context.go("/");
+                context.read<KeyRefreshProvider>().setRefreshProvider();
               }
             },
           ),

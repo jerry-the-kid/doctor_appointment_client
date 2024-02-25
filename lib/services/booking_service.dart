@@ -8,4 +8,17 @@ class BookingService {
   Future<void> createBooking({required BookingModel bookingModel}) async {
     await _bookingCollectionReference.add(bookingModel.toJson());
   }
+
+  Future<List<BookingModel>> getAllBookings() async {
+    List<BookingModel> bookings = [];
+    QuerySnapshot querySnapshot = await _bookingCollectionReference.get();
+
+    for (var doc in querySnapshot.docs) {
+      Map<String, dynamic> bookingData = doc.data() as Map<String, dynamic>;
+      BookingModel booking = BookingModel.fromJson(bookingData);
+      bookings.add(booking);
+    }
+
+    return bookings;
+  }
 }

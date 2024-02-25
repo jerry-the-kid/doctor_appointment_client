@@ -5,11 +5,14 @@ import 'package:doctor_appointment_client/constants/app_colors.dart';
 import 'package:doctor_appointment_client/constants/helpers.dart';
 import 'package:doctor_appointment_client/data/models/booking_model.dart';
 import 'package:doctor_appointment_client/data/models/card_model.dart';
+import 'package:doctor_appointment_client/data/models/doctor_model.dart';
+import 'package:doctor_appointment_client/data/models/medicine_model.dart';
+import 'package:doctor_appointment_client/data/models/prescription_model.dart';
 import 'package:doctor_appointment_client/providers/booking_provider.dart';
 import 'package:doctor_appointment_client/providers/user_provider.dart';
 import 'package:doctor_appointment_client/services/auth_service.dart';
 import 'package:doctor_appointment_client/services/booking_service.dart';
-import 'package:doctor_appointment_client/services/card_service.dart';
+import 'package:doctor_appointment_client/services/prescription_service.dart';
 import 'package:doctor_appointment_client/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -23,6 +26,63 @@ class PaymentMethodScreen extends StatefulWidget {
 }
 
 class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
+  List<MedicineModel> medicines = [
+    MedicineModel(
+        name: "ABCIXIMAB",
+        type: "TAB",
+        medicalHours: ["morning", "afternoon"],
+        duration: 8),
+    MedicineModel(
+        name: "VOMILAST",
+        type: "TAB",
+        medicalHours: ["morning", "night"],
+        duration: 8),
+    MedicineModel(
+        name: "ZOCLAR 500",
+        type: "CAP",
+        medicalHours: ["morning"],
+        duration: 3),
+    MedicineModel(
+        name: "GESTAKIND 10/SR",
+        type: "TAB",
+        medicalHours: ["night"],
+        duration: 4),
+  ];
+
+  addPrescription(DoctorModel doctor) async {
+    var prescription = PrescriptionModel(
+      userId: Auth().currentUser!.uid,
+      doctorName: doctor.name,
+      title: doctor.title,
+      specialistIn: doctor.specialistIn,
+      avatarUrl: doctor.avatarUrl,
+      createdDate: DateTime.now(),
+      chiefComplaints: "* FEVER WITH CHILLS (4 DAYS)\n* HEADACHE (2 DAYS)",
+      clinicalFindings:
+          "* THERE ARE TEST FINDING FOR A TEST PATIENT\n* ENTERING SAMPLE DIAGNOSIS AND SAMPLE PRESCRIPTION",
+      diagnosis: "* MALARIA",
+      medicines: medicines.map((medicine) {
+        return {
+          'name': medicine.name,
+          'type': medicine.type,
+          'medicalHours':
+              medicine.medicalHours.map((hour) => hour.toString()).toList(),
+          'duration': medicine.duration,
+        };
+      }).toList(),
+      advices:
+          "* TAKE BED REST\n* DO NOT EAT OUTSIDE FOOD\n* EAT EASY TO DIGEST FOOD LIKE BOILED RICE WITH DAAL",
+    );
+
+    await PrescriptionService()
+        .createPrescription(prescriptionModel: prescription);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var bookingProvider = context.watch<BookingProvider>();
@@ -56,6 +116,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
           title: 'Reserved booking for 250,000 VND',
           onPressed: () {
             var card = bookingProvider.card!;
+            // card ??= context.read<UserProvider>().currentUser!.cards![0];
 
             if (card.currentBalance < 250000) {
               showDenyDialog('Payment Deny',
@@ -107,6 +168,8 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                   if (context.mounted) {
                     context.read<UserProvider>().setCurrentUser(user: user!);
                   }
+
+                  addPrescription(bookingProvider.doctor!);
                 },
                 successCallBack: () {
                   context.replace(
@@ -297,13 +360,11 @@ class _SelectedCardState extends State<SelectedCard> {
   int selectedCardIndex = 0;
 
   @override
-  void initState() {
-    super.initState();
-    context.read<BookingProvider>().setCard(card: widget.cards[0]);
-  }
-
-  @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration.zero, () {
+      context.read<BookingProvider>().setCard(card: widget.cards[0]);
+    });
+
     return SizedBox(
       height: 120,
       child: ListView.builder(

@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:doctor_appointment_client/config/routes/routes.dart';
 import 'package:doctor_appointment_client/config/theme/theme.dart';
 import 'package:doctor_appointment_client/providers/booking_provider.dart';
+import 'package:doctor_appointment_client/providers/refresh_provider.dart';
 import 'package:doctor_appointment_client/providers/user_provider.dart';
-import 'package:doctor_appointment_client/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -17,15 +17,6 @@ void configLoading() {
     ..displayDuration = const Duration(milliseconds: 2000)
     ..indicatorType = EasyLoadingIndicatorType.ring
     ..loadingStyle = EasyLoadingStyle.dark;
-  // ..indicatorSize = 45.0
-  // ..radius = 10.0
-  // ..progressColor = Colors.yellow
-  // ..backgroundColor = Colors.green
-  // ..indicatorColor = Colors.yellow
-  // ..textColor = Colors.yellow
-  // ..maskColor = Colors.blue.withOpacity(0.5)
-  // ..userInteractions = true
-  // ..dismissOnTap = false;
 }
 
 void main() async {
@@ -63,6 +54,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (context) => KeyRefreshProvider()),
         ChangeNotifierProvider(create: (context) => BookingProvider()),
         ChangeNotifierProvider(create: (context) => UserProvider()),
       ],
