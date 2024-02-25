@@ -22,4 +22,9 @@ class BookingService {
 
     return bookings;
   }
+
+  Future<void> updateBooking(
+      {required String uid, required Map<Object, Object?> data}) async {
+    await _bookingCollectionReference.doc(uid).update(data);
+  }
 }

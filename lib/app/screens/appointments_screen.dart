@@ -114,6 +114,8 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                                                 height: 10,
                                               ),
                                               UpcomingScheduleCard(
+                                                  isPast: true,
+                                                  isCancel: booking.cancel,
                                                   bookingModel: booking),
                                             ],
                                           ))

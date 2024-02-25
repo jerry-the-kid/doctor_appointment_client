@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 class UpcomingScheduleCard extends StatefulWidget {
   final bool isActive;
   final bool isPast;
+  final bool isCancel;
   final BookingModel bookingModel;
 
   const UpcomingScheduleCard({
@@ -14,6 +15,7 @@ class UpcomingScheduleCard extends StatefulWidget {
     required this.bookingModel,
     this.isActive = false,
     this.isPast = false,
+    this.isCancel = false,
   });
 
   @override
@@ -38,6 +40,7 @@ class _UpcomingScheduleCardState extends State<UpcomingScheduleCard> {
       child: Column(
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(10), // Image border
@@ -55,7 +58,7 @@ class _UpcomingScheduleCardState extends State<UpcomingScheduleCard> {
                     "${widget.bookingModel.title} ${widget.bookingModel.doctorName}",
                     style: TextStyle(
                         color: widget.isActive ? Colors.white : Colors.black,
-                        fontSize: 19,
+                        fontSize: width < 450 ? 16 : 19,
                         fontWeight: FontWeight.w500),
                   ),
                   Text(
@@ -63,7 +66,22 @@ class _UpcomingScheduleCardState extends State<UpcomingScheduleCard> {
                     style: Theme.of(context).textTheme.bodySmall,
                   )
                 ],
-              )
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              if (widget.isCancel)
+                Container(
+                  decoration: BoxDecoration(
+                      color: AppColors.gray_1,
+                      borderRadius: BorderRadius.circular(8)),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 4, horizontal: 6),
+                  child: const Text(
+                    "Cancel",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
             ],
           ),
           const SizedBox(height: 15),
@@ -120,7 +138,8 @@ class _UpcomingScheduleCardState extends State<UpcomingScheduleCard> {
                   child: ElevatedButton(
                       onPressed: () {
                         if (!widget.isPast) {
-                          context.push('/appointment/cancel');
+                          context.push(
+                              '/appointment/cancel/${widget.bookingModel.id}');
                         }
                       },
                       child: Text(widget.isPast ? 'Re-Book' : 'Cancel'))),
@@ -130,7 +149,7 @@ class _UpcomingScheduleCardState extends State<UpcomingScheduleCard> {
                       style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.orange,
                           foregroundColor: Colors.white),
-                      onPressed: () {},
+                      onPressed: widget.isCancel ? null : () {},
                       child: Text(widget.isPast ? 'Add Review' : "Reschedule")))
             ],
           ),

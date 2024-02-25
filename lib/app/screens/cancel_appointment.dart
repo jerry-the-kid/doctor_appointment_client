@@ -1,8 +1,15 @@
 import 'package:doctor_appointment_client/constants/app_colors.dart';
+import 'package:doctor_appointment_client/constants/helpers.dart';
+import 'package:doctor_appointment_client/providers/refresh_provider.dart';
+import 'package:doctor_appointment_client/services/booking_service.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class CancelAppointment extends StatefulWidget {
-  const CancelAppointment({super.key});
+  final String bookingId;
+
+  const CancelAppointment({super.key, required this.bookingId});
 
   @override
   State<CancelAppointment> createState() => _CancelAppointmentState();
@@ -19,6 +26,13 @@ List<String> options = [
 
 class _CancelAppointmentState extends State<CancelAppointment> {
   String currentOption = options[0];
+  String otherReason = "";
+
+  void _handleOtherReasonChange(String value) {
+    setState(() {
+      otherReason = value;
+    });
+  }
 
   void _handleRadioValueChange(String? value) {
     if (value != null) {
@@ -30,7 +44,6 @@ class _CancelAppointmentState extends State<CancelAppointment> {
 
   @override
   Widget build(BuildContext context) {
-    print(currentOption);
     return Scaffold(
       appBar: AppBar(title: const Text("Cancel Booking")),
       body: SingleChildScrollView(
@@ -70,7 +83,9 @@ class _CancelAppointmentState extends State<CancelAppointment> {
                     .copyWith(fontSize: 16, fontWeight: FontWeight.w400),
               ),
               const SizedBox(height: 10),
-              const RoundedTextArea(),
+              RoundedTextArea(
+                onChanged: _handleOtherReasonChange,
+              ),
               const SizedBox(height: 50),
               SizedBox(
                 width: double.infinity,
@@ -79,7 +94,25 @@ class _CancelAppointmentState extends State<CancelAppointment> {
                         padding: const EdgeInsets.symmetric(vertical: 20),
                         backgroundColor: AppColors.primaryColor,
                         foregroundColor: Colors.white),
-                    onPressed: () {},
+                    onPressed: () {
+                      Helpers().handleFirebaseException(
+                          context: context,
+                          callBackFnc: () async {
+                            await BookingService()
+                                .updateBooking(uid: widget.bookingId, data: {
+                              "cancel": true,
+                              "cancelReason": currentOption == 'Other'
+                                  ? otherReason
+                                  : currentOption
+                            });
+                          },
+                          successCallBack: () {
+                            context
+                                .read<KeyRefreshProvider>()
+                                .setRefreshProvider();
+                            context.pop();
+                          });
+                    },
                     child: const Text("Cancel Appointment")),
               ),
             ],
@@ -91,8 +124,11 @@ class _CancelAppointmentState extends State<CancelAppointment> {
 }
 
 class RoundedTextArea extends StatelessWidget {
+  final Function(String)? onChanged;
+
   const RoundedTextArea({
     super.key,
+    this.onChanged,
   });
 
   @override
@@ -106,6 +142,7 @@ class RoundedTextArea extends StatelessWidget {
         ),
       ),
       child: TextFormField(
+        onChanged: onChanged,
         minLines: 6,
         keyboardType: TextInputType.multiline,
         maxLines: null,

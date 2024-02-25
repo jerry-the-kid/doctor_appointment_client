@@ -13,12 +13,10 @@ import 'package:doctor_appointment_client/app/screens/prescription_screen.dart';
 import 'package:doctor_appointment_client/app/screens/register_screen.dart';
 import 'package:doctor_appointment_client/app/screens/app_notify_screen.dart';
 import 'package:doctor_appointment_client/app/screens/user_detail_screen.dart';
-import 'package:doctor_appointment_client/app/screens/user_setting_screen.dart';
 import 'package:doctor_appointment_client/app/widgets/widget_tree.dart';
 import 'package:doctor_appointment_client/constants/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:path/path.dart';
 
 // GoRouter configuration
 final router = GoRouter(
@@ -43,10 +41,6 @@ final router = GoRouter(
         }),
     GoRoute(
         path: '/register', builder: (context, state) => const RegisterScreen()),
-
-    // GoRoute(
-    //     path: '/',
-    //     builder: (context, state) => const CheckupAppointmentScreen()),
     GoRoute(
         path: '/payments',
         builder: (context, state) => const PaymentMethodScreen()),
@@ -58,8 +52,9 @@ final router = GoRouter(
       builder: (context, state) => const CheckupAppointmentScreen(),
     ),
     GoRoute(
-        path: '/appointment/cancel',
-        builder: (context, state) => const CancelAppointment()),
+        path: '/appointment/cancel/:bookingId',
+        builder: (context, state) =>
+            CancelAppointment(bookingId: state.pathParameters['bookingId']!)),
     GoRoute(
         path: '/user', builder: (context, state) => const UserDetailScreen()),
     GoRoute(
