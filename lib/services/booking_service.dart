@@ -16,6 +16,7 @@ class BookingService {
     for (var doc in querySnapshot.docs) {
       Map<String, dynamic> bookingData = doc.data() as Map<String, dynamic>;
       BookingModel booking = BookingModel.fromJson(bookingData);
+      booking.id = doc.id;
       bookings.add(booking);
     }
 

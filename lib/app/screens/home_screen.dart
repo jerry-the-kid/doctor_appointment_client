@@ -68,17 +68,19 @@ class HomeScreen extends StatelessWidget {
                   return const Center(child: CircularProgressIndicator());
                 }
 
+                var closestBooking =
+                    findClosestBooking(snapshot.data!, DateTime.now());
+
                 if (snapshot.connectionState == ConnectionState.done &&
-                    (snapshot.data == null || snapshot.data!.isEmpty)) {
+                    (snapshot.data == null ||
+                        snapshot.data!.isEmpty ||
+                        closestBooking == null)) {
                   return const NoItemNote(
                       message: "You don't have any upcoming schedule !");
                 }
 
-                var closestBooking =
-                    findClosestBooking(snapshot.data!, DateTime.now());
-
                 return UpcomingScheduleCard(
-                    isActive: true, bookingModel: closestBooking);
+                    isActive: true, bookingModel: closestBooking!);
               }),
           const SizedBox(
             height: 30,

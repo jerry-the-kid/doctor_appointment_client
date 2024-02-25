@@ -14,6 +14,9 @@ BookingModel _$BookingModelFromJson(Map<String, dynamic> json) => BookingModel(
       specialistIn: json['specialistIn'] as String,
       avatarUrl: json['avatarUrl'] as String,
       createdDate: DateTime.parse(json['createdDate'] as String),
+      cancel: json['cancel'] as bool? ?? false,
+      cancelReason: json['cancelReason'] as String?,
+      id: json['id'] as String?,
     );
 
 Map<String, dynamic> _$BookingModelToJson(BookingModel instance) =>
@@ -25,4 +28,7 @@ Map<String, dynamic> _$BookingModelToJson(BookingModel instance) =>
       'title': instance.title,
       'specialistIn': instance.specialistIn,
       'avatarUrl': instance.avatarUrl,
+      'cancel': instance.cancel,
+      'cancelReason': instance.cancelReason,
+      'id': instance.id,
     };
