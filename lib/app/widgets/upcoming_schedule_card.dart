@@ -140,6 +140,9 @@ class _UpcomingScheduleCardState extends State<UpcomingScheduleCard> {
                         if (!widget.isPast) {
                           context.push(
                               '/appointment/cancel/${widget.bookingModel.id}');
+                        } else {
+                          context
+                              .push("/doctors/${widget.bookingModel.doctorId}");
                         }
                       },
                       child: Text(widget.isPast ? 'Re-Book' : 'Cancel'))),

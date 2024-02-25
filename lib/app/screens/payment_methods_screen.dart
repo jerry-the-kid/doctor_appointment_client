@@ -134,6 +134,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
             var booking = BookingModel(
                 selectedDate: bookingTime,
                 userId: Auth().currentUser!.uid,
+                doctorId: doctor.id!,
                 doctorName: doctor.name,
                 title: doctor.title,
                 specialistIn: doctor.specialistIn,

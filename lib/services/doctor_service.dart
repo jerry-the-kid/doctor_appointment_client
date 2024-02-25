@@ -16,7 +16,9 @@ class DoctorService {
     if (documentSnapshot.exists) {
       Map<String, dynamic> doctorData =
           documentSnapshot.data() as Map<String, dynamic>;
-      return DoctorModel.fromJson(doctorData);
+      DoctorModel doctor = DoctorModel.fromJson(doctorData);
+      doctor.id = documentSnapshot.id;
+      return doctor;
     } else {
       return null;
     }

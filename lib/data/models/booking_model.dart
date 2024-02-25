@@ -7,6 +7,7 @@ class BookingModel {
   DateTime selectedDate;
   DateTime createdDate;
   String userId;
+  String doctorId;
   String doctorName;
   String title;
   String specialistIn;
@@ -18,6 +19,7 @@ class BookingModel {
   BookingModel({
     required this.selectedDate,
     required this.userId,
+    required this.doctorId,
     required this.doctorName,
     required this.title,
     required this.specialistIn,
