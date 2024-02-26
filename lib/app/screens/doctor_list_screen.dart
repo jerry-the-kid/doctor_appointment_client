@@ -1,12 +1,35 @@
 import 'package:doctor_appointment_client/app/widgets/doctor_list.dart';
+import 'package:doctor_appointment_client/app/widgets/no_item_note.dart';
 import 'package:doctor_appointment_client/constants/app_colors.dart';
+import 'package:doctor_appointment_client/services/doctor_service.dart';
 import 'package:flutter/material.dart';
 
-class DoctorListScreen extends StatelessWidget {
+List<String> doctorSpecialist = [
+  "Khoa Răng Hàm Mặt",
+  "Khoa Ngoại Tổng Hợp",
+  "Khoa Nội Tổng Hợp",
+];
+
+class DoctorListScreen extends StatefulWidget {
   const DoctorListScreen({super.key});
 
   @override
+  State<DoctorListScreen> createState() => _DoctorListScreenState();
+}
+
+class _DoctorListScreenState extends State<DoctorListScreen> {
+  String selectedSpecialist = doctorSpecialist[0];
+
+  @override
   Widget build(BuildContext context) {
+    ButtonStyle activeButtonStyle = ElevatedButton.styleFrom(
+      foregroundColor: Colors.white,
+      backgroundColor: AppColors.primaryColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Doctors"),
@@ -26,31 +49,47 @@ class DoctorListScreen extends StatelessWidget {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          backgroundColor: AppColors.primaryColor,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8))),
-                      onPressed: () {},
-                      child: const Text("Gynecologist")),
-                  const SizedBox(width: 5),
-                  ElevatedButton(
-                      onPressed: () {}, child: const Text("Pediatrics")),
-                  const SizedBox(width: 5),
-                  ElevatedButton(
-                      onPressed: () {}, child: const Text("Cardiologist")),
-                  const SizedBox(width: 5),
-                  ElevatedButton(
-                      onPressed: () {}, child: const Text("Cardiologist")),
-                  const SizedBox(width: 5),
+                  ...doctorSpecialist.map((e) => Row(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          ElevatedButton(
+                              style: selectedSpecialist == e
+                                  ? activeButtonStyle
+                                  : null,
+                              onPressed: () {
+                                setState(() {
+                                  selectedSpecialist = e;
+                                });
+                              },
+                              child: Text(e)),
+                          const SizedBox(width: 5),
+                        ],
+                      )),
                 ],
               ),
             ),
             const SizedBox(height: 30),
-            // const Expanded(
-            //   child: DoctorList(),
-            // )
+            FutureBuilder(
+                future: DoctorService()
+                    .getDoctorsBySpecialist(specialistIn: selectedSpecialist),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    // return const Scaffold(
+                    //     body: Center(child: CircularProgressIndicator()));
+                    return const Expanded(
+                        child: Center(
+                      child: CircularProgressIndicator(),
+                    ));
+                  }
+
+                  if (snapshot.connectionState == ConnectionState.done &&
+                      (snapshot.data == null || snapshot.data!.isEmpty)) {
+                    return const NoItemNote(
+                        message: "No doctors found with this specialist !");
+                  }
+
+                  return Expanded(child: DoctorList(doctors: snapshot.data!));
+                })
           ],
         ),
       ),
