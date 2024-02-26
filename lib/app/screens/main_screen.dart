@@ -93,7 +93,15 @@ class _MainScreenState extends State<MainScreen> {
         child: IndexedStack(
           index: currentIndex,
           children: [
-            SingleChildScrollView(child: HomeScreen(user: widget.user)),
+            SingleChildScrollView(
+                child: HomeScreen(
+              user: widget.user,
+              onGoToDoctorList: () {
+                setState(() {
+                  currentIndex = 1;
+                });
+              },
+            )),
             const SingleChildScrollView(child: AppointmentsScreen()),
             const SingleChildScrollView(child: PillReminder()),
             const SingleChildScrollView(child: HealthReportScreen()),

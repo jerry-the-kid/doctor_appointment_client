@@ -14,9 +14,11 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key, required this.user});
+  const HomeScreen(
+      {super.key, required this.user, required this.onGoToDoctorList});
 
   final UserModel user;
+  final VoidCallback onGoToDoctorList;
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +56,9 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(
             height: 30,
           ),
-          const HeadingWithViewAll(
+          HeadingWithViewAll(
             title: "Upcoming Schedule",
+            viewAllCallback: onGoToDoctorList,
           ),
           const SizedBox(
             height: 15,
@@ -85,8 +88,11 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(
             height: 30,
           ),
-          const HeadingWithViewAll(
+          HeadingWithViewAll(
             title: "Top Doctor",
+            viewAllCallback: () {
+              context.push('/doctors');
+            },
           ),
           const SizedBox(
             height: 10,
@@ -115,16 +121,15 @@ class HomeScreen extends StatelessWidget {
 
 class HeadingWithViewAll extends StatelessWidget {
   final String title;
+  final VoidCallback viewAllCallback;
 
-  const HeadingWithViewAll({
-    super.key,
-    required this.title,
-  });
+  const HeadingWithViewAll(
+      {super.key, required this.title, required this.viewAllCallback});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.push('/doctors'),
+      onTap: viewAllCallback,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
