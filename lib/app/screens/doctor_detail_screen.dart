@@ -120,14 +120,17 @@ class DoctorDetailScreen extends StatelessWidget {
                         title: doctor.title,
                         avatarUrl: doctor.avatarUrl,
                         specialistIn: doctor.specialistIn,
+                        isMedicalCheckup: doctor.name == "Medical Checkup",
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        "About Doctor",
-                        style: Theme.of(context).textTheme.headlineMedium,
-                      ),
+                      if (doctor.name != "Medical Checkup")
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      if (doctor.name != "Medical Checkup")
+                        Text(
+                          "About Doctor",
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
                       const SizedBox(
                         height: 10,
                       ),

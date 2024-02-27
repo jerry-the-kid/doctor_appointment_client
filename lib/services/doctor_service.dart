@@ -58,6 +58,6 @@ class DoctorService {
       doctors.add(doctor);
     }
 
-    return doctors;
+    return doctors.where((doctor) => doctor.name != "Medical Checkup").toList();
   }
 }

@@ -7,18 +7,18 @@ class SelectAppointmentDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Dialog(
+    return Dialog(
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 25, horizontal: 25),
+        padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
         child: SizedBox(
           child: Wrap(
             runSpacing: 10,
             children: [
-              Text(
+              const Text(
                 "What is you want to booking for ?",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               AppointmentSelection(
@@ -26,12 +26,18 @@ class SelectAppointmentDialog extends StatelessWidget {
                 title: "Schedule health check up",
                 message:
                     "Schedule your health check-up with ease, ensuring your well-being is a top priority",
+                selectAppointmentCallback: () {
+                  context.push('/checkup');
+                },
               ),
               AppointmentSelection(
                 prefixIcon: Icons.people_alt,
                 title: "Doctor consultation booking",
                 message:
                     "Book appointments with qualified doctors swiftly, addressing your healthcare needs efficiently.",
+                selectAppointmentCallback: () {
+                  context.push('/doctors');
+                },
               )
             ],
           ),
@@ -45,19 +51,22 @@ class AppointmentSelection extends StatelessWidget {
   final String title;
   final String message;
   final IconData prefixIcon;
+  final VoidCallback selectAppointmentCallback;
 
   const AppointmentSelection(
       {super.key,
       required this.title,
       required this.message,
-      required this.prefixIcon});
+      required this.prefixIcon,
+      required this.selectAppointmentCallback});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        context.push('/checkup');
-      },
+      // onTap: () {
+      // context.push('/checkup');
+      // },
+      onTap: selectAppointmentCallback,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
         decoration: BoxDecoration(

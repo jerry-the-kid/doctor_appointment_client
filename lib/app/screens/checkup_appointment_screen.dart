@@ -1,5 +1,5 @@
 import 'package:doctor_appointment_client/app/widgets/primary_full_btn.dart';
-import 'package:doctor_appointment_client/constants/app_colors.dart';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -56,7 +56,7 @@ class _CheckupAppointmentScreenState extends State<CheckupAppointmentScreen> {
         child: PrimaryFullBtn(
           title: "Schedule Now",
           onPressed: () {
-            context.push('/payments');
+            context.push('/doctors/AUdabJNMbsIRQUZBdMGK');
           },
         ),
       ),

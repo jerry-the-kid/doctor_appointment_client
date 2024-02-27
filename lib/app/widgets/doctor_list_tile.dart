@@ -9,6 +9,8 @@ class DoctorListTile extends StatelessWidget {
   final String specialistIn;
   final String avatarUrl;
   final String id;
+  final bool isMedicalCheckup;
+  final bool isListTile;
 
   const DoctorListTile({
     super.key,
@@ -18,9 +20,8 @@ class DoctorListTile extends StatelessWidget {
     required this.avatarUrl,
     required this.id,
     this.isListTile = true,
+    this.isMedicalCheckup = false,
   });
-
-  final bool isListTile;
 
   @override
   Widget build(BuildContext context) {
@@ -72,32 +73,33 @@ class DoctorListTile extends StatelessWidget {
                         .bodySmall!
                         .copyWith(fontWeight: FontWeight.w500),
                   ),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.star,
-                        color: AppColors.orange,
-                        size: 18,
-                      ),
-                      const SizedBox(width: 2),
-                      Text(
-                        "4.6",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall!
-                            .copyWith(fontWeight: FontWeight.w500),
-                      ),
-                      const SizedBox(width: 20),
-                      Text(
-                        '150 reviews',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall!
-                            .copyWith(fontWeight: FontWeight.w500),
-                      )
-                    ],
-                  ),
+                  SizedBox(height: isMedicalCheckup ? 40 : 10),
+                  if (!isMedicalCheckup)
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.star,
+                          color: AppColors.orange,
+                          size: 18,
+                        ),
+                        const SizedBox(width: 2),
+                        Text(
+                          "4.6",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(fontWeight: FontWeight.w500),
+                        ),
+                        const SizedBox(width: 20),
+                        Text(
+                          '150 reviews',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(fontWeight: FontWeight.w500),
+                        )
+                      ],
+                    ),
                 ],
               ),
             )
