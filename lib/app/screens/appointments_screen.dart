@@ -54,15 +54,15 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                       findClosestBooking(snapshot.data!, DateTime.now());
 
                   if (snapshot.connectionState == ConnectionState.done &&
-                      (snapshot.data == null ||
-                          snapshot.data!.isEmpty ||
-                          closestBooking == null)) {
+                      (snapshot.data == null || snapshot.data!.isEmpty)) {
                     return const NoItemNote(
                         message: "You don't have any schedule !");
                   }
 
-                  var futureBooking = findFutureBookingWithoutCancel(
-                      snapshot.data!, closestBooking!);
+                  var futureBooking = closestBooking == null
+                      ? []
+                      : findFutureBookingWithoutCancel(
+                          snapshot.data!, closestBooking);
 
                   var pastOrCancelBooking =
                       findCancelledOrPastBookings(snapshot.data!);
@@ -82,7 +82,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                                   const SizedBox(height: 20),
                                   UpcomingScheduleCard(
                                     isActive: true,
-                                    bookingModel: closestBooking,
+                                    bookingModel: closestBooking!,
                                   ),
                                   ...futureBooking
                                       .map((booking) => Column(

@@ -84,7 +84,8 @@ final router = GoRouter(
         builder: (context, state) => const PrescriptionList()),
     GoRoute(
         path: '/prescription/:prescriptionId',
-        builder: (context, state) => const PrescriptionScreen()),
+        builder: (context, state) =>
+            PrescriptionScreen(id: state.pathParameters['prescriptionId']!)),
     GoRoute(
       path: '/doctors',
       builder: (context, state) => const DoctorListScreen(),

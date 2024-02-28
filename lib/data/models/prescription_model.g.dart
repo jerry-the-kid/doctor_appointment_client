@@ -8,6 +8,7 @@ part of 'prescription_model.dart';
 
 PrescriptionModel _$PrescriptionModelFromJson(Map<String, dynamic> json) =>
     PrescriptionModel(
+      id: json['id'] as String?,
       userId: json['userId'] as String,
       doctorName: json['doctorName'] as String,
       title: json['title'] as String,
@@ -27,6 +28,7 @@ PrescriptionModel _$PrescriptionModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$PrescriptionModelToJson(PrescriptionModel instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'userId': instance.userId,
       'doctorName': instance.doctorName,
       'title': instance.title,

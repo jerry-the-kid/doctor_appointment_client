@@ -5,6 +5,7 @@ part 'prescription_model.g.dart';
 
 @JsonSerializable()
 class PrescriptionModel {
+  String? id;
   String userId;
   String doctorName;
   String title;
@@ -18,7 +19,8 @@ class PrescriptionModel {
   String advices;
 
   PrescriptionModel(
-      {required this.userId,
+      {this.id,
+      required this.userId,
       required this.doctorName,
       required this.title,
       required this.specialistIn,

@@ -74,8 +74,6 @@ class _DoctorListScreenState extends State<DoctorListScreen> {
                     .getDoctorsBySpecialist(specialistIn: selectedSpecialist),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    // return const Scaffold(
-                    //     body: Center(child: CircularProgressIndicator()));
                     return const Expanded(
                         child: Center(
                       child: CircularProgressIndicator(),
