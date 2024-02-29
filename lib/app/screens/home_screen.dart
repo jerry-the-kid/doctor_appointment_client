@@ -1,14 +1,18 @@
 import 'package:badges/badges.dart' as badges;
+import 'package:doctor_appointment_client/app/screens/pill_reminder_screen.dart';
 import 'package:doctor_appointment_client/app/widgets/doctor_list.dart';
 import 'package:doctor_appointment_client/app/widgets/no_item_note.dart';
 import 'package:doctor_appointment_client/app/widgets/upcoming_schedule_card.dart';
 import 'package:doctor_appointment_client/constants/app_colors.dart';
+import 'package:doctor_appointment_client/constants/helpers.dart';
 import 'package:doctor_appointment_client/data/models/booking_model.dart';
+import 'package:doctor_appointment_client/data/models/pill_model.dart';
 import 'package:doctor_appointment_client/data/models/user_model.dart';
 import 'package:doctor_appointment_client/providers/refresh_provider.dart';
 import 'package:doctor_appointment_client/providers/user_provider.dart';
 import 'package:doctor_appointment_client/services/booking_service.dart';
 import 'package:doctor_appointment_client/services/doctor_service.dart';
+import 'package:doctor_appointment_client/services/pill_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -41,18 +45,60 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(
             height: 15,
           ),
-          SizedBox(
-            height: 80,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: const [
-                MedicineListTile(),
-                SizedBox(width: 10),
-                MedicineListTile(),
-                MedicineListTile()
-              ],
-            ),
-          ),
+          FutureBuilder(
+              future: PillService().getPillsForDay(DateTime.now()),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                if (snapshot.connectionState == ConnectionState.done &&
+                    (snapshot.data == null || snapshot.data!.isEmpty)) {
+                  return const NoItemNote(
+                      message: "You don't have any pill reminder yet !");
+                }
+
+                bool afternoonActive =
+                    isCurrentTimeActive(DateTime.now(), "afternoon");
+                bool nightActive = isCurrentTimeActive(DateTime.now(), "night");
+
+                String currentTime = "morning";
+                String currentHour = "08:00 AM";
+
+                if (afternoonActive) {
+                  currentTime = 'afternoon';
+                  currentHour = "12:00 AM";
+                } else if (nightActive) {
+                  currentTime = "night";
+                  currentHour = "18:00 AM";
+                }
+
+                var medicinesList = filterPillsByMedicalHour(
+                    filterPillsByDateTime(snapshot.data!, DateTime.now()),
+                    currentTime);
+
+                return SizedBox(
+                  height: 80,
+                  child: medicinesList.isEmpty
+                      ? NoItemNote(
+                          message: "You don't have any pill in $currentTime")
+                      : ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            ...medicinesList.map(
+                              (p) => Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: MedicineListTile(
+                                  title: p.name,
+                                  type: p.type,
+                                  time: currentHour,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                );
+              }),
           const SizedBox(
             height: 30,
           ),
@@ -157,12 +203,28 @@ class HeadingWithViewAll extends StatelessWidget {
 }
 
 class MedicineListTile extends StatelessWidget {
-  const MedicineListTile({
-    super.key,
-  });
+  final String title;
+  final String type;
+  final String time;
+
+  const MedicineListTile(
+      {super.key, required this.time, required this.title, required this.type});
 
   @override
   Widget build(BuildContext context) {
+    String description = "";
+    if (type == 'TAB') {
+      description = "1 tablet";
+    } else if (type == "CAP") {
+      description = "1 capsule";
+    } else if (type == "CAPLET") {
+      description = "1 caplet";
+    } else if (type == "SUSP") {
+      description = "1 Suspension";
+    } else {
+      description = "1 Medicine";
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -173,13 +235,13 @@ class MedicineListTile extends StatelessWidget {
               size: 16,
             ),
             Text(
-              " 02:00 PM ",
+              time,
               style: Theme.of(context)
                   .textTheme
                   .bodySmall!
                   .copyWith(fontWeight: FontWeight.w600),
             ),
-            Text("Upcoming",
+            Text(" Upcoming",
                 style: Theme.of(context)
                     .textTheme
                     .bodySmall!
@@ -207,11 +269,11 @@ class MedicineListTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Zincovit CL",
+                    title,
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   Text(
-                    "2 table spoons, After meal",
+                    description,
                     style: Theme.of(context).textTheme.bodySmall,
                   )
                 ],

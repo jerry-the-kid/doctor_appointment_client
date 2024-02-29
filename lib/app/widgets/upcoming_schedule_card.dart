@@ -28,7 +28,7 @@ class _UpcomingScheduleCardState extends State<UpcomingScheduleCard> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     var bookingTimeString =
-        "${Helpers().formattedDate(newPattern: "HH:mm", dateTime: widget.bookingModel.selectedDate)} - ${Helpers().formattedDate(newPattern: "HH:mm", dateTime: widget.bookingModel.selectedDate.add(const Duration(hours: 1)))}";
+        "${Helpers().formattedDate(newPattern: "HH:mm a", dateTime: widget.bookingModel.selectedDate)} - ${Helpers().formattedDate(newPattern: "HH:mm a", dateTime: widget.bookingModel.selectedDate.add(const Duration(hours: 1)))}";
 
     bool isDateTimeWithinThreeDays(DateTime dateTime) {
       DateTime now = DateTime.now();
