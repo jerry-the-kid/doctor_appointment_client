@@ -59,7 +59,7 @@ class LocalNotificationService {
       required String payload,
       required DateTime scheduleTime}) async {
     tz.initializeTimeZones();
-    print(calculateDuration(DateTime.now(), scheduleTime));
+
     await _flutterLocalNotificationsPlugin.zonedSchedule(
         2,
         'scheduled title',

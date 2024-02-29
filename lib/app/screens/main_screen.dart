@@ -8,6 +8,7 @@ import 'package:doctor_appointment_client/data/models/user_model.dart';
 import 'package:doctor_appointment_client/services/auth_service.dart';
 import 'package:doctor_appointment_client/services/local_notification_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key, required this.user});
@@ -19,6 +20,8 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
   int currentIndex = 0;
 
   List<String> appBarTitle = [
@@ -34,7 +37,19 @@ class _MainScreenState extends State<MainScreen> {
     LocalNotificationService.onClickNotification.stream.listen((event) {
       print("Ni Hao");
     });
+    requestNotificationPermissions();
     super.initState();
+  }
+
+  Future<void> requestNotificationPermissions() async {
+    flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()!
+        .requestNotificationsPermission();
+    flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()!
+        .requestExactAlarmsPermission();
   }
 
   @override
