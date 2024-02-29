@@ -7,11 +7,13 @@ import 'package:doctor_appointment_client/data/models/booking_model.dart';
 import 'package:doctor_appointment_client/data/models/card_model.dart';
 import 'package:doctor_appointment_client/data/models/doctor_model.dart';
 import 'package:doctor_appointment_client/data/models/medicine_model.dart';
+import 'package:doctor_appointment_client/data/models/pill_model.dart';
 import 'package:doctor_appointment_client/data/models/prescription_model.dart';
 import 'package:doctor_appointment_client/providers/booking_provider.dart';
 import 'package:doctor_appointment_client/providers/user_provider.dart';
 import 'package:doctor_appointment_client/services/auth_service.dart';
 import 'package:doctor_appointment_client/services/booking_service.dart';
+import 'package:doctor_appointment_client/services/pill_service.dart';
 import 'package:doctor_appointment_client/services/prescription_service.dart';
 import 'package:doctor_appointment_client/services/user_service.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +52,23 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
   ];
 
   addPrescription(DoctorModel doctor) async {
+    List<PillModel> pills = [];
+
+    for (var medicine in medicines) {
+      for (int i = 0; i < medicine.duration; i++) {
+        DateTime today = DateTime.now();
+        pills.add(PillModel(
+          userId: Auth().currentUser!.uid,
+          date: today.add(Duration(days: i)),
+          medicalHours: medicine.medicalHours,
+          name: medicine.name,
+          type: medicine.type,
+        ));
+      }
+    }
+
+    PillService().addPillsInBatch(pills);
+
     var prescription = PrescriptionModel(
       userId: Auth().currentUser!.uid,
       doctorName: doctor.name,
