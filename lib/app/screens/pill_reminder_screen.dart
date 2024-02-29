@@ -2,6 +2,7 @@ import 'package:doctor_appointment_client/app/widgets/no_item_note.dart';
 import 'package:doctor_appointment_client/constants/app_colors.dart';
 import 'package:doctor_appointment_client/constants/helpers.dart';
 import 'package:doctor_appointment_client/data/models/pill_model.dart';
+import 'package:doctor_appointment_client/services/local_notification_service.dart';
 import 'package:doctor_appointment_client/services/pill_service.dart';
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,16 @@ class PillReminder extends StatefulWidget {
 
 class _PillReminderState extends State<PillReminder> {
   DateTime _selectedDate = DateTime.now();
+
+  @override
+  void initState() {
+    LocalNotificationService.showScheduleNotification(
+        body: "Test",
+        title: "Check check",
+        payload: "",
+        scheduleTime: DateTime.now().add(const Duration(minutes: 1)));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

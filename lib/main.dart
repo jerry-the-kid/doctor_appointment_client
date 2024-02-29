@@ -5,6 +5,7 @@ import 'package:doctor_appointment_client/config/theme/theme.dart';
 import 'package:doctor_appointment_client/providers/booking_provider.dart';
 import 'package:doctor_appointment_client/providers/refresh_provider.dart';
 import 'package:doctor_appointment_client/providers/user_provider.dart';
+import 'package:doctor_appointment_client/services/local_notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -21,6 +22,7 @@ void configLoading() {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await LocalNotificationService.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

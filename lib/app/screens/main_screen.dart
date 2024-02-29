@@ -6,6 +6,7 @@ import 'package:doctor_appointment_client/app/screens/user_setting_screen.dart';
 import 'package:doctor_appointment_client/app/widgets/select_appointment_dialog.dart';
 import 'package:doctor_appointment_client/data/models/user_model.dart';
 import 'package:doctor_appointment_client/services/auth_service.dart';
+import 'package:doctor_appointment_client/services/local_notification_service.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -30,6 +31,9 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void initState() {
+    LocalNotificationService.onClickNotification.stream.listen((event) {
+      print("Ni Hao");
+    });
     super.initState();
   }
 
