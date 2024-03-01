@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctor_appointment_client/data/models/booking_model.dart';
+import 'package:doctor_appointment_client/services/auth_service.dart';
 
 class BookingService {
   final CollectionReference _bookingCollectionReference =
@@ -11,7 +12,9 @@ class BookingService {
 
   Future<List<BookingModel>> getAllBookings() async {
     List<BookingModel> bookings = [];
-    QuerySnapshot querySnapshot = await _bookingCollectionReference.get();
+    QuerySnapshot querySnapshot = await _bookingCollectionReference
+        .where("userId", isEqualTo: Auth().currentUser!.uid)
+        .get();
 
     for (var doc in querySnapshot.docs) {
       Map<String, dynamic> bookingData = doc.data() as Map<String, dynamic>;
