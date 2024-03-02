@@ -15,6 +15,7 @@ class UserModel {
   int? age;
   int? height;
   List<CardModel>? cards;
+  bool? isFirstBooking;
 
   UserModel({
     required this.id,
@@ -25,6 +26,7 @@ class UserModel {
     this.height,
     this.gender,
     this.firstCreate = true,
+    this.isFirstBooking = true,
     this.avatarImage =
         'https://i.pinimg.com/originals/f5/fd/14/f5fd146c41549072d5a7823e31ea8eae.png',
     this.cards,

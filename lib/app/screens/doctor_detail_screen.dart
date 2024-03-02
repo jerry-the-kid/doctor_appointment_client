@@ -6,7 +6,7 @@ import 'package:doctor_appointment_client/constants/helpers.dart';
 import 'package:doctor_appointment_client/data/models/booking_model.dart';
 import 'package:doctor_appointment_client/data/models/doctor_model.dart';
 import 'package:doctor_appointment_client/providers/booking_provider.dart';
-import 'package:doctor_appointment_client/providers/refresh_provider.dart';
+import 'package:doctor_appointment_client/providers/user_provider.dart';
 import 'package:doctor_appointment_client/services/auth_service.dart';
 import 'package:doctor_appointment_client/services/booking_service.dart';
 import 'package:doctor_appointment_client/services/doctor_service.dart';
@@ -33,7 +33,14 @@ class DoctorDetailScreen extends StatelessWidget {
                 : "Reschedule Appointment",
             onPressed: () {
               if (rescheduleBookingID == null) {
-                context.push('/payments');
+                if (!context
+                    .read<UserProvider>()
+                    .currentUser!
+                    .isFirstBooking!) {
+                  context.push('/payments');
+                } else {
+                  context.push("/preBooking");
+                }
               } else {
                 Helpers().handleFirebaseException(
                     context: context,

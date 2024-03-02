@@ -125,11 +125,10 @@ class _CancelAppointmentState extends State<CancelAppointment> {
 
 class RoundedTextArea extends StatelessWidget {
   final Function(String)? onChanged;
+  final String? placeholder;
 
-  const RoundedTextArea({
-    super.key,
-    this.onChanged,
-  });
+  const RoundedTextArea(
+      {super.key, this.onChanged, this.placeholder = "Enter your reason"});
 
   @override
   Widget build(BuildContext context) {
@@ -146,10 +145,10 @@ class RoundedTextArea extends StatelessWidget {
         minLines: 6,
         keyboardType: TextInputType.multiline,
         maxLines: null,
-        decoration: const InputDecoration(
-          hintText: 'Enter your reason', // Placeholder text
+        decoration: InputDecoration(
+          hintText: placeholder, // Placeholder text
           contentPadding:
-              EdgeInsets.all(10.0), // Padding within the TextFormField
+              const EdgeInsets.all(10.0), // Padding within the TextFormField
           border: InputBorder.none, // Remove default border
         ),
       ),

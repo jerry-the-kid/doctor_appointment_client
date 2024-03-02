@@ -18,4 +18,9 @@ class UserProvider extends ChangeNotifier {
     currentUser!.cards = [...(currentUser!.cards ?? []), ...updatedCards];
     notifyListeners();
   }
+
+  void updateIsFirstBooking(bool value) {
+    currentUser!.isFirstBooking = value;
+    notifyListeners();
+  }
 }
