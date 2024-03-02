@@ -54,8 +54,13 @@ class HomeScreen extends StatelessWidget {
 
                 if (snapshot.connectionState == ConnectionState.done &&
                     (snapshot.data == null || snapshot.data!.isEmpty)) {
-                  return const NoItemNote(
-                      message: "You don't have any pill reminder yet !");
+                  return Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      "You don't have any medicines yet !",
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  );
                 }
 
                 bool afternoonActive =

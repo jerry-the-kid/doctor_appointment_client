@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:doctor_appointment_client/app/widgets/input.dart';
 import 'package:doctor_appointment_client/app/widgets/primary_full_btn.dart';
 import 'package:doctor_appointment_client/constants/app_colors.dart';
+import 'package:doctor_appointment_client/constants/helpers.dart';
 import 'package:doctor_appointment_client/services/auth_service.dart';
 import 'package:doctor_appointment_client/services/user_service.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +24,9 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
   int age = 20;
   int weight = 50;
   int pageIndex = 0;
+
+  final _formKey = GlobalKey<FormState>();
+  final _heighController = TextEditingController();
 
   void handleChangeGender(String newGender) {
     if (gender == newGender) return;
@@ -297,7 +302,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
               child: Column(
                 children: [
                   const Text(
-                    "What is your weight?",
+                    "What is your weight? (kg)",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -333,10 +338,91 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
       ),
     );
 
+    var fifthScreen = Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              IconButton(
+                  onPressed: () {
+                    setState(() {
+                      pageIndex = pageIndex - 1;
+                    });
+                  },
+                  icon: const Icon(Icons.arrow_back)),
+              const Spacer(),
+              const Text(
+                "3",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.orange,
+                    fontSize: 18),
+              ),
+              const Text(
+                "/4",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+              constraints: const BoxConstraints(maxWidth: 400),
+              child: Column(
+                children: [
+                  const Text(
+                    "What is your height? (cm)",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Text(
+                    "Height is an important parameter when assessing the patient's general condition and diagnosing various diseases",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  SizedBox(
+                    height: height * 0.25,
+                  ),
+                  Form(
+                      key: _formKey,
+                      child: TextFormField(
+                        controller: _heighController,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          hintStyle: const TextStyle(fontSize: 14),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your height';
+                          } else if (!Helpers().isAllNumbers(value)) {
+                            return 'Height must not have characters';
+                          }
+                          return null;
+                        },
+                      )),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
     var title = 'Save';
 
     if (pageIndex == 0) title = "Get Started";
-    if (pageIndex == 3) title = "Completed";
+    if (pageIndex == 4) title = "Completed";
 
     return Scaffold(
       // backgroundColor: AppColors.bg,
@@ -346,25 +432,30 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
           title: title,
           onPressed: () {
             setState(() {
-              if (pageIndex < 3) {
+              if (pageIndex < 4) {
                 pageIndex = pageIndex + 1;
               } else {
-                UserService().updateUser(uid: Auth().currentUser!.uid, data: {
-                  "age": age,
-                  "weight": weight,
-                  "gender": gender,
-                  "firstCreate": false,
-                }).then((value) => context.push(
-                    Uri(
-                      path: '/appNotify',
-                      queryParameters: {
-                        'svgSrc': 'assets/images/done.svg',
-                        'title': 'It\'s all checked!',
-                        'description':
-                            'Thanks for filling the information form.'
-                      },
-                    ).toString(),
-                    extra: () => {widget.onSubmit()}));
+                if (_formKey.currentState!.validate()) {
+                  _formKey.currentState!.save();
+
+                  UserService().updateUser(uid: Auth().currentUser!.uid, data: {
+                    "age": age,
+                    "weight": weight,
+                    "gender": gender,
+                    "height": int.parse(_heighController.text),
+                    "firstCreate": false,
+                  }).then((value) => context.push(
+                      Uri(
+                        path: '/appNotify',
+                        queryParameters: {
+                          'svgSrc': 'assets/images/done.svg',
+                          'title': 'It\'s all checked!',
+                          'description':
+                              'Thanks for filling the information form.'
+                        },
+                      ).toString(),
+                      extra: () => {widget.onSubmit()}));
+                }
               }
             });
           },
@@ -378,6 +469,8 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
           return thirdScreen;
         } else if (pageIndex == 3) {
           return fourthScreen;
+        } else if (pageIndex == 4) {
+          return fifthScreen;
         }
         return firstScreen;
       }),
@@ -388,6 +481,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
 class CustomCarousel extends StatelessWidget {
   const CustomCarousel({
     super.key,
+    this.isHeight = false,
     required this.value,
     required this.callback,
     required this.initialPage,
@@ -396,6 +490,7 @@ class CustomCarousel extends StatelessWidget {
   final int value;
   final Function(int) callback;
   final int initialPage;
+  final bool isHeight;
 
   @override
   Widget build(BuildContext context) {

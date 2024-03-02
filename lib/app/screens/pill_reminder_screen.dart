@@ -19,11 +19,11 @@ class _PillReminderState extends State<PillReminder> {
 
   @override
   void initState() {
-    LocalNotificationService.showScheduleNotification(
-        body: "Test",
-        title: "Check check",
-        payload: "",
-        scheduleTime: DateTime.now().add(const Duration(minutes: 1)));
+    // LocalNotificationService.showSimpleNotification(
+    //   body: "Test",
+    //   title: "Check check",
+    //   payload: "",
+    // );
     super.initState();
   }
 

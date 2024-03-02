@@ -34,9 +34,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void initState() {
-    LocalNotificationService.onClickNotification.stream.listen((event) {
-      print("Ni Hao");
-    });
+    LocalNotificationService.onClickNotification.stream.listen((event) {});
     requestNotificationPermissions();
     super.initState();
   }

@@ -13,6 +13,7 @@ class UserModel {
   String? gender;
   int? weight;
   int? age;
+  int? height;
   List<CardModel>? cards;
 
   UserModel({
@@ -21,6 +22,7 @@ class UserModel {
     required this.userName,
     this.age,
     this.weight,
+    this.height,
     this.gender,
     this.firstCreate = true,
     this.avatarImage =

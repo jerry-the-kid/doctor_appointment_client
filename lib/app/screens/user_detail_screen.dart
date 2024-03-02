@@ -117,7 +117,9 @@ class _UserDetailFormState extends State<UserDetailForm> {
         TextEditingController(text: userProvider.currentUser!.email);
     final weightController = TextEditingController(
         text: userProvider.currentUser!.weight.toString());
-    final genderController =
+    final heightController = TextEditingController(
+        text: userProvider.currentUser!.height.toString());
+    final TextEditingController genderController =
         TextEditingController(text: userProvider.currentUser!.gender);
     final ageController =
         TextEditingController(text: userProvider.currentUser!.age.toString());
@@ -141,19 +143,36 @@ class _UserDetailFormState extends State<UserDetailForm> {
             const SizedBox(
               height: 15,
             ),
+            Input(
+              controller: emailController,
+              enabled: widget.isEdit,
+              label: 'Email',
+              placeholder: 'Your email',
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your email';
+                }
+                if (!Helpers().isStringEmail(value)) {
+                  return 'Please enter a valid email';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(
+              height: 15,
+            ),
             Row(children: [
               Expanded(
                 child: Input(
-                  controller: emailController,
+                  controller: genderController,
+                  label: "Gender",
                   enabled: widget.isEdit,
-                  label: 'Email',
-                  placeholder: 'Your email',
+                  placeholder: "Your gender",
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    if (!Helpers().isStringEmail(value)) {
-                      return 'Please enter a valid email';
+                      return "Please enter your gender";
+                    } else if (!['male', 'female'].contains(value)) {
+                      return 'Gender must be male or female';
                     }
                     return null;
                   },
@@ -200,21 +219,21 @@ class _UserDetailFormState extends State<UserDetailForm> {
                 )),
                 const SizedBox(width: 20),
                 Expanded(
-                  child: Input(
-                    controller: genderController,
-                    label: "Gender",
-                    enabled: widget.isEdit,
-                    placeholder: "Your gender",
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Please enter your gender";
-                      } else if (!['male', 'female'].contains(value)) {
-                        return 'Gender must be male or female';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
+                    child: Input(
+                  controller: heightController,
+                  label: "Height",
+                  enabled: widget.isEdit,
+                  inputType: TextInputType.number,
+                  placeholder: 'Your height',
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter your height";
+                    } else if (!Helpers().isAllNumbers(value)) {
+                      return 'Please enter a valid height';
+                    }
+                    return null;
+                  },
+                )),
               ],
             ),
             const SizedBox(
@@ -232,7 +251,8 @@ class _UserDetailFormState extends State<UserDetailForm> {
                         'email': emailController.text,
                         'gender': genderController.text,
                         'weight': int.parse(weightController.text),
-                        'age': int.parse(ageController.text)
+                        'age': int.parse(ageController.text),
+                        'height': int.parse(heightController.text),
                       };
 
                       Helpers().handleFirebaseException(
