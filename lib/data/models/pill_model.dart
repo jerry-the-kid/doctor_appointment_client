@@ -55,9 +55,9 @@ bool isCurrentTimeActive(DateTime date, String hour) {
     // Check if the current time falls within the specified time range for the given hour
     if (hour == "morning" && now.hour >= 0 && now.hour < 10) {
       return true;
-    } else if (hour == "afternoon" && now.hour >= 10 && now.hour < 18) {
+    } else if (hour == "afternoon" && now.hour >= 10 && now.hour < 15) {
       return true;
-    } else if (hour == "night" && (now.hour >= 18 || now.hour < 1)) {
+    } else if (hour == "night" && (now.hour >= 15 || now.hour < 1)) {
       return true;
     }
   }

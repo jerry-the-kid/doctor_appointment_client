@@ -1,4 +1,5 @@
 import 'package:doctor_appointment_client/app/widgets/dialog.dart';
+import 'package:doctor_appointment_client/app/widgets/review_dialog.dart';
 import 'package:doctor_appointment_client/constants/app_colors.dart';
 import 'package:doctor_appointment_client/constants/helpers.dart';
 import 'package:doctor_appointment_client/data/models/booking_model.dart';
@@ -206,6 +207,13 @@ class _UpcomingScheduleCardState extends State<UpcomingScheduleCard> {
                                     ),
                                   );
                                 }
+                              } else {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) =>
+                                        ReviewDialog(closeDialog: () {
+                                          Navigator.pop(context, true);
+                                        }));
                               }
                             },
                       child: Text(widget.isPast ? 'Add Review' : "Reschedule")))

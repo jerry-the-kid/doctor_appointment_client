@@ -3,6 +3,7 @@ import 'package:doctor_appointment_client/app/screens/heath_report_screen.dart';
 import 'package:doctor_appointment_client/app/screens/home_screen.dart';
 import 'package:doctor_appointment_client/app/screens/pill_reminder_screen.dart';
 import 'package:doctor_appointment_client/app/screens/user_setting_screen.dart';
+import 'package:doctor_appointment_client/app/widgets/review_dialog.dart';
 import 'package:doctor_appointment_client/app/widgets/select_appointment_dialog.dart';
 import 'package:doctor_appointment_client/data/models/user_model.dart';
 import 'package:doctor_appointment_client/services/auth_service.dart';
