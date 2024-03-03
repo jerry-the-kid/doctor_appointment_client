@@ -8,7 +8,7 @@ List<String> subsystems = [
   'Thận - tiết niệu',
   'Cơ xương khớp',
   'Thần kinh',
-  'Thâm Thần'
+  'Tâm Thần'
 ];
 
 class GeneralHealthScreen extends StatelessWidget {
@@ -247,7 +247,7 @@ class GeneralHealthScreen extends StatelessWidget {
                   ),
                   TableRow(
                     children: [
-                      TableCellCustom(content: "Sản phụ"),
+                      TableCellCustom(content: "Phân Loại"),
                       TableCellCustom(content: 'N/A'),
                     ],
                   ),
