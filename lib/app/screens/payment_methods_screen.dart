@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:doctor_appointment_client/app/widgets/dialog.dart';
 import 'package:doctor_appointment_client/app/widgets/no_item_note.dart';
 import 'package:doctor_appointment_client/app/widgets/primary_full_btn.dart';
@@ -189,7 +191,12 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                     context.read<UserProvider>().setCurrentUser(user: user!);
                   }
 
-                  addPrescription(bookingProvider.doctor!);
+                  Timer(const Duration(minutes: 1), () {
+                    if (doctor.name == "Medical Checkup") {
+                    } else {
+                      addPrescription(bookingProvider.doctor!);
+                    }
+                  });
                 },
                 successCallBack: () {
                   context.replace(
