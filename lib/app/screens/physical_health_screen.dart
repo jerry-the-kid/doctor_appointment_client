@@ -1,11 +1,21 @@
 import 'package:doctor_appointment_client/app/widgets/table_cell_custom.dart';
+import 'package:doctor_appointment_client/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+double calculateBMI(int weight, int height) {
+  double bmi = weight / (height * height);
+
+  return bmi;
+}
 
 class PhysicalHealthScreen extends StatelessWidget {
   const PhysicalHealthScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var user = context.watch<UserProvider>();
+
     return Scaffold(
         appBar: AppBar(title: const Text("Physical Health")),
         body: Padding(
@@ -22,8 +32,8 @@ class PhysicalHealthScreen extends StatelessWidget {
             ),
             Table(
               border: TableBorder.all(),
-              children: const [
-                TableRow(
+              children: [
+                const TableRow(
                   children: [
                     TableCellCustom(content: "Nội dung khám", isTitle: true),
                     TableCellCustom(content: 'Kết quả', isTitle: true),
@@ -31,29 +41,29 @@ class PhysicalHealthScreen extends StatelessWidget {
                 ),
                 TableRow(
                   children: [
-                    TableCellCustom(content: "Chiều cao"),
-                    TableCellCustom(content: '175 cm'),
+                    const TableCellCustom(content: "Chiều cao"),
+                    TableCellCustom(content: '${user.currentUser?.height} cm'),
                   ],
                 ),
                 TableRow(
                   children: [
-                    TableCellCustom(content: "Cân nặng"),
-                    TableCellCustom(content: '53 kg'),
+                    const TableCellCustom(content: "Cân nặng"),
+                    TableCellCustom(content: '${user.currentUser?.weight} kg'),
                   ],
                 ),
-                TableRow(
+                const TableRow(
                   children: [
                     TableCellCustom(content: "Chỉ số BMI"),
-                    TableCellCustom(content: '...'),
+                    TableCellCustom(content: '20.1'),
                   ],
                 ),
-                TableRow(
+                const TableRow(
                   children: [
                     TableCellCustom(content: "Mạch"),
                     TableCellCustom(content: '80 lần/phút'),
                   ],
                 ),
-                TableRow(
+                const TableRow(
                   children: [
                     TableCellCustom(content: "Huyết áp"),
                     TableCellCustom(content: '130/80 mmHg'),
