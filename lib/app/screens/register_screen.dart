@@ -47,12 +47,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
     Helpers().handleFirebaseException(
         context: context,
         callBackFnc: () async {
-          await Auth().createUserWithEmailAndPassword(
-              email: email, password: password, name: name);
-        },
-        successCallBack: () async {
-          EasyLoading.showSuccess('SignUp successfully!')
-              .then((_) => context.go('/'));
+          await Auth()
+              .createUserWithEmailAndPassword(
+                  email: email, password: password, name: name)
+              .then((value) => EasyLoading.showSuccess('SignUp successfully!')
+                  .then((_) => context.go('/')));
         });
   }
 
