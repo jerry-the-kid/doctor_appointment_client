@@ -90,7 +90,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                     fontSize: 18),
               ),
               Text(
-                "/3",
+                "/4",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               )
             ],
@@ -218,7 +218,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                     fontSize: 18),
               ),
               const Text(
-                "/3",
+                "/4",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               )
             ],
@@ -289,7 +289,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                     fontSize: 18),
               ),
               const Text(
-                "/3",
+                "/4",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               )
             ],

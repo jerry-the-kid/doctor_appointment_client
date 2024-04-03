@@ -39,45 +39,10 @@ class _AddCardScreenState extends State<AddCardScreen> {
       appBar: AppBar(
         title: const Text("Add Card"),
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: PrimaryFullBtn(
-          title: "Add Card",
-          onPressed: () async {
-            if (_formKey.currentState!.validate()) {
-              _formKey.currentState!.save();
-
-              Helpers().handleFirebaseException(
-                context: context,
-                callBackFnc: () async {
-                  CardModel? card = await CardService().getCardByCardInfo(
-                      cardNumber: _cardNumberController.text,
-                      cvv: _cardCvvController.text,
-                      expiredDate: _cardExpiryDateController.text,
-                      username: _cardHolderNameController.text);
-
-                  if (card != null && context.mounted) {
-                    context
-                        .read<UserProvider>()
-                        .updateCardList(updatedCards: [card]);
-
-                    UserService()
-                        .updateUser(uid: Auth().currentUser!.uid, data: {
-                      "cards": FieldValue.arrayUnion([card.toJson()]),
-                    });
-                  } else {
-                    if (context.mounted) {
-                      Helpers().showErrorSnackbar(context,
-                          "Card not found in Database !! Please try other.");
-                    }
-                  }
-                },
-                successCallBack: () => context.pop(),
-              );
-            }
-          },
-        ),
-      ),
+      // floatingActionButton: Padding(
+      //   padding: const EdgeInsets.symmetric(horizontal: 20),
+      //   child: ,
+      // ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SingleChildScrollView(
         child: Padding(
@@ -179,6 +144,45 @@ class _AddCardScreenState extends State<AddCardScreen> {
                   ],
                 ),
               ),
+              const SizedBox(
+                height: 20,
+              ),
+              PrimaryFullBtn(
+                title: "Add Card",
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState!.save();
+
+                    Helpers().handleFirebaseException(
+                      context: context,
+                      callBackFnc: () async {
+                        CardModel? card = await CardService().getCardByCardInfo(
+                            cardNumber: _cardNumberController.text,
+                            cvv: _cardCvvController.text,
+                            expiredDate: _cardExpiryDateController.text,
+                            username: _cardHolderNameController.text);
+
+                        if (card != null && context.mounted) {
+                          context
+                              .read<UserProvider>()
+                              .updateCardList(updatedCards: [card]);
+
+                          UserService()
+                              .updateUser(uid: Auth().currentUser!.uid, data: {
+                            "cards": FieldValue.arrayUnion([card.toJson()]),
+                          });
+                        } else {
+                          if (context.mounted) {
+                            Helpers().showErrorSnackbar(context,
+                                "Card not found in Database !! Please try other.");
+                          }
+                        }
+                      },
+                      successCallBack: () => context.pop(),
+                    );
+                  }
+                },
+              )
             ],
           ),
         ),

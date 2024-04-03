@@ -18,11 +18,6 @@ class _PillReminderState extends State<PillReminder> {
 
   @override
   void initState() {
-    // LocalNotificationService.showSimpleNotification(
-    //   body: "Test",
-    //   title: "Check check",
-    //   payload: "",
-    // );
     super.initState();
   }
 

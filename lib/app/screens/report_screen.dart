@@ -35,7 +35,20 @@ class ReportListScreen extends StatelessWidget {
 
               if (snapshot.connectionState == ConnectionState.done &&
                   (snapshot.data == null || snapshot.data!.isEmpty)) {
-                return const NoItemNote(message: "No reports found !");
+                return Column(
+                  children: [
+                    const NoItemNote(
+                        message: "No general health report found!"),
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.primaryColor,
+                            foregroundColor: Colors.white),
+                        onPressed: () {
+                          context.push('/checkup');
+                        },
+                        child: const Text("Booking health checkup"))
+                  ],
+                );
               }
               return Column(
                 children: snapshot.data!
@@ -119,31 +132,6 @@ class ReportItem extends StatelessWidget {
                     ],
                   ),
                 ),
-                // Expanded(
-                //   child: Column(
-                //     crossAxisAlignment: CrossAxisAlignment.start,
-                //     children: [
-                //       Text(
-                //         "DOCTOR",
-                //         style: TextStyle(
-                //             fontSize: 10,
-                //             color: Colors.grey[600],
-                //             letterSpacing: 1.2),
-                //       ),
-                //       const SizedBox(
-                //         height: 5,
-                //       ),
-                //       Text(
-                //         "",
-                //         // "${prescription.title} ${prescription.doctorName}",
-                //         style: TextStyle(
-                //             fontSize: 15,
-                //             fontWeight: FontWeight.bold,
-                //             color: Colors.grey[800]),
-                //       )
-                //     ],
-                //   ),
-                // )
               ],
             )
           ],

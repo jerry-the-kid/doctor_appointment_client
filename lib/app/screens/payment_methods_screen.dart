@@ -128,8 +128,6 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
               ));
     }
 
-    print("object");
-
     return Scaffold(
       appBar: AppBar(title: const Text("Payment Method")),
       floatingActionButton: Padding(
