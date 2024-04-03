@@ -36,7 +36,7 @@ class GeneralHealthScreen extends StatelessWidget {
                           backgroundColor: AppColors.primaryColor,
                           foregroundColor: Colors.white),
                       onPressed: () {
-                        context.go("/doctors/AUdabJNMbsIRQUZBdMGK");
+                        context.push("/doctors/AUdabJNMbsIRQUZBdMGK");
                       },
                       child: const Text("Booking health checkup"))
                 ],

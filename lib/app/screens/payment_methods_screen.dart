@@ -53,15 +53,15 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
         duration: 4),
   ];
 
-  addPrescription(DoctorModel doctor) async {
+  addPrescription(DoctorModel doctor, DateTime bookingDate) async {
     List<PillModel> pills = [];
 
     for (var medicine in medicines) {
       for (int i = 0; i < medicine.duration; i++) {
-        DateTime today = DateTime.now();
+        DateTime bDate = bookingDate;
         pills.add(PillModel(
           userId: Auth().currentUser!.uid,
-          date: today.add(Duration(days: i)),
+          date: bDate.add(Duration(days: i)),
           medicalHours: medicine.medicalHours,
           name: medicine.name,
           type: medicine.type,
@@ -77,7 +77,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
       title: doctor.title,
       specialistIn: doctor.specialistIn,
       avatarUrl: doctor.avatarUrl,
-      createdDate: DateTime.now(),
+      createdDate: bookingDate,
       chiefComplaints: "* FEVER WITH CHILLS (4 DAYS)\n* HEADACHE (2 DAYS)",
       clinicalFindings:
           "* THERE ARE TEST FINDING FOR A TEST PATIENT\n* ENTERING SAMPLE DIAGNOSIS AND SAMPLE PRESCRIPTION",
@@ -194,10 +194,10 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                     context.read<UserProvider>().setCurrentUser(user: user!);
                   }
 
-                  Timer(const Duration(minutes: 1), () {
+                  Timer(const Duration(seconds: 10), () {
                     if (doctor.name == "Medical Checkup") {
                     } else {
-                      addPrescription(bookingProvider.doctor!);
+                      addPrescription(bookingProvider.doctor!, bookingTime);
                     }
                   });
                 },

@@ -3,6 +3,7 @@ import 'package:doctor_appointment_client/app/widgets/table_cell_custom.dart';
 import 'package:doctor_appointment_client/constants/app_colors.dart';
 import 'package:doctor_appointment_client/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class LaboratoryTestScreen extends StatelessWidget {
@@ -23,7 +24,9 @@ class LaboratoryTestScreen extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.primaryColor,
                           foregroundColor: Colors.white),
-                      onPressed: () {},
+                      onPressed: () {
+                        context.push("/doctors/AUdabJNMbsIRQUZBdMGK");
+                      },
                       child: const Text("Booking health checkup"))
                 ],
               )

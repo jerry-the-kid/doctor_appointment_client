@@ -83,8 +83,12 @@ class HomeScreen extends StatelessWidget {
                 return SizedBox(
                   height: 80,
                   child: medicinesList.isEmpty
-                      ? NoItemNote(
-                          message: "You don't have any pill in $currentTime")
+                      ? Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "You don't have any medicines yet !",
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ))
                       : ListView(
                           scrollDirection: Axis.horizontal,
                           children: [
