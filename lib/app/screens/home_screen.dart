@@ -1,10 +1,8 @@
 import 'package:badges/badges.dart' as badges;
-import 'package:doctor_appointment_client/app/screens/pill_reminder_screen.dart';
 import 'package:doctor_appointment_client/app/widgets/doctor_list.dart';
 import 'package:doctor_appointment_client/app/widgets/no_item_note.dart';
 import 'package:doctor_appointment_client/app/widgets/upcoming_schedule_card.dart';
 import 'package:doctor_appointment_client/constants/app_colors.dart';
-import 'package:doctor_appointment_client/constants/helpers.dart';
 import 'package:doctor_appointment_client/data/models/booking_model.dart';
 import 'package:doctor_appointment_client/data/models/pill_model.dart';
 import 'package:doctor_appointment_client/data/models/user_model.dart';

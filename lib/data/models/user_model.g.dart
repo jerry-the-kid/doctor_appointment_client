@@ -16,6 +16,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       gender: json['gender'] as String?,
       firstCreate: json['firstCreate'] as bool? ?? true,
       isFirstBooking: json['isFirstBooking'] as bool? ?? true,
+      isFirstCheckup: json['isFirstCheckup'] as bool? ?? false,
       avatarImage: json['avatarImage'] as String? ??
           'https://i.pinimg.com/originals/f5/fd/14/f5fd146c41549072d5a7823e31ea8eae.png',
       cards: (json['cards'] as List<dynamic>?)
@@ -35,4 +36,5 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'height': instance.height,
       'cards': instance.cards,
       'isFirstBooking': instance.isFirstBooking,
+      'isFirstCheckup': instance.isFirstCheckup,
     };

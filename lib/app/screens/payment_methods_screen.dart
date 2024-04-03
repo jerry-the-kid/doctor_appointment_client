@@ -176,6 +176,9 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
 
                     userData['cards'] =
                         cards.map((card) => card.toJson()).toList();
+                    if (doctor.id == 'AUdabJNMbsIRQUZBdMGK') {
+                      userData['isFirstCheckup'] = true;
+                    }
 
                     await UserService().updateUser(
                       uid: Auth().currentUser!.uid,

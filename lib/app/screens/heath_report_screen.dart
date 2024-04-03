@@ -12,43 +12,61 @@ class HealthReportScreen extends StatelessWidget {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(20),
-        child: Align(
-          alignment: width < 465 ? Alignment.center : Alignment.topLeft,
-          child: Wrap(
-            // alignment: WrapAlignment.s,
-            spacing: 10,
-            children: [
-              MedicalCard(
-                imageSrc: 'assets/images/medical_check.svg',
-                title: "General Health",
-                onTap: () {
-                  context.push('/health/general');
-                },
+        child: Column(
+          children: [
+            // Container(
+            //   width: double.infinity,
+            //   margin: const EdgeInsets.only(bottom: 10),
+            //   padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            //   decoration: BoxDecoration(
+            //       color: AppColors.blue_bg,
+            //       borderRadius: BorderRadius.circular(10)),
+            //   child: Row(
+            //     children: [
+            //       const Spacer(),
+            //       ElevatedButton(onPressed: () {}, child: const Text("Booking"))
+            //     ],
+            //   ),
+            // ),
+            Align(
+              alignment: width < 465 ? Alignment.center : Alignment.topLeft,
+              child: Wrap(
+                // alignment: WrapAlignment.s,
+                spacing: 10,
+                children: [
+                  MedicalCard(
+                    imageSrc: 'assets/images/medical_check.svg',
+                    title: "General Health",
+                    onTap: () {
+                      context.push('/health/general');
+                    },
+                  ),
+                  MedicalCard(
+                    imageSrc: 'assets/images/lab.svg',
+                    title: "Laboratory Test",
+                    onTap: () {
+                      context.push('/health/laboratory');
+                    },
+                  ),
+                  MedicalCard(
+                    imageSrc: 'assets/images/good_result.svg',
+                    title: "Physical Health",
+                    onTap: () {
+                      context.push('/health/physical');
+                    },
+                  ),
+                  MedicalCard(
+                    imageSrc: 'assets/images/recommend_medicine.svg',
+                    title: "Medical Prescription",
+                    onTap: () {
+                      // context.push('/prescription/2');
+                      context.push("/prescription");
+                    },
+                  ),
+                ],
               ),
-              MedicalCard(
-                imageSrc: 'assets/images/lab.svg',
-                title: "Laboratory Test",
-                onTap: () {
-                  context.push('/health/laboratory');
-                },
-              ),
-              MedicalCard(
-                imageSrc: 'assets/images/good_result.svg',
-                title: "Physical Health",
-                onTap: () {
-                  context.push('/health/physical');
-                },
-              ),
-              MedicalCard(
-                imageSrc: 'assets/images/recommend_medicine.svg',
-                title: "Medical Prescription",
-                onTap: () {
-                  // context.push('/prescription/2');
-                  context.push("/prescription");
-                },
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
