@@ -10,7 +10,8 @@ class BookingProvider extends ChangeNotifier {
 
   BookingProvider(
       {DateTime? selectedDate, this.selectedHour = "07:00 AM", this.doctor})
-      : selectedDate = selectedDate ?? DateTime.now();
+      : selectedDate =
+            selectedDate ?? DateTime.now().add(const Duration(days: 1));
 
   void setDoctor({required DoctorModel doctor}) {
     this.doctor = doctor;

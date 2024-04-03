@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:doctor_appointment_client/app/widgets/divided_button.dart';
 import 'package:doctor_appointment_client/app/widgets/doctor_list_tile.dart';
 import 'package:doctor_appointment_client/app/widgets/primary_full_btn.dart';
@@ -228,6 +230,8 @@ class _DividedTabState extends State<DividedTab> {
 
     String selectedHour = context.watch<BookingProvider>().selectedHour;
 
+    // Shuffling the list randomly
+
     for (int hour = startHour; hour <= endHour; hour++) {
       // Build time slot widget
       String time = '${hour.toString().padLeft(2, '0')}:00 $endPrefix';
@@ -241,11 +245,13 @@ class _DividedTabState extends State<DividedTab> {
             side: const BorderSide(color: Colors.black, width: .4),
           ),
         ),
-        onPressed: () {
-          context
-              .read<BookingProvider>()
-              .changeSelectedHour(selectedHour: time);
-        },
+        onPressed: hour == 9 || hour == 3
+            ? null
+            : () {
+                context
+                    .read<BookingProvider>()
+                    .changeSelectedHour(selectedHour: time);
+              },
         child: Text(
           time,
           style: TextStyle(

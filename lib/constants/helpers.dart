@@ -170,7 +170,9 @@ class Helpers {
 
   DateTime startOfMonth =
       DateTime(DateTime.now().year, DateTime.now().month, 1);
-  DateTime yesterday = DateTime.now().subtract(const Duration(days: 1));
+  DateTime yesterday = DateTime.now()
+      .add(const Duration(days: 1))
+      .subtract(const Duration(days: 1));
 
   List<DateTime> generateDisabledDates() {
     List<DateTime> disabledDates = [];
