@@ -42,7 +42,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: PrimaryFullBtn(
-          title: "Add Cart",
+          title: "Add Card",
           onPressed: () async {
             if (_formKey.currentState!.validate()) {
               _formKey.currentState!.save();

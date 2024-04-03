@@ -24,6 +24,26 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+List<MedicineModel> medicines = [
+  MedicineModel(
+      name: "ABCIXIMAB",
+      type: "TAB",
+      medicalHours: ["morning", "afternoon"],
+      duration: 8),
+  MedicineModel(
+      name: "VOMILAST",
+      type: "TAB",
+      medicalHours: ["morning", "night"],
+      duration: 8),
+  MedicineModel(
+      name: "ZOCLAR 500", type: "CAP", medicalHours: ["morning"], duration: 3),
+  MedicineModel(
+      name: "GESTAKIND 10/SR",
+      type: "TAB",
+      medicalHours: ["night"],
+      duration: 4),
+];
+
 class PaymentMethodScreen extends StatefulWidget {
   const PaymentMethodScreen({super.key});
 
@@ -32,29 +52,6 @@ class PaymentMethodScreen extends StatefulWidget {
 }
 
 class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
-  List<MedicineModel> medicines = [
-    MedicineModel(
-        name: "ABCIXIMAB",
-        type: "TAB",
-        medicalHours: ["morning", "afternoon"],
-        duration: 8),
-    MedicineModel(
-        name: "VOMILAST",
-        type: "TAB",
-        medicalHours: ["morning", "night"],
-        duration: 8),
-    MedicineModel(
-        name: "ZOCLAR 500",
-        type: "CAP",
-        medicalHours: ["morning"],
-        duration: 3),
-    MedicineModel(
-        name: "GESTAKIND 10/SR",
-        type: "TAB",
-        medicalHours: ["night"],
-        duration: 4),
-  ];
-
   addPrescription(DoctorModel doctor, DateTime bookingDate) async {
     List<PillModel> pills = [];
 
@@ -130,6 +127,8 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                 },
               ));
     }
+
+    print("object");
 
     return Scaffold(
       appBar: AppBar(title: const Text("Payment Method")),
@@ -339,7 +338,10 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                 const NoItemNote(
                   message: "There is no saved cards. Please add new card",
                 ),
-              if (cards != null) SelectedCard(cards: cards),
+              if (cards != null)
+                SelectedCard(
+                  cards: cards,
+                ),
               const SizedBox(
                 height: 10,
               ),
@@ -395,11 +397,16 @@ class _SelectedCardState extends State<SelectedCard> {
   int selectedCardIndex = 0;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    // TODO: implement initState
+    super.initState();
     Future.delayed(Duration.zero, () {
       context.read<BookingProvider>().setCard(card: widget.cards[0]);
     });
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return SizedBox(
       height: 120,
       child: ListView.builder(

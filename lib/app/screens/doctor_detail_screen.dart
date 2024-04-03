@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:doctor_appointment_client/app/widgets/divided_button.dart';
 import 'package:doctor_appointment_client/app/widgets/doctor_list_tile.dart';
 import 'package:doctor_appointment_client/app/widgets/primary_full_btn.dart';
