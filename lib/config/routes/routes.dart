@@ -13,6 +13,7 @@ import 'package:doctor_appointment_client/app/screens/prescription_list.dart';
 import 'package:doctor_appointment_client/app/screens/prescription_screen.dart';
 import 'package:doctor_appointment_client/app/screens/register_screen.dart';
 import 'package:doctor_appointment_client/app/screens/app_notify_screen.dart';
+import 'package:doctor_appointment_client/app/screens/report_screen.dart';
 import 'package:doctor_appointment_client/app/screens/user_detail_screen.dart';
 import 'package:doctor_appointment_client/app/widgets/widget_tree.dart';
 import 'package:doctor_appointment_client/constants/helpers.dart';
@@ -28,16 +29,6 @@ final router = GoRouter(
     GoRoute(path: '/', builder: (context, state) => const WidgetTreeState()),
     GoRoute(
         path: '/appNotify',
-        // context.replace(
-        //             Uri(
-        //               path: '/appNotify',
-        //               queryParameters: {
-        //                 'svgSrc': 'assets/images/trans_done.svg',
-        //                 'title': 'Booking successfully !!'
-        //               },
-        //             ).toString(),
-        //           );
-
         builder: (context, state) {
           Map<String, String> result = Helpers().uriToObject(state.uri);
 
@@ -74,6 +65,11 @@ final router = GoRouter(
     GoRoute(
         path: '/notification',
         builder: (context, state) => const NotificationScreen()),
+    GoRoute(
+        path: '/reports/:type',
+        builder: (context, state) => ReportListScreen(
+              type: state.pathParameters['type']!,
+            )),
     GoRoute(
         path: '/health/laboratory',
         builder: (context, state) => const LaboratoryTestScreen()),

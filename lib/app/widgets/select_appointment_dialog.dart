@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
 class SelectAppointmentDialog extends StatelessWidget {
@@ -27,6 +26,7 @@ class SelectAppointmentDialog extends StatelessWidget {
                 message:
                     "Schedule your health check-up with ease, ensuring your well-being is a top priority",
                 selectAppointmentCallback: () {
+                  context.pop();
                   context.push('/checkup');
                 },
               ),
@@ -36,6 +36,7 @@ class SelectAppointmentDialog extends StatelessWidget {
                 message:
                     "Book appointments with qualified doctors swiftly, addressing your healthcare needs efficiently.",
                 selectAppointmentCallback: () {
+                  context.pop();
                   context.push('/doctors');
                 },
               )

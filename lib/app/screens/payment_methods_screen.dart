@@ -11,12 +11,14 @@ import 'package:doctor_appointment_client/data/models/doctor_model.dart';
 import 'package:doctor_appointment_client/data/models/medicine_model.dart';
 import 'package:doctor_appointment_client/data/models/pill_model.dart';
 import 'package:doctor_appointment_client/data/models/prescription_model.dart';
+import 'package:doctor_appointment_client/data/models/report_model.dart';
 import 'package:doctor_appointment_client/providers/booking_provider.dart';
 import 'package:doctor_appointment_client/providers/user_provider.dart';
 import 'package:doctor_appointment_client/services/auth_service.dart';
 import 'package:doctor_appointment_client/services/booking_service.dart';
 import 'package:doctor_appointment_client/services/pill_service.dart';
 import 'package:doctor_appointment_client/services/prescription_service.dart';
+import 'package:doctor_appointment_client/services/report_service.dart';
 import 'package:doctor_appointment_client/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -194,8 +196,11 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                     context.read<UserProvider>().setCurrentUser(user: user!);
                   }
 
-                  Timer(const Duration(seconds: 10), () {
+                  Timer(const Duration(seconds: 10), () async {
                     if (doctor.name == "Medical Checkup") {
+                      ReportService().createReports(
+                          reportModel: ReportModel(
+                              createdDate: bookingTime, userId: user!.id));
                     } else {
                       addPrescription(bookingProvider.doctor!, bookingTime);
                     }
@@ -290,7 +295,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                             child: DetailInfo(
                               label: "Department",
                               info:
-                                  "Phòng ban ${bookingProvider.doctor!.specialistIn}",
+                                  "Phòng ban ${bookingProvider.doctor!.id == 'AUdabJNMbsIRQUZBdMGK' ? "khám sức khỏe" : bookingProvider.doctor!.specialistIn}",
                             ),
                           ),
                         ],

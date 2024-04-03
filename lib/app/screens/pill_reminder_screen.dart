@@ -2,7 +2,6 @@ import 'package:doctor_appointment_client/app/widgets/no_item_note.dart';
 import 'package:doctor_appointment_client/constants/app_colors.dart';
 import 'package:doctor_appointment_client/constants/helpers.dart';
 import 'package:doctor_appointment_client/data/models/pill_model.dart';
-import 'package:doctor_appointment_client/services/local_notification_service.dart';
 import 'package:doctor_appointment_client/services/pill_service.dart';
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';

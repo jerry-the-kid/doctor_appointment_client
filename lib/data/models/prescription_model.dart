@@ -1,4 +1,3 @@
-import 'package:doctor_appointment_client/data/models/medicine_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'prescription_model.g.dart';

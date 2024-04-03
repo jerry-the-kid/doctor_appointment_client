@@ -1,7 +1,6 @@
 import 'package:doctor_appointment_client/app/widgets/no_item_note.dart';
 import 'package:doctor_appointment_client/app/widgets/table_cell_custom.dart';
 import 'package:doctor_appointment_client/constants/app_colors.dart';
-import 'package:doctor_appointment_client/data/models/user_model.dart';
 import 'package:doctor_appointment_client/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
